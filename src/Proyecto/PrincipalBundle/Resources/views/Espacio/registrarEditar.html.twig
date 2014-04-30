@@ -1,0 +1,99 @@
+{% extends "ProyectoPrincipalBundle:Default:base.html.twig" %}
+{%block scripts%}
+<script type="text/javascript">//var direccionBuscarCiudad = "{{path('proyecto_users_buscar_ciudad')}}";</script>
+{%endblock%}
+
+{%block contenedorbase%}
+<div class="wrapper">
+
+	{% include 'ProyectoPrincipalBundle:Helpers:top.html.twig'  with {'clase': 'verde'}  %}
+
+	<div class="verde" id="work"  >
+		<div class="aviso"   >
+			<h2 class="izquierda">registrando tu espacio.... </h2><h2 class="derecha">(1/5) </h2>
+			<div class="clearfix"></div>
+			<p>
+				- No pagas nada.  </br>
+				- Te alquilarán y pagarán online. </br>
+				- Gestionarás tu calendario de reservas y cancelaciones gratis. </br>
+				- Tendrás difusión y posicionamiento gratuito en internet.
+			</p>
+
+			<h2 class="izquierda">a cambio.... </h2>
+			<div class="clearfix"></div>
+			<p>
+				- Esfuérzate definiendo bien con datos, fotos,.. ¡Tendrás más éxito!.   </br>
+				- Lee las <a href="condiciones.html">Condiciones detalladas</a> que aceptas al registrar el espacio. </br>
+				- Nuestro premio es un  % ¡Sólo de las contrataciones reales que te consigamos! .
+			</p>
+		</div>
+	</div>
+	<!-- Text Section End -->
+
+	<div class="verde" id="work"  >
+
+		<div class="nuevo">
+
+			<div id="formnuevo">
+				<form action="{{ url }}" method="post" {{ form_enctype(form) }} id="">
+					<!--
+					<p>  (Sesión no iniciada)</p>
+
+					<input type="text" class="formstyle" title="Nombre" name="name" />
+					<input type="text" class="formstyle" title="Contraseña (Máx 20 carácteres)" name="Contraseña" />
+					-->
+					<p>
+						&nbsp;
+					</p>
+					<div class="clearfix"></div>
+
+					<p>
+						<strong>Registrar un nuevo espacio como:</strong>
+					</p>
+
+					
+					<p>{{ form_errors(form) }}</p>
+
+					
+					<p>
+					{{ form_widget(form.propietarioEmpleado) }}Propietario/a ó Empleado
+					</p>
+
+					<p>
+					{{ form_widget(form.agenteComercial) }}Agente Comercial
+					</p>
+
+					<p>
+					{{ form_widget(form.administradorWeb) }}Administrador de la Web
+					</p>
+
+					<p>
+						&nbsp;
+					</p>
+
+					<div class="clearfix"></div>
+
+					<input type="submit" class="botonSubmitFormulario formstyle " value="Siguiente">
+
+					<div class="clearfix"></div>
+
+					
+
+					{{ form_rest(form) }}
+
+				</form>
+			</div>
+
+			<div class="clearfix"></div>
+
+			<div id="espacios" ></div>
+			<div id="eventos" ></div>
+			<div id="servicios" ></div>
+			<div class="clearfix"></div>
+		</div>
+		<!-- Work Links Section End -->
+		<!-- Last Words Section End-->
+		<div id="sedes" ></div>
+	</div>
+</div>
+{%endblock%}

@@ -1,0 +1,8 @@
+Proyecto\PrincipalBundle\Entity\User:
+    properties:
+        file:
+            - Image:
+                minWidth: 10
+                maxWidth: 5000
+                minHeight: 10
+                maxHeight: 5000

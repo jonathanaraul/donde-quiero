@@ -1,0 +1,178 @@
+{% extends "ProyectoPrincipalBundle:Default:base.html.twig" %}
+{%block scripts%}
+<script type="text/javascript">//var direccionBuscarCiudad = "{{path('proyecto_users_buscar_ciudad')}}";</script>
+{%endblock%}
+
+{%block contenedorbase%}
+
+<div class="wrapper">
+	{% include 'ProyectoPrincipalBundle:Helpers:top.html.twig'  with {'clase': 'verde'}  %}
+	<div class="verde" id="work"  >
+
+		<div class="nuevo">
+
+			<div id="formnuevo">
+				<form action="{{ url }}" method="post" {{ form_enctype(form) }} >
+					<h2 > Registrar nuevo espacio (5/5)</h2>
+					<p >
+						&nbsp;
+					</p>
+
+					<p>
+						<strong>Detalles de la reserva:</strong>
+					</p>
+
+					<p>
+						{{ form_widget(form.aceptacionReservaAutomatica) }}
+						Aceptación de la reserva automática
+					</p>
+
+					<p >
+						{{ form_widget(form.tiempoMaximoAceptacionReservaAutomatica24h) }}
+						Tiempo máximo de aceptación de reserva 24h
+					</p>
+
+					<p >
+						{{ form_widget(form.tiempoMaximoAceptacionReservaAutomatica48) }}
+						Tiempo máximo de aceptación de reserva 48h
+					</p>
+
+					<p >
+						&nbsp;
+					</p>
+
+					<p >
+						{{ form_widget(form.datosFacturacionPagoDelUsuario) }}
+						Los datos de facturación y pago son los del usuario
+					</p>
+
+					<p >
+						{{ form_widget(form.anadirDatosFacturacionPago) }}
+						<a href="#"> Añadir datos de facturación y pago</a>
+					</p>
+					<p >
+						&nbsp;
+					</p>
+
+					<p>
+						<strong>Señala las actividades permitidas:</strong>
+					</p>
+
+					<p>
+						{{ form_widget(form.todas) }}
+						Todas
+					</p>
+
+					<p >
+						{{ form_widget(form.similaresCentroRealiza) }}
+						Similares a las que el centro ya realiza
+					</p>
+
+					<p >
+						{{ form_widget(form.formacionTeorica) }}
+						Formación Teórica
+					</p>
+
+					<p >
+						{{ form_widget(form.formacionInformatica) }}
+						Formación Informática
+					</p>
+
+					<p >
+						{{ form_widget(form.formacionTaller) }}
+						Formación Taller
+					</p>
+
+					<p >
+						{{ form_widget(form.exposicion) }}
+						Exposición
+					</p>
+
+					<p >
+						{{ form_widget(form.ventaFeria) }}
+						Venta, feria
+					</p>
+
+					<p >
+						{{ form_widget(form.deporte) }}
+						Deporte
+					</p>
+
+					<p >
+						{{ form_widget(form.espectaculo) }}
+						Espectáculo
+					</p>
+
+					<p >
+						{{ form_widget(form.reunionAsamblea) }}
+						Reunión o asamblea
+					</p>
+
+					<p >
+						{{ form_widget(form.boda) }}
+						Boda
+					</p>
+
+					<p >
+						{{ form_widget(form.fiesta) }}
+						Fiesta
+					</p>
+
+					<p >
+						{{ form_widget(form.jardin) }}
+						Jardín
+					</p>
+
+					<div class="clearfix"></div>
+
+					<p>
+						&nbsp;
+					</p>
+					<h3 > Precio</h3>
+
+					<p>
+						
+						{{ form_widget(form.precioPorHora, { 'attr': {'class': 'formstyle','title':'Precio por Hora (Euros)','min':'0','step':'1','value':'0'} }) }}
+					</p>
+					<p>
+						&nbsp;
+					</p>
+					<div class="clearfix"></div>
+					<p>
+						{{ form_widget(form.aceptoCondicionesUsoPoliticaPrivacidad) }}
+						<a href="#"> Acepto las condiciones de uso y la política de privacidad</a>
+					</p>
+
+					<div class="clearfix"></div>
+
+					<input type="submit" class="botonSubmitFormulario formstyle " value="Enviar">
+					<div class="enviar">
+						<a href="registroespacio3.html" title="Perfil">Anterior </a>
+					</div>
+
+
+					{{ form_rest(form) }}
+				</form>
+			</div>
+
+			<p>
+				&nbsp;
+			</p>
+
+			<div id="error"></div>
+
+			<div class="clearfix"></div>
+
+			<div id="espacios" ></div>
+			<div id="eventos" ></div>
+			<div id="servicios" ></div>
+			<div class="clearfix"></div>
+		</div>
+		<!-- Work Links Section End -->
+		<!-- Last Words Section End-->
+		<div id="sedes" ></div>
+	</div>
+
+</div>
+
+{%endblock%}

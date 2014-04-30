@@ -1,0 +1,330 @@
+{% extends "ProyectoPrincipalBundle:Default:base.html.twig" %}
+
+{%block contenedorbase%}
+<div class="wrapper">
+
+ {% include 'ProyectoPrincipalBundle:Helpers:top.html.twig'  %}
+{% include 'ProyectoPrincipalBundle:Default:sesion.html.twig'  with {'datos': datos} %}
+ <div id="destacados">
+   <h2 > Destacados </h2>
+    <div class="clearfix"></div>
+  <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio1.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
+            <h3>Mini-Site del Evento</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Diseño Web</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio2.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Reportaje Eventos</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Fotografía</li>
+             <li class="izquierda"> </li>
+              <li class="derecha">Precio </li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio3.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Grupo de Jazz</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Música</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio4.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Catering Creativo</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Catering</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+      <div class="clearfix"></div>
+    </div> <!-- destacados Section End -->
+    
+   <div id="work"  class="azul"> <!-- Work Links Section Start -->
+    <div class="añadir">
+    <a href="{{ path('proyecto_principal_servicios') }}">Servicios</a><!--/item--></div>
+    <div class="buscador">
+      <select name="Ciudades..." title="Ciudad.." class="formstyle">
+        <option value="Madrid"> Ofrecidos por.. </option>
+<option value="Madrid">Todos </option>
+<option value="Barcelona">…una sede para sus propios eventos</option>
+<option value="Tenerife">…una empresa para eventos de otros </option>
+</select>
+      </div><!--/item-->
+        
+         <div class="buscador">
+        <select name="Fecha..." title="Fecha.." class="formstyle">
+        <option value="Madrid">Multimedia </option>
+<option value="Madrid">Todos </option>
+<option value="Barcelona">Grabación y edición vídeo </option>
+<option value="Barcelona">Fotógrafo del evento </option>
+<option value="Barcelona">Alquiler cámaras </option>
+<option value="Barcelona">Alquiler portátiles </option>
+<option value="Barcelona">Alquiler proyectores y pantallas </option>
+<option value="Barcelona">Sonido, Micrófono y altavoces </option>
+<option value="Barcelona">Iluminación </option>
+
+</select>
+        </div><!--/item-->
+        
+      <div class="buscador">
+        <select name="Fecha..." title="Fecha.." class="formstyle">
+        <option value="Madrid">Mejora de espacios </option>
+<option value="Madrid">Todos </option>
+<option value="Barcelona">Decoración con accesorios </option>
+<option value="Barcelona">Floristería </option>
+<option value="Barcelona">Diseño de exposiciones temporales. </option>
+<option value="Barcelona">Montaje de exposición</option>
+<option value="Barcelona">Escenografía</option>
+<option value="Barcelona">Rehabilitación arquitectónica </option>
+<option value="Barcelona">Limpieza (uso normal e intensivo)  </option>
+<option value="Barcelona">Seguros  </option>
+
+
+</select>
+      </div><!--/item-->
+      
+      
+<div class="añadir">
+  <ul> <li>  <a href="registro.html"><img class="icon" src="{{ asset('sistema/images/icons/mas.png')}}" width="27" height="27" title="Añadir Gratis"></a></li> 
+     <li style="float:right;"> <a href="{{ path('proyecto_principal_servicios') }}"><img class="icon" src="{{ asset('sistema/images/icons/buscar.png')}}" width="27" height="27" alt="Buscar"></a></a> </ul></div>
+    <div class="buscador">
+        <select name="Fecha..." title="Fecha.." class="formstyle">
+        <option value="Madrid">Mejora de contenidos </option>
+<option value="Madrid">Todos </option>
+<option value="Barcelona">Impresión  y grabación docs </option>
+<option value="Barcelona">Transporte de mercancías </option>
+<option value="Barcelona">Envíos </option>
+<option value="Barcelona">Mobiliario aula, taller, recepción...</option>
+<option value="Barcelona">Accesorios formación (Pizarras...)</option>
+<option value="Barcelona">Papelería normal y corporativa </option>
+<option value="Barcelona">Internet cable  </option>
+<option value="Barcelona">Internet WIFI </option>
+<option value="Barcelona">Animación </option>
+<option value="Barcelona">Interpretación musical </option>
+<option value="Barcelona">Interpretación teatral </option>
+
+
+</select>
+      </div><!--/item-->
+        
+         <div class="buscador">
+     <select name="Fecha..." title="Fecha.." class="formstyle">
+        <option value="Madrid">Servicio para asistentes </option>
+<option value="Madrid">Todos </option>
+<option value="Barcelona">Catering</option>
+<option value="Barcelona">Azafatas</option>
+<option value="Barcelona">Recepcionista </option>
+<option value="Barcelona">Traducción</option>
+<option value="Barcelona">Intérpretes</option>
+<option value="Barcelona">Receptores con auricular para escuchar intérprete </option>
+<option value="Barcelona">Alojamiento </option>
+<option value="Barcelona">Internet WIFI </option>
+<option value="Barcelona">Viaje </option>
+<option value="Barcelona">Transporte local de asistentes </option>
+<option value="Barcelona">Guía o acompañante para asistentes </option>
+
+
+</select>
+        </div><!--/item-->
+        
+      <div class="buscador">
+        <select name="Fecha..." title="Fecha.." class="formstyle">
+        <option value="Madrid"> Imagen Corporativa </option>
+<option value="Madrid"> Todos </option>
+<option value="Barcelona">Logos y docs corporativos</option>
+<option value="Barcelona">Web del evento o de la Sede</option>
+<option value="Barcelona">Impresión  y grabación </option>
+<option value="Barcelona">Reparto publicitario</option>
+<option value="Barcelona">Posicionamiento</option>
+<option value="Barcelona">Community Management </option>
+<option value="Barcelona">Difusión en internet </option>
+<option value="Barcelona">Difusión otros medios </option>
+<option value="Barcelona">Emisión online en página del evento</option>
+
+
+</select>
+      </div><!--/item-->
+        
+        
+        
+    	<div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio1.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
+            <h3>Mini-Site del Evento</h3><!--Title-->
+            <ul>
+            <li class="izquierda" > Diseño Web</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio2.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Reportaje Eventos</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Fotografía</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio3.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Grupo de Jazz</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Música</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio4.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Catering Creativo</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Catering</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio5.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
+        <h3>Iluminación </h3><!--Title-->
+            <ul>
+            <li class="izquierda">Audiovisual</li>
+             <li class="izquierda"></li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio6.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Pack Photocall</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Escenografía</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/evento6.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
+        	
+            <h3>Vinos </h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Catering</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio7.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Azafatas de Eventos</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Personal</li>
+             <li class="izquierda"></li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio1.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
+            <h3>Mini-Site del Evento</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Diseño Web</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio2.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Reportaje Eventos</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Fotografía</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio3.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Grupo de Jazz</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Música</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio4.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Catering Creativo</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Catering</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio5.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
+        <h3>Iluminación </h3><!--Title-->
+            <ul>
+            <li class="izquierda">Audiovisual</li>
+             <li class="izquierda"></li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio6.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Pack Photocall</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Escenografía</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/evento6.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
+        	
+            <h3>Vinos </h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Catering</li>
+             <li class="izquierda"> </li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="item">
+        	<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio7.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
+        	
+        <h3>Azafatas Eventos</h3><!--Title-->
+            <ul>
+            <li class="izquierda"> Personal</li>
+             <li class="izquierda"></li>
+              <li class="derecha"> Precio</li> </ul><!--Category-->
+        </div><!--/item-->
+        
+        <div class="clearfix"></div>
+        
+         <div id="contador"> <a href="{{ path('proyecto_principal_servicios') }}">1 2 3 4 &gt;</a></div>
+    </div>
+        
+<div class="clearfix"></div>
+    </div> <!-- Work Links Section End -->
+
+    </div>
+
+<!-- TO MAKE THE PHP FORM WORK, ALL YOU NEED TO DO IS OPEN UP THE FILE CALLED 'submitemail.php' AND CHANGE WHERE IT SAYS 'your email goes here' -->
+
+<!-- DON'T TOUCH THIS SECTION -->
+</div>
+{%endblock%} 
