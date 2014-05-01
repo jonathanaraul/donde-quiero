@@ -1,3 +1,46 @@
+ var data ="<ul>" ;$('.azul select').find('option').each(function() {
+    		
+
+
+
+		var campo = $.trim($(this).text());
+		campo = $.trim(campo.replace("ñ", 'ni'));
+		campo = $.trim(campo.replace(":", ''));
+		campo = $.trim(campo.replace(/<[^>]+>/g, ''));
+		campo = $.trim(campo.replace("+", ''));
+		campo = $.trim(campo.replace("-", ''));
+		campo = $.trim(campo.replace("(", ''));
+		campo = $.trim(campo.replace(")", ''));
+		campo = $.trim(campo.replace("%", ''));
+		campo = $.trim(campo.replace("á", 'a'));
+		campo = $.trim(campo.replace("é", 'e'));
+		campo = $.trim(campo.replace("í", 'i'));
+		campo = $.trim(campo.replace("una", ''));
+		campo = $.trim(campo.replace("para", ''));
+		campo = $.trim(campo.replace("y", ''));
+		campo = $.trim(campo.replace("ó", 'o'));
+		campo = $.trim(campo.replace("ú", 'u'));
+		campo = $.trim(campo.replace("°", ''));
+		campo = $.trim(campo.replace(/\W/g, ' '));
+		campo = $.trim(campo.replace(/\s/g, ''));
+		campo = $.trim(campo.replace(/\d/g, ''));
+		campo = campo.toLowerCase();
+
+		campo = campo.split(" ");
+		var auxiliar ="";
+		/*for (var i = 0; i< campo.length - 1;  i++) {
+			if(i!=0) campo[i].capitalize();
+			auxiliar += campo[i];
+		};
+*/
+
+		data += "<br>" +campo;
+
+		console.log(data);
+		return false;
+
+    	}); data +="</ul>"; document.write(data);
+
 
 $("#boton-formulario-mensaje").live("click", function() {
 	var valor = null;
