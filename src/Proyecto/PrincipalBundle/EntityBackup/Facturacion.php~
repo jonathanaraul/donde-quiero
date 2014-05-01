@@ -1,0 +1,108 @@
+<?php
+
+namespace Proyecto\PrincipalBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Facturacion
+ *
+ * @ORM\Table(name="facturacion")
+ * @ORM\Entity
+ */
+class Facturacion
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=300, nullable=false)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="identificador", type="string", length=300, nullable=false)
+     */
+    private $identificador;
+
+     /**
+     * @ORM\Column(type="text", nullable=false)
+     */
+    public $direccion;
+
+    /**
+     * @var \Localidad
+     *
+     * @ORM\ManyToOne(targetEntity="Localidad")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="localidad", referencedColumnName="id")
+     * })
+     */
+    private $localidad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numeroCuenta", type="string", length=300, nullable=false)
+     */
+    private $numeroCuenta;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numeroTarjeta", type="string", length=300, nullable=false)
+     */
+    private $numeroTarjeta;
+
+    /**
+     * * @var \DateTime
+     *
+     * @ORM\Column(name="fechaCaducidad", type="datetime", nullable=false)
+     */
+    private $fechaCaducidad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codigo", type="string", length=300, nullable=false)
+     */
+    private $codigo;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechaRegistro", type="datetime", nullable=false)
+     */
+    private $fechaRegistro;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    
+}

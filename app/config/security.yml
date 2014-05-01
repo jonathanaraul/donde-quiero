@@ -29,6 +29,7 @@ security:
               path: /logout
               target: /
     access_control:
+        - { path: ^/registrar/.*, roles: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /_profiler/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }

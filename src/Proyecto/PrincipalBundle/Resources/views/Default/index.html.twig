@@ -234,139 +234,27 @@
 
 			</select>
 		</div><!--/item-->
+	
+		{%for element in espacios%}
 		<!--/item-->
 		<div class="item">
-			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('sistema/images/work/thumbs/espacio1.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
-			<h3>Salón de Actos</h3><!--Title-->
+			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('uploads/espacios/'~ element.path  ) }}" alt="image 1" style="width:180px;height:135px;"></a><!-- Image must be 400px by 300px -->
+			<h3>{{element.nombreEspacio|title}}</h3><!--Title-->
 			<ul>
 				<li class="izquierda">
-					Madrid
+					{{element.nombre|title}}
 				</li>
 				<li class="izquierda">
-					380 m2
+					{{element.superficie}} m2
 				</li>
 				<li class="derecha">
-					Precio
+					{{element.precioPorHora}} &euro;
 				</li>
 			</ul><!--Category-->
 		</div><!--/item-->
+		{%endfor%}
 
-		<div class="item">
-			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('sistema/images/work/thumbs/espacio2.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
 
-			<h3>Sala Mercadal</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Madrid
-				</li>
-				<li class="izquierda">
-					360 m2
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('sistema/images/work/thumbs/espacio3.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Sala de Reuniones</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Madrid
-				</li>
-				<li class="izquierda">
-					50 m2
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('sistema/images/work/thumbs/espacio4.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Sala Triangular</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Madrid
-				</li>
-				<li class="izquierda">
-					300 m2
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-		<div class="item">
-			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('sistema/images/work/thumbs/espacio9.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
-			<h3>Sala</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Las Palmas
-				</li>
-				<li class="izquierda">
-					200 m2
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('sistema/images/work/thumbs/espacio11.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Espacio díafano</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Las Palmas
-				</li>
-				<li class="izquierda">
-					450 m2
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('sistema/images/work/thumbs/espacio7.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Aula </h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Madrid
-				</li>
-				<li class="izquierda">
-					31 m2
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('sistema/images/work/thumbs/espacio8.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Salón de Actos</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Madrid
-				</li>
-				<li class="izquierda">
-					1000 m2
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
 
 		<div class="clearfix"></div>
 		<div id="contador">

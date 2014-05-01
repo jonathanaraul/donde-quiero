@@ -647,6 +647,22 @@ margin: 0px 10px 0px 10px;
 
 
 /* ----------------------- WORK LINKS START ------------------------- */
+.work{
+	width: 800px;
+padding: 12px;
+margin: 2% auto 2% auto;
+height: auto;
+border-radius: 15px;
+-moz-border-radius: 15px;
+-webkit-box-shadow: 0 1px 3px #c3c3c3;
+-moz-box-shadow: 0 1px 3px #c3c3c3;
+box-shadow: 0 1px 3px #c3c3c3;
+-webkit-transition: box-shadow 0.2s ease-in-out;
+-moz-transition: box-shadow 0.2s ease-in-out;
+-o-transition: box-shadow 0.2s ease-in-out;
+-ms-transition: box-shadow 0.2s ease-in-out;
+transition: box-shadow 0.2s ease-in-out;
+}
 #work{
 	width:800px;
 	padding:12px;
@@ -1211,7 +1227,25 @@ input:focus, input.focused, textarea:focus, textarea.focused {  color: #000000; 
 	margin-bottom:2%;
 	color:#fff;
 }
-
+.formnuevo{
+	margin-left:17%;
+	width:80%;
+	margin-top:2%;
+}
+.formnuevo p{
+	font-family: 'Roboto', Arial, Helvetica, sans-serif;
+	font-weight:normal;
+	font-size:90%;
+	line-height:160%;
+	margin-bottom:2%;
+	color:#fff;
+}
+.mostrar{
+	display: block;
+}
+.ocultar{
+	display: none
+}
 #forminicio a{
 	color:#000;
 	

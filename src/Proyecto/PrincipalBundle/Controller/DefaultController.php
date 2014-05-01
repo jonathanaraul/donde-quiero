@@ -16,9 +16,13 @@ use Proyecto\PrincipalBundle\Entity\User;
 class DefaultController extends Controller {
 
 	public function indexAction() {
+
+		//HelpersController::eliminaHuerfanos($this);
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
 		$secondArray = array();
+		$secondArray['espacios'] = HelpersController::getEspacios($this);
 
+	
 		$array = array_merge($firstArray, $secondArray);
 		return $this -> render('ProyectoPrincipalBundle:Default:index.html.twig', $array);
 	}
