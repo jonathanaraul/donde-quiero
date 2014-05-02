@@ -1,3 +1,17 @@
+function checksApagados(clase){
+    var prueba = true;
+    var elementos  = $('.'+clase);
+  $.each(elementos, function(indice, valor) {
+    
+        if($(valor).is(":checked"))
+        {
+          prueba= false;
+        }
+  });
+    return prueba;
+}
+
+
 <!-- ------------------- SCROLL TO START ------------------- -->
             $(function() {
                 $('nav ul li a').bind('click',function(event){

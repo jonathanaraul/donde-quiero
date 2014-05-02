@@ -39,63 +39,57 @@ $(".anterior-formulario").live("click", function() {
 
 function ejecutaValidaciones(nivel) {
 	 var resultado = true;
-     return resultado;
      
 	if(nivel=='primero'){
 		
-		if(!$('#form_propietarioEmpleado').is(":checked") && !$('#form_agenteComercial').is(":checked") && !$('#form_administradorWeb').is(":checked")){
-			jError('Debe definir como desea registrar su espacio'); 
+		if(checksApagados('check-registrar-como')){
+			jError('Debe definir como desea registrar su servicio'); 
 			return false;
 		}
 	}	
 	else if(nivel=='segundo'){
-		if($('#form_nombreEspacio').val()=="Nombre del Espacio (Max 20 carácteres)" || $('#form_nombreEspacio').val()==""){
-			jError('Debe indicar el nombre de su espacio'); 
+		if($('#form_nombre').val()=="Nombre del Servicio (Max 20 carácteres)" || $('#form_nombre').val()==""){
+			jError('Debe indicar el nombre de su servicio'); 
 			return false;
 		}
 		if($('#form_descripcionGeneral').val()=="Descripción general" || $('#form_descripcionGeneral').val()==""){
-			jError('Debe describir su espacio'); 
+			jError('Debe describir su servicio'); 
 			return false;
 		}
 		if($('input[type=file]').val()==""){
-			jError('Debe subir por lo menos una imagen de su espacio'); 
+			jError('Debe subir por lo menos una imagen de su servicio'); 
 			return false;
 		}
-	}
-	else if(nivel=='tercero'){
-		if(!parseInt($('#form_superficie').val())>0){
-			jError('Debe indicar la superficie de su espacio, ejemplo 500'); 
+		if(checksApagados('check-ofrecidos-por')){
+			jError('Debe definir para quien ofrece el servicio'); 
 			return false;
 		}
-		if(!$('#form_modoAula').is(":checked") && !$('#form_modoBanquete').is(":checked") && !$('#form_modoCocktail').is(":checked")&& !$('#form_modoEscenario').is(":checked")&& !$('#form_modoExposicion').is(":checked")){
-			jError('Debe seleccionar por lo menos un modo de uso para su espacio'); 
-			return false;
-		}
+
 	}
 	else if(nivel=='cuarto'){
-		if(!$('#form_proyectorPantallaSala').is(":checked") && !$('#form_microfonoAltavoces').is(":checked") && !$('#form_videocamara').is(":checked")&& !$('#form_wifi').is(":checked")&& !$('#form_internetCable').is(":checked")&& !$('#form_maquinaBebidas').is(":checked")&& !$('#form_pizarra').is(":checked")&& !$('#form_conserjeria').is(":checked")&& !$('#form_aireAcondicionado').is(":checked")&& !$('#form_calefaccion').is(":checked")&& !$('#form_otrosServicios').is(":checked")){
-			jError('Debe seleccionar por lo menos una de las características que posee su espacio'); 
+		if(checksApagados('check-tipo-servicio')){
+			jError('Debe definir por lo menos un tipo de servicio entre las fases 3 y 4'); 
 			return false;
 		}
 	}
 	else if(nivel=='quinto'){
-		if(!$('#form_aceptacionReservaAutomatica').is(":checked") && !$('#form_tiempoMaximoAceptacionReservaAutomatica24h').is(":checked") && !$('#form_tiempoMaximoAceptacionReservaAutomatica48').is(":checked")){
+		
+		if(checksApagados('check-aceptacion-reserva')){
 			jError('Debe indicar un modo de aceptación de la reserva'); 
 			return false;
 		}
-		if(!$('#form_todas').is(":checked") && !$('#form_similaresCentroRealiza').is(":checked") && !$('#form_formacionTeorica').is(":checked")&& !$('#form_formacionInformatica').is(":checked")&& !$('#form_formacionTaller').is(":checked")&& !$('#form_exposicion').is(":checked")&& !$('#form_ventaFeria').is(":checked")&& !$('#form_deporte').is(":checked")&& !$('#form_espectaculo').is(":checked")&& !$('#form_reunionAsamblea').is(":checked")&& !$('#form_boda').is(":checked")&& !$('#form_fiesta').is(":checked")){
-			jError('Debe indicar por lo menos una de las actividades permitidas en su espacio'); 
+		if(checksApagados('check-facturacion-pago')){
+			jError('Debe definir los parametros de facturación'); 
 			return false;
 		}
 		if(!parseFloat($('#form_precioPorHora').val())>0){
-			jError('Debe especificar un precio de alquiler para su espacio, ejemplo 500'); 
+			jError('Debe especificar un precio de alquiler para su servicio, ejemplo 500'); 
 			return false;
 		}
 		if(!$('#form_aceptoCondicionesUsoPoliticaPrivacidad').is(":checked")){
 			jError('Debe aceptar las conficiones de uso y las politicas de privacidad'); 
 			return false;
 		}
-		
 	}
 
 	return resultado;
@@ -122,3 +116,147 @@ $("#form_provincia").live("change", function() {
 	return false;     
                                        }
                   );
+
+
+
+$("#form_ofrecidosTodos").live("change", function() {
+
+    var elementos  = $('.check-ofrecidos-por');
+    if(this.checked) {
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', true);
+         });
+    }
+    else{
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', false);
+         });    	
+    }
+});
+$(".check-ofrecidos-por").live("change", function() {
+	
+     var id = $(this).attr('id');
+     var variable = 'form_ofrecidosTodos';
+
+     if(id!=variable) $('#'+variable).prop('checked', false);
+});
+
+
+
+$("#form_todosMultimedia").live("change", function() {
+	
+    var elementos  = $('.check-multimedia');
+    if(this.checked) {
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', true);
+         });
+    }
+    else{
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', false);
+         });    	
+    }
+});
+$(".check-multimedia").live("change", function() {
+	
+     var id = $(this).attr('id');
+     var variable = 'form_todosMultimedia';
+
+     if(id!=variable) $('#'+variable).prop('checked', false);
+});
+
+
+
+$("#form_todosMejoraEspacios").live("change", function() {
+	
+    var elementos  = $('.check-mejora-espacios');
+    if(this.checked) {
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', true);
+         });
+    }
+    else{
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', false);
+         });    	
+    }
+});
+$(".check-mejora-espacios").live("change", function() {
+	
+     var id = $(this).attr('id');
+     var variable = 'form_todosMejoraEspacios';
+
+     if(id!=variable) $('#'+variable).prop('checked', false);
+});
+
+
+
+$("#form_todosMejoradeContenidos").live("change", function() {
+	
+    var elementos  = $('.check-mejora-contenidos');
+    if(this.checked) {
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', true);
+         });
+    }
+    else{
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', false);
+         });    	
+    }
+});
+$(".check-mejora-contenidos").live("change", function() {
+	
+     var id = $(this).attr('id');
+     var variable = 'form_todosMejoradeContenidos';
+
+     if(id!=variable) $('#'+variable).prop('checked', false);
+});
+
+
+
+$("#form_todosServicioAsistentes").live("change", function() {
+	
+    var elementos  = $('.check-mejora-servicio-asistentes');
+    if(this.checked) {
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', true);
+         });
+    }
+    else{
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', false);
+         });    	
+    }
+});
+$(".check-mejora-servicio-asistentes").live("change", function() {
+	
+     var id = $(this).attr('id');
+     var variable = 'form_todosServicioAsistentes';
+
+     if(id!=variable) $('#'+variable).prop('checked', false);
+});
+
+
+
+$("#form_todosImagenCorporativa").live("change", function() {
+	
+    var elementos  = $('.check-imagen-corporativa');
+    if(this.checked) {
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', true);
+         });
+    }
+    else{
+         $.each(elementos, function(indice, valor) {
+            $(valor).prop('checked', false);
+         });    	
+    }
+});
+$(".check-imagen-corporativa").live("change", function() {
+	
+     var id = $(this).attr('id');
+     var variable = 'form_todosImagenCorporativa';
+
+     if(id!=variable) $('#'+variable).prop('checked', false);
+});

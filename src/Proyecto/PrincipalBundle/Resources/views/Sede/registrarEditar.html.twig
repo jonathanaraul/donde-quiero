@@ -139,15 +139,15 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					<p></p>
 
 					<p>
-						{{ form_widget(form.propietarioEmpleado) }}Propietario/a ó Empleado
+						{{ form_widget(form.propietarioEmpleado, { 'attr': {'class': 'check-registrar-como'}}) }}Propietario/a ó Empleado
 					</p>
 
 					<p>
-						{{ form_widget(form.agenteComercial) }}Agente Comercial
+						{{ form_widget(form.agenteComercial, { 'attr': {'class': 'check-registrar-como'}}) }}Agente Comercial
 					</p>
 
 					<p>
-						{{ form_widget(form.administradorWeb) }}Administrador de la Web
+						{{ form_widget(form.administradorWeb, { 'attr': {'class': 'check-registrar-como'}}) }}Administrador de la Web
 					</p>
 
 					<p>
@@ -282,19 +282,19 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 
 					<p class="parrafo-registro">
-						{{ form_widget(form.enCentroCiudad) }}
+						{{ form_widget(form.enCentroCiudad, { 'attr': {'class': 'check-accesibilidad'}}) }}
 						En centro ciudad
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.cercaAutobus) }}
+						{{ form_widget(form.cercaAutobus, { 'attr': {'class': 'check-accesibilidad'}}) }}
 						Cerca de Autobús
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.cercaAeropuerto) }}
+						{{ form_widget(form.cercaAeropuerto, { 'attr': {'class': 'check-accesibilidad'}}) }}
 						Cerca de aeropuerto
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.accesibleMovilidadReducida) }}
+						{{ form_widget(form.accesibleMovilidadReducida, { 'attr': {'class': 'check-accesibilidad'}}) }}
 						Accesible para Movilidad Reducida
 					</p>
 
@@ -305,71 +305,71 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 
 					<p class="parrafo-registro">
-						{{ form_widget(form.colegioInstituto) }}
+						{{ form_widget(form.colegioInstituto, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Colegio/Instituto
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.universidad) }}
+						{{ form_widget(form.universidad, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Universidad
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.otrosCentrosFormacion) }}
+						{{ form_widget(form.otrosCentrosFormacion, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Otros Centros de Formación
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.coWorking) }}
+						{{ form_widget(form.coWorking, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Coworking
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.centroNegocios) }}
+						{{ form_widget(form.centroNegocios, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Centro de Negocios
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.oficinaProfesional) }}
+						{{ form_widget(form.oficinaProfesional, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Oficina Profesional
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.hotel) }}
+						{{ form_widget(form.hotel, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Hotel
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.restauranteBarDiscoteca) }}
+						{{ form_widget(form.restauranteBarDiscoteca, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Restaurante, bar, discoteca
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.finca) }}
+						{{ form_widget(form.finca, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Finca
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.colegioProfesional) }}
+						{{ form_widget(form.colegioProfesional, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Colegio Profesional
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.fundacionCentroCultural) }}
+						{{ form_widget(form.fundacionCentroCultural, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Fundación, Centro Cultural
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.clubPrivadoAsociacion) }}
+						{{ form_widget(form.clubPrivadoAsociacion, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Club privado o asociación
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.cineTeatro) }}
+						{{ form_widget(form.cineTeatro, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Cine o teatro
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.centroDeportivo) }}
+						{{ form_widget(form.centroDeportivo, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Centro Deportivo
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.centroFerial) }}
+						{{ form_widget(form.centroFerial, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Centro Ferial
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.centroRecreativo) }}
+						{{ form_widget(form.centroRecreativo, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Centro Recreativo
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.centroComercial) }}
+						{{ form_widget(form.centroComercial, { 'attr': {'class': 'check-tipo-sede'}}) }}
 						Centro Comercial
 					</p>
 
@@ -414,7 +414,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					</p>
 					<div>	
 					<p class="left">
-						{{ form_widget(form.modoAula) }}
+						{{ form_widget(form.modoAula, { 'attr': {'class': 'check-configuracion'}}) }}
 						<strong> Modo Aula (Sillas)</strong>
 					<p class="right">
 						hasta
@@ -423,7 +423,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					</p>
 
 					<p class="left">
-						{{ form_widget(form.modoBanquete) }}
+						{{ form_widget(form.modoBanquete, { 'attr': {'class': 'check-configuracion'}}) }}
 						<strong> Modo Banquete</strong>
 					<p class="right">
 						hasta
@@ -432,7 +432,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					</p>
 
 					<p class="left">
-						{{ form_widget(form.modoCocktail) }}
+						{{ form_widget(form.modoCocktail, { 'attr': {'class': 'check-configuracion'}}) }}
 						<strong> Modo Cocktail</strong>
 					<p class="right">
 						hasta
@@ -441,7 +441,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					</p>
 
 					<p class="left">
-						{{ form_widget(form.modoEscenario) }}
+						{{ form_widget(form.modoEscenario, { 'attr': {'class': 'check-configuracion'}}) }}
 						<strong> Modo Escenario</strong>
 					<p class="right">
 						hasta
@@ -450,7 +450,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					</p>
 
 					<p class="left">
-						{{ form_widget(form.modoExposicion) }}
+						{{ form_widget(form.modoExposicion, { 'attr': {'class': 'check-configuracion'}}) }}
 						<strong> Modo Exposición</strong>
 					<p class="right">
 						hasta
@@ -468,56 +468,56 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 
 					<p >
-						{{ form_widget(form.formacionTeorica) }}
+						{{ form_widget(form.formacionTeorica, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Formación Teórica
 					</p>
 
 					<p >
-						{{ form_widget(form.formacionInformatica) }}
+						{{ form_widget(form.formacionInformatica, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Formación Informática
 					</p>
 
 					<p >
-						{{ form_widget(form.formacionTaller) }}
+						{{ form_widget(form.formacionTaller, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Formación Taller
 					</p>
 
 					<p >
-						{{ form_widget(form.exposicion) }}
+						{{ form_widget(form.exposicion, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Exposición
 					</p>
 
 					<p >
-						{{ form_widget(form.ventaFeria) }}
+						{{ form_widget(form.ventaFeria, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Venta, feria
 					</p>
 
 					<p >
-						{{ form_widget(form.deporte) }}
+						{{ form_widget(form.deporte, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Deporte
 					</p>
 
 					<p >
-						{{ form_widget(form.espectaculo) }}
+						{{ form_widget(form.espectaculo, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Espectáculo
 					</p>
 
 					<p >
-						{{ form_widget(form.reunionAsamblea) }}
+						{{ form_widget(form.reunionAsamblea, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Reunión o asamblea
 					</p>
 
 					<p >
-						{{ form_widget(form.boda) }}
+						{{ form_widget(form.boda, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Boda
 					</p>
 
 					<p >
-						{{ form_widget(form.fiesta) }}
+						{{ form_widget(form.fiesta, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Fiesta
 					</p>
 					<p >
-						{{ form_widget(form.jardineria) }}
+						{{ form_widget(form.jardineria, { 'attr': {'class': 'check-actividad-permitida'}}) }}
 						Jardineria
 					</p>
 					<div class="clearfix"></div>
@@ -557,17 +557,17 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					</p>
 
 					<p>
-						{{ form_widget(form.aceptacionReservaAutomatica) }}
+						{{ form_widget(form.aceptacionReservaAutomatica, { 'attr': {'class': 'check-aceptacion-reserva'}}) }}
 						Aceptación de la reserva automática
 					</p>
 
 					<p >
-						{{ form_widget(form.tiempoMaximoAceptacionReservaAutomatica24h) }}
+						{{ form_widget(form.tiempoMaximoAceptacionReservaAutomatica24h, { 'attr': {'class': 'check-aceptacion-reserva'}}) }}
 						Tiempo máximo de aceptación de reserva 24h
 					</p>
 
 					<p >
-						{{ form_widget(form.tiempoMaximoAceptacionReservaAutomatica48) }}
+						{{ form_widget(form.tiempoMaximoAceptacionReservaAutomatica48, { 'attr': {'class': 'check-aceptacion-reserva'}}) }}
 						Tiempo máximo de aceptación de reserva 48h
 					</p>
 
@@ -576,12 +576,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					</p>
 
 					<p >
-						{{ form_widget(form.datosFacturacionPagoDelUsuario) }}
+						{{ form_widget(form.datosFacturacionPagoDelUsuario, { 'attr': {'class': 'check-facturacion-pago'}}) }}
 						Los datos de facturación y pago son los del usuario
 					</p>
 
 					<p >
-						{{ form_widget(form.anadirDatosFacturacionPago) }}
+						{{ form_widget(form.anadirDatosFacturacionPago, { 'attr': {'class': 'check-facturacion-pago'}}) }}
 						<a href="#"> Añadir datos de facturación y pago</a>
 					</p>
 					<p >

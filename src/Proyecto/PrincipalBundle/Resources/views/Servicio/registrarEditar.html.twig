@@ -51,15 +51,15 @@
 					<p></p>
 
 					<p>
-						{{ form_widget(form.propietarioEmpleado) }}Propietario/a ó Empleado
+						{{ form_widget(form.propietarioEmpleado, { 'attr': {'class': 'check-registrar-como'}}) }}Propietario/a ó Empleado
 					</p>
 
 					<p>
-						{{ form_widget(form.agenteComercial) }}Agente Comercial
+						{{ form_widget(form.agenteComercial, { 'attr': {'class': 'check-registrar-como'}}) }}Agente Comercial
 					</p>
 
 					<p>
-						{{ form_widget(form.administradorWeb) }}Administrador de la Web
+						{{ form_widget(form.administradorWeb, { 'attr': {'class': 'check-registrar-como'}}) }}Administrador de la Web
 					</p>
 
 					<p>
@@ -132,18 +132,18 @@
 					</p>
 
 					<p class="parrafo-registro">
-						{{ form_widget(form.ofrecidosTodos) }}
+						{{ form_widget(form.ofrecidosTodos, { 'attr': {'class': 'check-ofrecidos-por'}}) }}
 						Todos
 					</p>
 
 					</br>
 					<p class="parrafo-registro">
-						{{ form_widget(form.sedePropiosEventos) }}
+						{{ form_widget(form.sedePropiosEventos, { 'attr': {'class': 'check-ofrecidos-por'}}) }}
 						Una sede para sus propios eventos
 					</p>
 					</br>
 					<p class="parrafo-registro">
-						{{ form_widget(form.empresaEventosOtros) }}
+						{{ form_widget(form.empresaEventosOtros, { 'attr': {'class': 'check-ofrecidos-por'}}) }}
 						Una empresa para eventos de otros
 					</p>
 					<div class="clearfix"></div>
@@ -178,35 +178,35 @@
 					</p>
 
 					<p class="parrafo-registro">
-						{{ form_widget(form.todosMultimedia) }}
+						{{ form_widget(form.todosMultimedia, { 'attr': {'class': 'check-tipo-servicio check-multimedia'}}) }}
 						Todos
 					</p>				
 					<p class="parrafo-registro">
-						{{ form_widget(form.grabacionEdicionVideo) }}
+						{{ form_widget(form.grabacionEdicionVideo, { 'attr': {'class': 'check-tipo-servicio check-multimedia'}}) }}
 						Grabación y edición vídeo
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.fotografoEvento) }}
+						{{ form_widget(form.fotografoEvento, { 'attr': {'class': 'check-tipo-servicio check-multimedia'}}) }}
 						Fotógrafo del evento
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.alquilerCamaras) }}
+						{{ form_widget(form.alquilerCamaras, { 'attr': {'class': 'check-tipo-servicio check-multimedia'}}) }}
 						Alquiler cámaras
 					</p>				
 					<p class="parrafo-registro">
-						{{ form_widget(form.alquilerPortatiles) }}
+						{{ form_widget(form.alquilerPortatiles, { 'attr': {'class': 'check-tipo-servicio check-multimedia'}}) }}
 						Alquiler portátiles
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.alquilerProyectoresPantallas) }}
+						{{ form_widget(form.alquilerProyectoresPantallas, { 'attr': {'class': 'check-tipo-servicio check-multimedia'}}) }}
 						Alquiler proyectores y pantallas
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.sonidoMicrofonoAltavoces) }}
+						{{ form_widget(form.sonidoMicrofonoAltavoces, { 'attr': {'class': 'check-tipo-servicio check-multimedia'}}) }}
 						Sonido, Micrófono y altavoces
 					</p>				
 					<p class="parrafo-registro">
-						{{ form_widget(form.iluminacion) }}
+						{{ form_widget(form.iluminacion, { 'attr': {'class': 'check-tipo-servicio check-multimedia'}}) }}
 						Iluminación
 					</p>
 
@@ -223,39 +223,39 @@
 						<strong>Servicios de Mejora de Espacios:</strong>
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.todosMejoraEspacios) }}
+						{{ form_widget(form.todosMejoraEspacios, { 'attr': {'class': 'check-tipo-servicio check-mejora-espacios'}}) }}
 						Todos
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.decoracionAccesorios) }}
+						{{ form_widget(form.decoracionAccesorios, { 'attr': {'class': 'check-tipo-servicio check-mejora-espacios'}}) }}
 						Decoración con accesorios
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.floristeria) }}
+						{{ form_widget(form.floristeria, { 'attr': {'class': 'check-tipo-servicio check-mejora-espacios'}}) }}
 						Floristería
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.disenioExposicionesTemporales) }}
+						{{ form_widget(form.disenioExposicionesTemporales, { 'attr': {'class': 'check-tipo-servicio check-mejora-espacios'}}) }}
 						Diseño de exposiciones temporales
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.montajeExposicion) }}
+						{{ form_widget(form.montajeExposicion, { 'attr': {'class': 'check-tipo-servicio check-mejora-espacios'}}) }}
 						Montaje de exposición
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.escenografia) }}
+						{{ form_widget(form.escenografia, { 'attr': {'class': 'check-tipo-servicio check-mejora-espacios'}}) }}
 						Escenografía
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.rehabilitacionArquitectnica) }}
+						{{ form_widget(form.rehabilitacionArquitectnica, { 'attr': {'class': 'check-tipo-servicio check-mejora-espacios'}}) }}
 						Rehabilitación arquitectónica
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.limpiezaNormalIntensivo) }}
+						{{ form_widget(form.limpiezaNormalIntensivo, { 'attr': {'class': 'check-tipo-servicio check-mejora-espacios'}}) }}
 						Limpieza (uso normal e intensivo)
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.seguros) }}
+						{{ form_widget(form.seguros, { 'attr': {'class': 'check-tipo-servicio check-mejora-espacios'}}) }}
 						Seguros
 					</p>
 
@@ -273,51 +273,51 @@
 						<strong>Servicios de Mejora de Contenidos:</strong>
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.todosMejoradeContenidos) }}
+						{{ form_widget(form.todosMejoradeContenidos, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Todos
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.impresionGrabacionDocs) }}
+						{{ form_widget(form.impresionGrabacionDocs, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Impresión y grabación docs
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.transporteMercancias) }}
+						{{ form_widget(form.transporteMercancias, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Transporte de mercancías
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.envios) }}
+						{{ form_widget(form.envios, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Envíos
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.mobiliarioAulaTallerRecepcion) }}
+						{{ form_widget(form.mobiliarioAulaTallerRecepcion, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Mobiliario aula, taller, recepción
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.accesoriosFormacionPizarras) }}
+						{{ form_widget(form.accesoriosFormacionPizarras, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Accesorios formación (Pizarras...)
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.papeleriaNormalCorporativa) }}
+						{{ form_widget(form.papeleriaNormalCorporativa, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Papelería normal y corporativa
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.internetCable) }}
+						{{ form_widget(form.internetCable, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Internet cable
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.internetWifiContenidos) }}
+						{{ form_widget(form.internetWifiContenidos, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Internet WIFI
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.animacion) }}
+						{{ form_widget(form.animacion, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Animación
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.interpretacionMusical) }}
+						{{ form_widget(form.interpretacionMusical, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Interpretación musical
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.interpretacionTeatral) }}
+						{{ form_widget(form.interpretacionTeatral, { 'attr': {'class': 'check-tipo-servicio check-mejora-contenidos'}}) }}
 						Interpretación teatral
 					</p>
 
@@ -357,51 +357,51 @@
 						<strong>Servicios para asistentes:</strong>
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.todosServicioAsistentes) }}
+						{{ form_widget(form.todosServicioAsistentes, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Todos
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.catering) }}
+						{{ form_widget(form.catering, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Catering
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.azafatas) }}
+						{{ form_widget(form.azafatas, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Azafatas
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.recepcionista) }}
+						{{ form_widget(form.recepcionista, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Recepcionista
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.traduccion) }}
+						{{ form_widget(form.traduccion, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Traducción
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.interpretes) }}
+						{{ form_widget(form.interpretes, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Intérpretes
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.receptoresAuricularEscucharInterprete) }}
+						{{ form_widget(form.receptoresAuricularEscucharInterprete, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Receptores con auricular para escuchar intérprete
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.alojamiento) }}
+						{{ form_widget(form.alojamiento, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Alojamiento
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.internetWifiAsistentes) }}
+						{{ form_widget(form.internetWifiAsistentes, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Internet WIFI
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.viaje) }}
+						{{ form_widget(form.viaje, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Viaje
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.transporteLocalAsistentes) }}
+						{{ form_widget(form.transporteLocalAsistentes, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Transporte local de asistentes
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.guiaAcompanianteAsistentes) }}
+						{{ form_widget(form.guiaAcompanianteAsistentes, { 'attr': {'class': 'check-tipo-servicio check-mejora-servicio-asistentes'}}) }}
 						Guía o acompañante para asistentes
 					</p>
 
@@ -415,43 +415,43 @@
 						<strong>Servicios de Imagen Corporativa:</strong>
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.todosImagenCorporativa) }}
+						{{ form_widget(form.todosImagenCorporativa, { 'attr': {'class': 'check-tipo-servicio check-imagen-corporativa'}}) }}
 						Todos
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.logosDocsCorporativos) }}
+						{{ form_widget(form.logosDocsCorporativos, { 'attr': {'class': 'check-tipo-servicio check-imagen-corporativa'}}) }}
 						Logos y docs corporativos
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.webEventoSede) }}
+						{{ form_widget(form.webEventoSede, { 'attr': {'class': 'check-tipo-servicio check-imagen-corporativa'}}) }}
 						Web del evento o de la Sede
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.impresionGrabacion) }}
+						{{ form_widget(form.impresionGrabacion, { 'attr': {'class': 'check-tipo-servicio check-imagen-corporativa'}}) }}
 						Impresión y grabación
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.repartoPublicitario) }}
+						{{ form_widget(form.repartoPublicitario, { 'attr': {'class': 'check-tipo-servicio check-imagen-corporativa'}}) }}
 						Reparto publicitario
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.posicionamiento) }}
+						{{ form_widget(form.posicionamiento, { 'attr': {'class': 'check-tipo-servicio check-imagen-corporativa'}}) }}
 						Posicionamiento
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.communityManagement) }}
+						{{ form_widget(form.communityManagement, { 'attr': {'class': 'check-tipo-servicio check-imagen-corporativa'}}) }}
 						Community Management
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.difusionInternet) }}
+						{{ form_widget(form.difusionInternet, { 'attr': {'class': 'check-tipo-servicio check-imagen-corporativa'}}) }}
 						Difusión en internet
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.difusionOtrosMedios) }}
+						{{ form_widget(form.difusionOtrosMedios, { 'attr': {'class': 'check-tipo-servicio check-imagen-corporativa'}}) }}
 						Difusión otros medios
 					</p>
 					<p class="parrafo-registro">
-						{{ form_widget(form.emisionOnlinePaginaEvento) }}
+						{{ form_widget(form.emisionOnlinePaginaEvento, { 'attr': {'class': 'check-tipo-servicio check-imagen-corporativa'}}) }}
 						Emisión online en página del evento
 					</p>
 
@@ -485,17 +485,17 @@
 					</p>
 
 					<p>
-						{{ form_widget(form.aceptacionReservaAutomatica) }}
+						{{ form_widget(form.aceptacionReservaAutomatica, { 'attr': {'class': 'check-aceptacion-reserva'}}) }}
 						Aceptación de la reserva automática
 					</p>
 
 					<p >
-						{{ form_widget(form.tiempoMaximoAceptacionReservaAutomatica24h) }}
+						{{ form_widget(form.tiempoMaximoAceptacionReservaAutomatica24h, { 'attr': {'class': 'check-aceptacion-reserva'}}) }}
 						Tiempo máximo de aceptación de reserva 24h
 					</p>
 
 					<p >
-						{{ form_widget(form.tiempoMaximoAceptacionReservaAutomatica48) }}
+						{{ form_widget(form.tiempoMaximoAceptacionReservaAutomatica48, { 'attr': {'class': 'check-aceptacion-reserva'}}) }}
 						Tiempo máximo de aceptación de reserva 48h
 					</p>
 
@@ -504,12 +504,12 @@
 					</p>
 
 					<p >
-						{{ form_widget(form.datosFacturacionPagoDelUsuario) }}
+						{{ form_widget(form.datosFacturacionPagoDelUsuario, { 'attr': {'class': 'check-facturacion-pago'}}) }}
 						Los datos de facturación y pago son los del usuario
 					</p>
 
 					<p >
-						{{ form_widget(form.anadirDatosFacturacionPago) }}
+						{{ form_widget(form.anadirDatosFacturacionPago, { 'attr': {'class': 'check-facturacion-pago'}}) }}
 						<a href="#"> Añadir datos de facturación y pago</a>
 					</p>
 					<p >
