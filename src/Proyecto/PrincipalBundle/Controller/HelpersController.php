@@ -53,7 +53,7 @@ class HelpersController extends Controller
 
         $em = $class->getDoctrine()->getManager();
 
-        $dql =  'SELECT o1.id,o1.nombreEspacio,o1.path, o1.superficie,o1.precioPorHora,o2.nombre
+        $dql =  'SELECT o1.id,o1.nombre,o1.path, o1.superficie,o1.precioPorHora,o2.nombre localidad
                  FROM ProyectoPrincipalBundle:Espacio o1, ProyectoPrincipalBundle:Localidad o2
                  WHERE o1.localidad = o2.id
                  ORDER BY o1.id ASC';
@@ -61,7 +61,58 @@ class HelpersController extends Controller
         $query = $em->createQuery( $dql )->setMaxResults(8);
 
         $arreglo = $query->getResult();
+       // var_dump($arreglo);
+        //exit;
 
+        return  $arreglo;
+    }
+
+    public static function getEventos($class){
+
+        $em = $class->getDoctrine()->getManager();
+
+        $dql =  'SELECT o1.id,o1.nombre,o1.path, o1.duracionTotal,o1.precioPorHora,o2.nombre localidad
+                 FROM ProyectoPrincipalBundle:Evento o1, ProyectoPrincipalBundle:Localidad o2
+                 WHERE o1.localidad = o2.id
+                 ORDER BY o1.id ASC';
+
+        $query = $em->createQuery( $dql )->setMaxResults(8);
+
+        $arreglo = $query->getResult();
+       // var_dump($arreglo);
+        //exit;
+
+        return  $arreglo;
+    }
+    public static function getSedes($class){
+
+        $em = $class->getDoctrine()->getManager();
+
+        $dql =  'SELECT o1.id,o1.nombre,o1.path, o1.latitud,o1.longitud
+                 FROM ProyectoPrincipalBundle:Sede o1
+                 ORDER BY o1.id ASC';
+
+        $query = $em->createQuery( $dql );//->setMaxResults(8);
+
+        $arreglo = $query->getResult();
+       // var_dump($arreglo);
+        //exit;
+
+        return  $arreglo;
+    }
+    public static function getServicios($class){
+
+        $em = $class->getDoctrine()->getManager();
+
+        $dql =  'SELECT o1.id,o1.nombre,o1.path,o1.precioPorHora
+                 FROM ProyectoPrincipalBundle:Servicio o1
+                 ORDER BY o1.id ASC';
+
+        $query = $em->createQuery( $dql )->setMaxResults(8);
+
+        $arreglo = $query->getResult();
+       // var_dump($arreglo);
+        //exit;
 
         return  $arreglo;
     }

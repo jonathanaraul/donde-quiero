@@ -12,45 +12,45 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Proyecto\PrincipalBundle\Entity\User;
-use Proyecto\PrincipalBundle\Entity\Espacio;
+use Proyecto\PrincipalBundle\Entity\Evento;
 
-class EspacioController extends Controller {
+class EventoController extends Controller {
 
 
-	public function espacioAction() {
+	public function eventoAction() {
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
 		$secondArray = array();
 
 		$array = array_merge($firstArray, $secondArray);
-		return $this -> render('ProyectoPrincipalBundle:Espacio:espacio.html.twig', $array);
+		return $this -> render('ProyectoPrincipalBundle:Evento:evento.html.twig', $array);
 	}
-	public function espaciosAction() {
+	public function eventosAction() {
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
 		$secondArray = array();
 
 		$array = array_merge($firstArray, $secondArray);
-		return $this -> render('ProyectoPrincipalBundle:Espacio:espacios.html.twig', $array);
+		return $this -> render('ProyectoPrincipalBundle:Evento:eventos.html.twig', $array);
 	}
 
 	public function registrarAction(Request $request) {
 		$id = null;
-		$url = $this -> generateUrl('proyecto_principal_espacio_registrar');
+		$url = $this -> generateUrl('proyecto_principal_evento_registrar');
 
-		return EspacioController::registrarEditar($id ,$url, $request,$this);
+		return EventoController::registrarEditar($id ,$url, $request,$this);
 	}
 	public function editarAction(Request $request) {
 
 		$user = UtilitiesAPI::getActiveUser($this);
 		$id = $user->getId();
-		$url = $this -> generateUrl('proyecto_principal_espacio_editar');
+		$url = $this -> generateUrl('proyecto_principal_evento_editar');
 
-		return EspacioController::registrarEditar($id ,$url,$request, $this);
+		return EventoController::registrarEditar($id ,$url,$request, $this);
 
 	}
 
 	public static function registrarEditar($id ,$url,Request $request,$class) {
-		if($id == null )$object = new Espacio();
-		else $object = $class -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Espacio') -> find($id);
+		if($id == null )$object = new Evento();
+		else $object = $class -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Evento') -> find($id);
 		
 		$firstArray = UtilitiesAPI::getDefaultContent($class);
 		$secondArray = array();
@@ -62,7 +62,7 @@ class EspacioController extends Controller {
 		$object->setLocalidad($user->getLocalidad());
 
         $form = $class->createFormBuilder($object)
-            ->add('jardineria', 'checkbox',array('required'  => false))
+
             ->add('propietarioEmpleado', 'checkbox',array('required'  => false))
             ->add('agenteComercial', 'checkbox',array('required'  => false))
             ->add('administradorWeb', 'checkbox',array('required'  => false))
@@ -78,65 +78,6 @@ class EspacioController extends Controller {
 			            ->orderBy('u.nombre', 'ASC');
 			    },
 			))
-			->add('file','file') 
-            ->add('enlaceVideo', 'text')
-
-            ->add('superficie')
-            ->add('anchoMinimoLibre')
-            ->add('largoMinimoLibre')
-            ->add('alturaMinimaLibre')
-            ->add('modoAula', 'checkbox',array('required'  => false))
-            ->add('modoAulaCapacidad')
-            ->add('modoBanquete', 'checkbox',array('required'  => false))
-            ->add('modoBanqueteCapacidad')
-            ->add('modoCocktail', 'checkbox',array('required'  => false))
-            ->add('modoCocktailCapacidad')
-            ->add('modoEscenario', 'checkbox',array('required'  => false))
-            ->add('modoEscenarioCapacidad')
-            ->add('modoExposicion', 'checkbox',array('required'  => false))
-            ->add('modoExposicionCapacidad')
-            
-            ->add('pilaresSueltos', 'checkbox',array('required'  => false))
-            ->add('entradaAseosMovilidadReducida', 'checkbox',array('required'  => false))
-            ->add('ventanasExterior', 'checkbox',array('required'  => false))
-            ->add('ventanasPatioInterior', 'checkbox',array('required'  => false))
-            ->add('posibilidadOscurecerSala', 'checkbox',array('required'  => false))
-            ->add('otrasCaracteristicas', 'text')
-
-            ->add('proyectorPantallaSala', 'checkbox',array('required'  => false))
-            ->add('microfonoAltavoces', 'checkbox',array('required'  => false))
-            ->add('videocamara', 'checkbox',array('required'  => false))
-            ->add('wifi', 'checkbox',array('required'  => false))
-            ->add('internetCable', 'checkbox',array('required'  => false))
-            ->add('maquinaBebidas', 'checkbox',array('required'  => false))
-            ->add('pizarra', 'checkbox',array('required'  => false))
-            ->add('conserjeria', 'checkbox',array('required'  => false))
-            ->add('aireAcondicionado', 'checkbox',array('required'  => false))
-            ->add('calefaccion', 'checkbox',array('required'  => false))
-            ->add('otrosServicios', 'text')
-
-        	->add('precioPorHora','number',array('required'  => true))
-            ->add('aceptacionReservaAutomatica', 'checkbox',array('required'  => false))
-            ->add('tiempoMaximoAceptacionReservaAutomatica24h', 'checkbox',array('required'  => false))
-            ->add('tiempoMaximoAceptacionReservaAutomatica48', 'checkbox',array('required'  => false))
-            ->add('datosFacturacionPagoDelUsuario', 'checkbox',array('required'  => false))
-            ->add('anadirDatosFacturacionPago', 'checkbox',array('required'  => false))
-            ->add('todas', 'checkbox',array('required'  => false))
-            ->add('similaresCentroRealiza', 'checkbox',array('required'  => false))
-            ->add('formacionTeorica', 'checkbox',array('required'  => false))
-            ->add('formacionInformatica', 'checkbox',array('required'  => false))
-            ->add('formacionTaller', 'checkbox',array('required'  => false))
-            ->add('exposicion', 'checkbox',array('required'  => false))
-            ->add('ventaFeria', 'checkbox',array('required'  => false))
-            ->add('deporte', 'checkbox',array('required'  => false))
-            ->add('espectaculo', 'checkbox',array('required'  => false))
-            ->add('reunionAsamblea', 'checkbox',array('required'  => false))
-            ->add('boda', 'checkbox',array('required'  => false))
-            ->add('fiesta', 'checkbox',array('required'  => false))
-
-            ->add('aceptoCondicionesUsoPoliticaPrivacidad', 'checkbox',array('required'  => false))
-
-
             ->add('localidad', 'entity', array(
 			    'class' => 'ProyectoPrincipalBundle:Localidad',
 			    'property' => 'nombre',
@@ -150,6 +91,48 @@ class EspacioController extends Controller {
 			    },
 
 			))
+			->add('duracionTotal', 'text')
+			->add('file','file') 
+            ->add('enlaceVideo', 'text')
+
+
+            ->add('proyectorPantallaSala', 'checkbox',array('required'  => false))
+            ->add('microfonoAltavoces', 'checkbox',array('required'  => false))
+            ->add('videocamara', 'checkbox',array('required'  => false))
+            ->add('wifi', 'checkbox',array('required'  => false))
+            ->add('internetCable', 'checkbox',array('required'  => false))
+            ->add('maquinaBebidas', 'checkbox',array('required'  => false))
+            ->add('pizarra', 'checkbox',array('required'  => false))
+            ->add('conserjeria', 'checkbox',array('required'  => false))
+            ->add('aireAcondicionado', 'checkbox',array('required'  => false))
+            ->add('calefaccion', 'checkbox',array('required'  => false))
+            ->add('otrosServicios', 'text')
+
+
+            ->add('aceptacionReservaAutomatica', 'checkbox',array('required'  => false))
+            ->add('tiempoMaximoAceptacionReservaAutomatica24h', 'checkbox',array('required'  => false))
+            ->add('tiempoMaximoAceptacionReservaAutomatica48', 'checkbox',array('required'  => false))
+            ->add('datosFacturacionPagoDelUsuario', 'checkbox',array('required'  => false))
+            ->add('anadirDatosFacturacionPago', 'checkbox',array('required'  => false))
+
+            ->add('formacionTeorica', 'checkbox',array('required'  => false))
+            ->add('formacionInformatica', 'checkbox',array('required'  => false))
+            ->add('formacionTaller', 'checkbox',array('required'  => false))
+            ->add('exposicion', 'checkbox',array('required'  => false))
+            ->add('ventaFeria', 'checkbox',array('required'  => false))
+            ->add('deporte', 'checkbox',array('required'  => false))
+            ->add('espectaculo', 'checkbox',array('required'  => false))
+            ->add('reunionAsamblea', 'checkbox',array('required'  => false))
+            ->add('boda', 'checkbox',array('required'  => false))
+            ->add('fiesta', 'checkbox',array('required'  => false))
+            ->add('jardineria', 'checkbox',array('required'  => false))
+
+
+            ->add('aceptoCondicionesUsoPoliticaPrivacidad', 'checkbox',array('required'  => false))
+        	->add('precioPorHora','number',array('required'  => true))
+            ->add('precio','number',array('required'  => true))
+
+
             
 
             ->getForm();
@@ -173,7 +156,6 @@ class EspacioController extends Controller {
 				
 				//Casos especiales
 				if($object->getEnlaceVideo()=='Añadir enlace a Video') $object->setEnlaceVideo(null);
-				if($object->getOtrasCaracteristicas()=='Otros...') $object->setOtrasCaracteristicas(null);
 				if($object->getOtrosServicios()=='Otros...') $object->setOtrosServicios(null);
 
 
@@ -190,7 +172,7 @@ class EspacioController extends Controller {
 
         $secondArray = array('form' => $form->createView(),'url'=>$url,'idProvincia'=>$idProvincia,'provincias'=>$provincias);
 		$array = array_merge($firstArray, $secondArray);
-		return $class -> render('ProyectoPrincipalBundle:Espacio:registrarEditar.html.twig', $array);
+		return $class -> render('ProyectoPrincipalBundle:Evento:registrarEditar.html.twig', $array);
 	}
 
 }

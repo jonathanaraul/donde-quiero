@@ -20,20 +20,15 @@ class DefaultController extends Controller {
 		//HelpersController::eliminaHuerfanos($this);
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
 		$secondArray = array();
-		$secondArray['espacios'] = HelpersController::getEspacios($this);
-
-	
+		$secondArray['espacios']  = HelpersController::getEspacios($this);
+		$secondArray['eventos']   = HelpersController::getEventos($this);
+		$secondArray['servicios'] = HelpersController::getServicios($this);
+		$secondArray['sedes']     = HelpersController::getSedes($this);
 		$array = array_merge($firstArray, $secondArray);
 		return $this -> render('ProyectoPrincipalBundle:Default:index.html.twig', $array);
 	}
 
-	public function espacioAction() {
-		$firstArray = UtilitiesAPI::getDefaultContent($this);
-		$secondArray = array();
 
-		$array = array_merge($firstArray, $secondArray);
-		return $this -> render('ProyectoPrincipalBundle:Default:espacio.html.twig', $array);
-	}
 	public function eventoAction() {
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
 		$secondArray = array();
@@ -47,13 +42,6 @@ class DefaultController extends Controller {
 
 		$array = array_merge($firstArray, $secondArray);
 		return $this -> render('ProyectoPrincipalBundle:Default:servicio.html.twig', $array);
-	}
-	public function espaciosAction() {
-		$firstArray = UtilitiesAPI::getDefaultContent($this);
-		$secondArray = array();
-
-		$array = array_merge($firstArray, $secondArray);
-		return $this -> render('ProyectoPrincipalBundle:Default:espacios.html.twig', $array);
 	}
 	public function eventosAction() {
 		$firstArray = UtilitiesAPI::getDefaultContent($this);

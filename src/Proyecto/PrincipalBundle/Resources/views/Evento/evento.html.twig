@@ -1,0 +1,430 @@
+{% extends "ProyectoPrincipalBundle:Default:base.html.twig" %}
+
+{%block contenedorbase%}
+
+{% include 'ProyectoPrincipalBundle:Default:sesion.html.twig'  with {'datos': datos} %}
+
+<aside id="about" class=" left">
+	<!-- Text Section Start -->
+	<!-- Replace all text with what you want -->
+
+	<div class="leftid">
+		Organiza
+		<img src="{{ asset('sistema/images/work/thumbs/evento9.png')}}" width="400" height="300">
+	</div>
+
+	<div class="leftimg">
+		<img src="{{ asset('sistema/images/work/thumbs/evento1.png')}}" width="400" height="300">
+	</div>
+
+</aside>
+<aside class="right">
+
+	<div class="fichaizq">
+		<h3>Ted Encuentro.</h3>
+
+		<ul>
+			<li class="izquierda">
+				<h4><a href="espacio.html">Espacio 1</a>, <a href="sede.html">El arca de Bábel</a></h4>
+			</li>
+			<li class="derecha">
+				<h4><a href="sede.html" style="margin-left:5px">Cómo llegar.</a></h4>
+			</li>
+		</ul><!--Category-->
+
+		<div class="clearfix"></div>
+		<p>
+			Este TEDxCanarias llevará por título "EL ARCA DE BABEL". La velada, que se celebrará en el Museo Néstor de Las Palmas de Gran Canaria, entre las 15:30 y las 21:00 horas, girará en torno a las "grandes cuestiones", que en las circunstancias actuales de caos en el mundo es necesario analizar, compartir, solucionar. Entre los ponentes confirmados se encuentran los científicos Antonio Pou y Julio Caujapé, el artista Anoniman, la periodista holandesa Linda Polman y el economista Paco Capella. 
+		</p>
+
+	</div>
+
+	<div class="fichader">
+		<div id="precio" class="rosa">
+			<h3> 50 </h3>
+			<h4> € </h4>
+		</div>
+		<a href="reserva.html">Reservar</a>
+	</div>
+	<div class="clearfix"></div>
+	<h4>Detalles</h4>
+	<div class="clearfix"></div>
+	<div class="atributos">
+
+		<ul>
+			<li>
+				Superficie: <span>21 m2 </span>
+			</li>
+			<li>
+				Aforo Modo Salon: <span> 30 </span>
+			</li>
+			<li>
+				Aforo Modo Cocktail: <span> 30 </span>
+			</li>
+			<li>
+				Aforo Modo Aula: <span> 30 </span>
+			</li>
+			<li>
+				Aforo Modo Escenario: <span> 50 </span>
+			</li>
+			<li>
+				Aforo Modo Expo: <span> 50 </span>
+			</li>
+			<li>
+				Asientos: <span> Si </span>
+			</li>
+			<li>
+				Aire Acondicionado: <span> Si </span>
+			</li>
+			<li>
+				Calefacción: <span> Si </span>
+			</li>
+			<li>
+				Exterior: <span> Si </span>
+			</li>
+			<li>
+				Permite oscurecer : <span> No </span>
+			</li>
+			<li>
+				Decoración: <span> Moderna </span>
+			</li>
+			<li>
+				Proyector: <span> Opcional </span>
+			</li>
+			<li>
+				Espacio Espera: <span> No </span>
+			</li>
+			<li>
+				Accesible minusválidos: <span> Si </span>
+			</li>
+			<li>
+				Wifi: <span> Si </span>
+			</li>
+			<li>
+				Internet Lan: <span> Si </span>
+			</li>
+
+		</ul><!--Category-->
+	</div>
+	<div class="clearfix"></div>
+
+</aside>
+<div class="clearfix"></div>
+<!-- Text Section End -->
+<div id="work"  class="rosa">
+	<!-- Work Links Section Start -->
+	<div class="añadir">
+		<a href="{{ path('proyecto_principal_eventos') }}">Eventos</a><!--/item-->
+	</div>
+	<div class="buscador">
+		<select name="Ciudad..." title="Ciudad.." class="formstyle">
+			<option value="Madrid"> Ciudad </option>
+			<option value="Madrid"> Todas </option>
+			<option value="Barcelona"> Madrid(2) </option>
+			<option value="Barcelona"> Barcelona(3)</option>
+			<option value="Tenerife"> Las Palmas(1) </option>
+			<option value="Tenerife"> A Coruña(1) </option>
+		</select>
+	</div><!--/item-->
+
+	<div class="buscador">
+		<select name="Fecha..." title="Disponibilidad.." class="formstyle">
+			<option value="Madrid"> Disponibilidad </option>
+			<option value="Madrid"> Todo </option>
+
+			<option value="Madrid"> Enero </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;fin de semana </option>
+
+			<option value="Madrid"> Febrero </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; fin de semana </option>
+
+			<option value="Madrid"> Marzo </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; fin de semana </option>
+
+			<option value="Madrid"> Abril </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; fin de semana </option>
+
+			<option value="Madrid"> Mayo </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; fin de semana </option>
+
+			<option value="Madrid"> Junio </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; fin de semana </option>
+
+			<option value="Madrid"> Julio </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; fin de semana </option>
+
+			<option value="Madrid"> Agosto </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  fin de semana </option>
+
+			<option value="Madrid"> Septiembre </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  fin de semana </option>
+
+			<option value="Madrid"> Octubre </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  fin de semana </option>
+
+			<option value="Madrid"> Noviembre </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  fin de semana </option>
+
+			<option value="Madrid"> Diciembre </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8:00-14:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14:00-22:00 </option>
+			<option value="Barcelona" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  fin de semana </option>
+
+		</select>
+	</div><!--/item-->
+
+	<div class="buscador">
+		<select name="Ciudades..." title="Ciudades.." class="formstyle">
+			<option value="Madrid"> Coste por hora (€/h) </option>
+			<option value="Madrid"> Todos </option>
+
+			<option value="Madrid"> Gratis </option>
+			<option value="Barcelona">hasta 20</option>
+			<option value="Tenerife"> hasta 300</option>
+			<option value="Tenerife"> hasta 1000</option>
+			<option value="Tenerife"> más de 1000</option>
+		</select>
+	</div><!--/item-->
+
+	<div class="añadir">
+		<ul>
+			<li>
+				<a href="registro.html"><img class="icon" src="{{ asset('sistema/images/icons/mas.png')}}" width="27" height="27" title="Añadir Gratis"></a>
+			</li>
+			<li style="float:right;">
+				<a href="{{ path('proyecto_principal_eventos') }}"><img class="icon" src="{{ asset('sistema/images/icons/buscar.png')}}" width="27" height="27" alt="Buscar"></a></a>
+		</ul>
+	</div>
+	<div class="buscador">
+		<select name="Ciudades..." title="Ciudades.." class="formstyle">
+			<option value="Madrid"> Precio Total (€) </option>
+			<option value="Madrid"> Todos </option>
+
+			<option value="Madrid"> Gratis </option>
+			<option value="Barcelona">hasta 20</option>
+			<option value="Tenerife"> hasta 100</option>
+			<option value="Tenerife"> hasta 300</option>
+			<option value="Tenerife"> hasta 1000</option>
+			<option value="Tenerife"> hasta 5000</option>
+			<option value="Tenerife"> hasta 10000</option>
+			<option value="Tenerife"> más de 10000</option>
+		</select>
+	</div><!--/item-->
+
+	<div class="buscador">
+		<select name="Ciudades..." title="Ciudades.." class="formstyle">
+			<option value="Madrid">Duración Total (h) </option>
+			<option value="Madrid"> Todos </option>
+
+			<option value="Madrid"> 1 </option>
+			<option value="Barcelona">hasta 4</option>
+			<option value="Tenerife"> hasta 30</option>
+			<option value="Tenerife"> hasta 100</option>
+			<option value="Tenerife"> hasta 300</option>
+			<option value="Tenerife"> más de 300</option>
+		</select>
+	</div><!--/item-->
+
+	<div class="buscador">
+		<select name="Fecha..." title="Fecha.." class="formstyle">
+			<option value="Madrid"> Tipo de Actividad </option>
+			<option value="Madrid"> Todas </option>
+
+			<option value="Madrid"> Formación Teórica</option>
+			<option value="Barcelona"> Formación Informática </option>
+			<option value="Barcelona"> Formación Taller</option>
+			<option value="Barcelona"> Venta, Feria</option>
+			<option value="Barcelona"> Deporte</option>
+			<option value="Barcelona"> Espectáculo</option>
+			<option value="Barcelona"> Reunión o asamblea</option>
+			<option value="Barcelona"> Boda</option>
+			<option value="Barcelona"> Fiesta</option>
+			<option value="Barcelona"> Jardín</option>
+
+		</select>
+	</div><!--/item-->
+	<!--/item-->
+	<div class="item">
+		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento1.png')}}" alt="image 1"></a>
+		<!-- Image must be 400px by 300px -->
+		<h3>TedxCanarias</h3>
+		<!--Title-->
+		<ul>
+			<li class="izquierda">
+				Las Palmas
+			</li>
+			<li class="izquierda">
+				2h
+			</li>
+			<li class="derecha">
+				Precio
+			</li>
+		</ul>
+		<!--Category-->
+	</div>
+	<!--/item-->
+	<div class="item">
+		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento2.png')}}" alt="image 2"></a>
+		<!-- Image must be 400px by 300px -->
+		<h3>Curso Eficiencia</h3>
+		<!--Title-->
+		<ul>
+			<li class="izquierda">
+				Madrid
+			</li>
+			<li class="izquierda">
+				10h
+			</li>
+			<li class="derecha">
+				Precio
+			</li>
+		</ul>
+		<!--Category-->
+	</div>
+	<!--/item-->
+	<div class="item">
+		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento3.png')}}" alt="image 3"></a>
+		<!-- Image must be 400px by 300px -->
+		<h3>Emprende Galicia</h3>
+		<!--Title-->
+		<ul>
+			<li class="izquierda">
+				A Coruña
+			</li>
+			<li class="izquierda">
+				5h
+			</li>
+			<li class="derecha">
+				Precio
+			</li>
+		</ul>
+		<!--Category-->
+	</div>
+	<!--/item-->
+	<div class="item">
+		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento4.png')}}" alt="image 4"></a>
+		<!-- Image must be 400px by 300px -->
+		<h3>Workshop Creativo</h3>
+		<!--Title-->
+		<ul>
+			<li class="izquierda">
+				Madrid
+			</li>
+			<li class="izquierda">
+				10h
+			</li>
+			<li class="derecha">
+				Precio
+			</li>
+		</ul>
+		<!--Category-->
+	</div>
+	<!--/item-->
+	<div class="item">
+		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento5.png')}}" alt="image 1"></a>
+		<!-- Image must be 400px by 300px -->
+		<h3>Creative Lab Session</h3>
+		<!--Title-->
+		<ul>
+			<li class="izquierda">
+				Madrid
+			</li>
+			<li class="izquierda">
+				9h
+			</li>
+			<li class="derecha">
+				Precio
+			</li>
+		</ul>
+		<!--Category-->
+	</div>
+	<!--/item-->
+	<div class="item">
+		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento6.png')}}" alt="image 2"></a>
+		<!-- Image must be 400px by 300px -->
+		<h3>Cata de Vinos</h3>
+		<!--Title-->
+		<ul>
+			<li class="izquierda">
+				Madrid
+			</li>
+			<li class="izquierda">
+				2h
+			</li>
+			<li class="derecha">
+				Precio
+			</li>
+		</ul>
+		<!--Category-->
+	</div>
+	<!--/item-->
+	<div class="item">
+		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento7.png')}}" alt="image 3"></a>
+		<!-- Image must be 400px by 300px -->
+		<h3>Congreso SBMAD13</h3>
+		<!--Title-->
+		<ul>
+			<li class="izquierda">
+				Madrid
+			</li>
+			<li class="izquierda">
+				3h
+			</li>
+			<li class="derecha">
+				Precio
+			</li>
+		</ul>
+		<!--Category-->
+	</div>
+	<!--/item-->
+	<div class="item">
+		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento8.png')}}" alt="image 4"></a>
+		<!-- Image must be 400px by 300px -->
+		<h3>Fiesta de Colectivos</h3>
+		<!--Title-->
+		<ul>
+			<li class="izquierda">
+				Madrid
+			</li>
+			<li class="izquierda">
+				3h
+			</li>
+			<li class="derecha">
+				Precio
+			</li>
+		</ul>
+		<!--Category-->
+	</div>
+	<!--/item-->
+	<div class="clearfix"></div>
+	<div id="contador">
+		<a href="{{ path('proyecto_principal_eventos') }}">8 de 100 (Ver más)</a>
+	</div>
+</div>
+<!-- Work Links Section End -->
+
+<div class="clearfix"></div>
+
+{%endblock%} 

@@ -1,61 +1,55 @@
 proyecto_principal_homepage:
     pattern:  /
     defaults: { _controller: ProyectoPrincipalBundle:Default:index }
+
 proyecto_principal_eventos:
     pattern:  /eventos
-    defaults: { _controller: ProyectoPrincipalBundle:Default:eventos }
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:eventos }
 proyecto_principal_evento:
     pattern:  /evento
-    defaults: { _controller: ProyectoPrincipalBundle:Default:evento }
-
-
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:evento }
+proyecto_principal_evento_registrar:
+    pattern:  /registrar/evento
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:registrar }
+proyecto_principal_evento_editar:
+    pattern:  /editar/evento
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:editar }
 
 proyecto_principal_espacio:
     pattern:  /espacio
-    defaults: { _controller: ProyectoPrincipalBundle:Default:espacio }
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:espacio }
 proyecto_principal_espacios:
     pattern:  /espacios
-    defaults: { _controller: ProyectoPrincipalBundle:Default:espacios }
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:espacios }
 proyecto_principal_espacio_registrar:
     pattern:  /registrar/espacio
     defaults: { _controller: ProyectoPrincipalBundle:Espacio:registrar }
 proyecto_principal_espacio_editar:
     pattern:  /editar/espacio
     defaults: { _controller: ProyectoPrincipalBundle:Espacio:editar }
-proyecto_principal_espacio_registrar2:
-    pattern:  /registrar/espacio/2
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:registrar2 }
-proyecto_principal_espacio_editar2:
-    pattern:  /editar/espacio/2
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:editar2 }
-proyecto_principal_espacio_registrar3:
-    pattern:  /registrar/espacio/3
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:registrar3 }
-proyecto_principal_espacio_editar3:
-    pattern:  /editar/espacio/3
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:editar3 }
-proyecto_principal_espacio_registrar4:
-    pattern:  /registrar/espacio/4
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:registrar4 }
-proyecto_principal_espacio_editar4:
-    pattern:  /editar/espacio/4
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:editar4 }
-proyecto_principal_espacio_registrar5:
-    pattern:  /registrar/espacio/5
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:registrar5 }
-proyecto_principal_espacio_editar5:
-    pattern:  /editar/espacio/5
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:editar5 }
 
 proyecto_principal_servicio:
     pattern:  /servicio
-    defaults: { _controller: ProyectoPrincipalBundle:Default:servicio }
+    defaults: { _controller: ProyectoPrincipalBundle:Servicio:servicio }
 proyecto_principal_servicios:
     pattern:  /servicios
-    defaults: { _controller: ProyectoPrincipalBundle:Default:servicios }
+    defaults: { _controller: ProyectoPrincipalBundle:Servicio:servicios }
+proyecto_principal_servicio_registrar:
+    pattern:  /registrar/servicio
+    defaults: { _controller: ProyectoPrincipalBundle:Servicio:registrar }
+proyecto_principal_servicio_editar:
+    pattern:  /editar/servicio
+    defaults: { _controller: ProyectoPrincipalBundle:Servicio:editar }
+
 proyecto_principal_sedes:
     pattern:  /sedes
-    defaults: { _controller: ProyectoPrincipalBundle:Default:sedes }
+    defaults: { _controller: ProyectoPrincipalBundle:Sede:sedes }
+proyecto_principal_sede_registrar:
+    pattern:  /registrar/sede
+    defaults: { _controller: ProyectoPrincipalBundle:Sede:registrar }
+proyecto_principal_sede_editar:
+    pattern:  /editar/sede
+    defaults: { _controller: ProyectoPrincipalBundle:Sede:editar }
 
 
 proyecto_users_buscar_ciudad:

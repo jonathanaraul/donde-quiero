@@ -2,6 +2,59 @@
 {%block scripts%}
 <script type="text/javascript" src="{{ asset('sistema/scripts/jquery.form.js')}}"></script>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUY1Omfl_gVZyliOZWXKUYaLG3O0JIleI&sensor=false"></script>
+    <script>
+function initialize() {
+  var mapOptions = {
+          center: new google.maps.LatLng(39.656456, -3.493652),
+          zoom: 6
+  };
+
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+  
+  //var myLatlng = new google.maps.LatLng(39.656456, -2.493652);
+
+//var markers = array();
+
+var markers = new Array({{sedes|length}})
+
+
+{%for element in sedes%}
+  markers[{{loop.index0}}] = new google.maps.Marker({
+    position: new google.maps.LatLng({{element.latitud}}, {{element.longitud}}),
+    map: map,
+    title: '{{element.nombre}}'
+  });
+{%endfor%}
+
+/*
+  var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(39.656456, -2.493652),
+    map: map,
+    title: 'madrid'
+  });*/
+/*
+  google.maps.event.addListener(marker, 'click', function() {
+    map.setZoom(8);
+    map.setCenter(marker.getPosition());
+  });*/
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
+{%endblock%}
+{%block estilos%}
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+
 {%endblock%}
 {%block contenedorbase%}
 <div class="wrapper">
@@ -239,10 +292,10 @@
 		<!--/item-->
 		<div class="item">
 			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('uploads/espacios/'~ element.path  ) }}" alt="image 1" style="width:180px;height:135px;"></a><!-- Image must be 400px by 300px -->
-			<h3>{{element.nombreEspacio|title}}</h3><!--Title-->
+			<h3>{{element.nombre|title}}</h3><!--Title-->
 			<ul>
 				<li class="izquierda">
-					{{element.nombre|title}}
+					{{element.localidad|title}}
 				</li>
 				<li class="izquierda">
 					{{element.superficie}} m2
@@ -267,7 +320,7 @@
 		<!-- Work Links Section Start -->
 
 		<div class="añadir">
-			<a href="{{ path('proyecto_principal_eventos') }}">Eventos</a><!--/item-->
+			<a href="{{path('proyecto_principal_evento_registrar')}}">Eventos</a><!--/item-->
 		</div>
 		<div class="buscador">
 			<select name="Ciudad..." title="Ciudad.." class="formstyle">
@@ -364,7 +417,7 @@
 		<div class="añadir">
 			<ul>
 				<li>
-					<a href="registro.html"><img class="icon" src="{{ asset('sistema/images/icons/mas.png')}}" width="27" height="27" title="Añadir Gratis"></a>
+					<a href="{{path('proyecto_principal_evento_registrar')}}"><img class="icon" src="{{ asset('sistema/images/icons/mas.png')}}" width="27" height="27" title="Añadir Gratis"></a>
 				</li>
 				<li style="float:right;">
 					<a href="{{ path('proyecto_principal_eventos') }}"><img class="icon" src="{{ asset('sistema/images/icons/buscar.png')}}" width="27" height="27" alt="Buscar"></a></a>
@@ -419,139 +472,26 @@
 			</select>
 		</div><!--/item-->
 
+
+
+		{%for element in eventos%}
+		<!--/item-->
 		<div class="item">
-			<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento1.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
-			<h3>TedxCanarias</h3><!--Title-->
+			<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('uploads/eventos/'~ element.path  ) }}" alt="image 1" style="width:180px;height:135px;"></a><!-- Image must be 400px by 300px -->
+			<h3>{{element.nombre|title}}</h3><!--Title-->
 			<ul>
 				<li class="izquierda">
-					Las Palmas
+					{{element.localidad|title}}
 				</li>
 				<li class="izquierda">
-					3h
+					{{element.duracionTotal}} h
 				</li>
 				<li class="derecha">
-					Precio
+					{{element.precioPorHora}} &euro;
 				</li>
 			</ul><!--Category-->
 		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento2.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Curso Eficiencia</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Madrid
-				</li>
-				<li class="izquierda">
-					8h
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento3.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Emprende Galicia</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					A Coruña
-				</li>
-				<li class="izquierda">
-					6h
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento4.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Workshop Creativo</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Madrid
-				</li>
-				<li class="izquierda">
-					10h
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento5.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
-			<h3>Creative Lab Session</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					CENP Madrid
-				</li>
-				<li class="izquierda">
-					19/10
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento6.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Cata de Vinos</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Madrid
-				</li>
-				<li class="izquierda">
-					2h
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento7.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Congreso SBMAD13</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Madrid
-				</li>
-				<li class="izquierda">
-					10h
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento8.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Fiesta de Colectivos</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Madrid
-				</li>
-				<li class="izquierda">
-					3h
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
+		{%endfor%}
 
 		<div class="clearfix"></div>
 		<div id="contador">
@@ -562,7 +502,7 @@
 	<div id="work"  class="azul">
 		<!-- Work Links Section Start -->
 		<div class="añadir">
-			<a href="{{ path('proyecto_principal_servicios') }}">Servicios</a><!--/item-->
+			<a href="{{path('proyecto_principal_servicio_registrar')}}">Servicios</a><!--/item-->
 		</div>
 		<div class="buscador">
 			<select name="Ciudades..." title="Ciudad.." class="formstyle">
@@ -607,7 +547,7 @@
 		<div class="añadir">
 			<ul>
 				<li>
-					<a href="registro.html"><img class="icon" src="{{ asset('sistema/images/icons/mas.png')}}" width="27" height="27" title="Añadir Gratis"></a>
+					<a href="{{path('proyecto_principal_servicio_registrar')}}"><img class="icon" src="{{ asset('sistema/images/icons/mas.png')}}" width="27" height="27" title="Añadir Gratis"></a>
 				</li>
 				<li style="float:right;">
 					<a href="{{ path('proyecto_principal_servicios') }}"><img class="icon" src="{{ asset('sistema/images/icons/buscar.png')}}" width="27" height="27" alt="Buscar"></a></a>
@@ -668,123 +608,24 @@
 			</select>
 		</div><!--/item-->
 
+
+		{%for element in servicios%}
+		<!--/item-->
 		<div class="item">
-			<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio1.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
-			<h3>Mini-Site del Evento</h3><!--Title-->
+			<a href="{{ path('proyecto_principal_espacio') }}"><img src="{{ asset('uploads/servicios/'~ element.path  ) }}" alt="image 1" style="width:180px;height:135px;"></a><!-- Image must be 400px by 300px -->
+			<h3>{{element.nombre|title}}</h3><!--Title-->
 			<ul>
 				<li class="izquierda">
-					Diseño Web
+					Categoría
 				</li>
-				<li class="izquierda"></li>
+				<li class="izquierda">
+				</li>
 				<li class="derecha">
-					Precio
+					{{element.precioPorHora}} &euro;
 				</li>
 			</ul><!--Category-->
 		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio2.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Reportaje  Eventos</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Fotografía
-				</li>
-				<li class="izquierda"></li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio3.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Grupo de Jazz</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Música
-				</li>
-				<li class="izquierda"></li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio4.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Catering Creativo</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Catering
-				</li>
-				<li class="izquierda"></li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio5.png')}}" alt="image 1"></a><!-- Image must be 400px by 300px -->
-			<h3>Iluminación </h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Audiovisual
-				</li>
-				<li class="derecha">
-					Precio
-				</li>
-				<li class="izquierda"></li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio6.png')}}" alt="image 2"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Pack Photocall</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Escenografía
-				</li>
-				<li class="izquierda"></li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/evento6.png')}}" alt="image 3"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Vinos </h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Catering
-				</li>
-				<li class="izquierda"></li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
-
-		<div class="item">
-			<a href="{{ path('proyecto_principal_servicio') }}"><img src="{{ asset('sistema/images/work/thumbs/servicio7.png')}}" alt="image 4"></a><!-- Image must be 400px by 300px -->
-
-			<h3>Azafatas  Eventos</h3><!--Title-->
-			<ul>
-				<li class="izquierda">
-					Personal
-				</li>
-				<li class="izquierda"></li>
-				<li class="derecha">
-					Precio
-				</li>
-			</ul><!--Category-->
-		</div><!--/item-->
+		{%endfor%}
 
 		<div class="clearfix"></div>
 
@@ -801,7 +642,7 @@
 <div id="work"  class="amarillo">
 	<!-- Work Links Section Start -->
 	<div class="añadir">
-		<a href="sedes.html">Sedes</a><!--/item-->
+		<a href="{{path('proyecto_principal_sede_registrar')}}">Sedes</a><!--/item-->
 	</div>
 	<div class="buscador">
 		<select name="Ciudad..." title="Ciudad.." class="formstyle">
@@ -842,7 +683,7 @@
 	<div class="añadir">
 		<ul>
 			<li>
-				<a href="registro.html"><img class="icon" src="{{ asset('sistema/images/icons/mas.png')}}" width="27" height="27" title="Añadir Gratis"></a>
+				<a href="{{path('proyecto_principal_sede_registrar')}}"><img class="icon" src="{{ asset('sistema/images/icons/mas.png')}}" width="27" height="27" title="Añadir Gratis"></a>
 			</li>
 			<li style="float:right;">
 				<a href="sedes.html"><img class="icon" src="{{ asset('sistema/images/icons/buscar.png')}}" width="27" height="27" alt="Buscar"></a></a>
@@ -926,9 +767,14 @@
 	</div><!--/item-->
 
 	<div class="itemmap">
+<!--
 		<iframe width="770" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.es/maps?f=q&amp;source=s_q&amp;hl=es&amp;geocode=&amp;q=espa%C3%B1a&amp;aq=&amp;sll=37.333351,-4.576501&amp;sspn=8.66189,18.314209&amp;ie=UTF8&amp;hq=&amp;hnear=Espa%C3%B1a&amp;t=m&amp;ll=39.656456,-3.493652&amp;spn=5.919918,17.138672&amp;z=6&amp;output=embed"></iframe>
 		<br />
 		<small><a href="https://maps.google.es/maps?f=q&amp;source=embed&amp;hl=es&amp;geocode=&amp;q=espa%C3%B1a&amp;aq=&amp;sll=37.333351,-4.576501&amp;sspn=8.66189,18.314209&amp;ie=UTF8&amp;hq=&amp;hnear=Espa%C3%B1a&amp;t=m&amp;ll=39.656456,-3.493652&amp;spn=5.919918,17.138672&amp;z=6" style="color:#0000FF;text-align:left">Ver mapa más grande</a></small>
+
+
+	-->
+	    <div id="map-canvas"></div>
 	</div><!--/item-->
 
 	<div id="contador">

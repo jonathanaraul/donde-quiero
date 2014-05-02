@@ -79,6 +79,9 @@ class Servicio
     /**
      * @ORM\Column(name="todosMultimedia", type="boolean", nullable=true)
      */
+    
+
+
     private $todosMultimedia;
     /**
      * @ORM\Column(name="grabacionEdicionVideo", type="boolean", nullable=true)
@@ -192,10 +195,6 @@ class Servicio
      */
     private $animacion;
     /**
-     * @ORM\Column(name="variable", type="boolean", nullable=true)
-     */
-    private $variable;
-    /**
      * @ORM\Column(name="interpretacionMusical", type="boolean", nullable=true)
      */
     private $interpretacionMusical;
@@ -235,9 +234,68 @@ class Servicio
      * @ORM\Column(name="receptoresAuricularEscucharInterprete", type="boolean", nullable=true)
      */
     private $receptoresAuricularEscucharInterprete;
+    /**
+     * @ORM\Column(name="alojamiento", type="boolean", nullable=true)
+     */
+    private $alojamiento;
+     /**
+     * @ORM\Column(name="internetWifiAsistentes", type="boolean", nullable=true)
+     */
+    private $internetWifiAsistentes;
+    /**
+     * @ORM\Column(name="viaje", type="boolean", nullable=true)
+     */
+    private $viaje;
+    /**
+     * @ORM\Column(name="transporteLocalAsistentes", type="boolean", nullable=true)
+     */
+    private $transporteLocalAsistentes;
+    /**
+     * @ORM\Column(name="guiaAcompanianteAsistentes", type="boolean", nullable=true)
+     */
+    private $guiaAcompanianteAsistentes; 
 
 
-  
+    /**
+     * @ORM\Column(name="todosImagenCorporativa", type="boolean", nullable=true)
+     */
+    private $todosImagenCorporativa;
+     /**
+     * @ORM\Column(name="logosDocsCorporativos", type="boolean", nullable=true)
+     */
+    private $logosDocsCorporativos;
+    /**
+     * @ORM\Column(name="webEventoSede", type="boolean", nullable=true)
+     */
+    private $webEventoSede;
+    /**
+     * @ORM\Column(name="impresionGrabacion", type="boolean", nullable=true)
+     */
+    private $impresionGrabacion;
+    /**
+     * @ORM\Column(name="repartoPublicitario", type="boolean", nullable=true)
+     */
+    private $repartoPublicitario;
+    /**
+     * @ORM\Column(name="posicionamiento", type="boolean", nullable=true)
+     */
+    private $posicionamiento;
+     /**
+     * @ORM\Column(name="communityManagement", type="boolean", nullable=true)
+     */
+    private $communityManagement;
+    /**
+     * @ORM\Column(name="difusionInternet", type="boolean", nullable=true)
+     */
+    private $difusionInternet;
+    /**
+     * @ORM\Column(name="difusionOtrosMedios", type="boolean", nullable=true)
+     */
+    private $difusionOtrosMedios;
+    /**
+     * @ORM\Column(name="emisionOnlinePaginaEvento", type="boolean", nullable=true)
+     */
+    private $emisionOnlinePaginaEvento;
 
     /**
      * @ORM\Column(name="aceptacionReservaAutomatica", type="boolean", nullable=true)
@@ -1146,28 +1204,6 @@ class Servicio
         return $this->animacion;
     }
 
-    /**
-     * Set variable
-     *
-     * @param boolean $variable
-     * @return Servicio
-     */
-    public function setVariable($variable)
-    {
-        $this->variable = $variable;
-    
-        return $this;
-    }
-
-    /**
-     * Get variable
-     *
-     * @return boolean 
-     */
-    public function getVariable()
-    {
-        return $this->variable;
-    }
 
     /**
      * Set interpretacionMusical
@@ -1686,4 +1722,349 @@ class Servicio
     }
 
 
+
+    /**
+     * Set alojamiento
+     *
+     * @param boolean $alojamiento
+     * @return Servicio
+     */
+    public function setAlojamiento($alojamiento)
+    {
+        $this->alojamiento = $alojamiento;
+    
+        return $this;
+    }
+
+    /**
+     * Get alojamiento
+     *
+     * @return boolean 
+     */
+    public function getAlojamiento()
+    {
+        return $this->alojamiento;
+    }
+
+    /**
+     * Set internetWifiAsistentes
+     *
+     * @param boolean $internetWifiAsistentes
+     * @return Servicio
+     */
+    public function setInternetWifiAsistentes($internetWifiAsistentes)
+    {
+        $this->internetWifiAsistentes = $internetWifiAsistentes;
+    
+        return $this;
+    }
+
+    /**
+     * Get internetWifiAsistentes
+     *
+     * @return boolean 
+     */
+    public function getInternetWifiAsistentes()
+    {
+        return $this->internetWifiAsistentes;
+    }
+
+    /**
+     * Set viaje
+     *
+     * @param boolean $viaje
+     * @return Servicio
+     */
+    public function setViaje($viaje)
+    {
+        $this->viaje = $viaje;
+    
+        return $this;
+    }
+
+    /**
+     * Get viaje
+     *
+     * @return boolean 
+     */
+    public function getViaje()
+    {
+        return $this->viaje;
+    }
+
+    /**
+     * Set transporteLocalAsistentes
+     *
+     * @param boolean $transporteLocalAsistentes
+     * @return Servicio
+     */
+    public function setTransporteLocalAsistentes($transporteLocalAsistentes)
+    {
+        $this->transporteLocalAsistentes = $transporteLocalAsistentes;
+    
+        return $this;
+    }
+
+    /**
+     * Get transporteLocalAsistentes
+     *
+     * @return boolean 
+     */
+    public function getTransporteLocalAsistentes()
+    {
+        return $this->transporteLocalAsistentes;
+    }
+
+    /**
+     * Set guiaAcompanianteAsistentes
+     *
+     * @param boolean $guiaAcompanianteAsistentes
+     * @return Servicio
+     */
+    public function setGuiaAcompanianteAsistentes($guiaAcompanianteAsistentes)
+    {
+        $this->guiaAcompanianteAsistentes = $guiaAcompanianteAsistentes;
+    
+        return $this;
+    }
+
+    /**
+     * Get guiaAcompanianteAsistentes
+     *
+     * @return boolean 
+     */
+    public function getGuiaAcompanianteAsistentes()
+    {
+        return $this->guiaAcompanianteAsistentes;
+    }
+
+    /**
+     * Set todosImagenCorporativa
+     *
+     * @param boolean $todosImagenCorporativa
+     * @return Servicio
+     */
+    public function setTodosImagenCorporativa($todosImagenCorporativa)
+    {
+        $this->todosImagenCorporativa = $todosImagenCorporativa;
+    
+        return $this;
+    }
+
+    /**
+     * Get todosImagenCorporativa
+     *
+     * @return boolean 
+     */
+    public function getTodosImagenCorporativa()
+    {
+        return $this->todosImagenCorporativa;
+    }
+
+    /**
+     * Set logosDocsCorporativos
+     *
+     * @param boolean $logosDocsCorporativos
+     * @return Servicio
+     */
+    public function setLogosDocsCorporativos($logosDocsCorporativos)
+    {
+        $this->logosDocsCorporativos = $logosDocsCorporativos;
+    
+        return $this;
+    }
+
+    /**
+     * Get logosDocsCorporativos
+     *
+     * @return boolean 
+     */
+    public function getLogosDocsCorporativos()
+    {
+        return $this->logosDocsCorporativos;
+    }
+
+    /**
+     * Set webEventoSede
+     *
+     * @param boolean $webEventoSede
+     * @return Servicio
+     */
+    public function setWebEventoSede($webEventoSede)
+    {
+        $this->webEventoSede = $webEventoSede;
+    
+        return $this;
+    }
+
+    /**
+     * Get webEventoSede
+     *
+     * @return boolean 
+     */
+    public function getWebEventoSede()
+    {
+        return $this->webEventoSede;
+    }
+
+    /**
+     * Set impresionGrabacion
+     *
+     * @param boolean $impresionGrabacion
+     * @return Servicio
+     */
+    public function setImpresionGrabacion($impresionGrabacion)
+    {
+        $this->impresionGrabacion = $impresionGrabacion;
+    
+        return $this;
+    }
+
+    /**
+     * Get impresionGrabacion
+     *
+     * @return boolean 
+     */
+    public function getImpresionGrabacion()
+    {
+        return $this->impresionGrabacion;
+    }
+
+    /**
+     * Set repartoPublicitario
+     *
+     * @param boolean $repartoPublicitario
+     * @return Servicio
+     */
+    public function setRepartoPublicitario($repartoPublicitario)
+    {
+        $this->repartoPublicitario = $repartoPublicitario;
+    
+        return $this;
+    }
+
+    /**
+     * Get repartoPublicitario
+     *
+     * @return boolean 
+     */
+    public function getRepartoPublicitario()
+    {
+        return $this->repartoPublicitario;
+    }
+
+    /**
+     * Set posicionamiento
+     *
+     * @param boolean $posicionamiento
+     * @return Servicio
+     */
+    public function setPosicionamiento($posicionamiento)
+    {
+        $this->posicionamiento = $posicionamiento;
+    
+        return $this;
+    }
+
+    /**
+     * Get posicionamiento
+     *
+     * @return boolean 
+     */
+    public function getPosicionamiento()
+    {
+        return $this->posicionamiento;
+    }
+
+    /**
+     * Set communityManagement
+     *
+     * @param boolean $communityManagement
+     * @return Servicio
+     */
+    public function setCommunityManagement($communityManagement)
+    {
+        $this->communityManagement = $communityManagement;
+    
+        return $this;
+    }
+
+    /**
+     * Get communityManagement
+     *
+     * @return boolean 
+     */
+    public function getCommunityManagement()
+    {
+        return $this->communityManagement;
+    }
+
+    /**
+     * Set difusionInternet
+     *
+     * @param boolean $difusionInternet
+     * @return Servicio
+     */
+    public function setDifusionInternet($difusionInternet)
+    {
+        $this->difusionInternet = $difusionInternet;
+    
+        return $this;
+    }
+
+    /**
+     * Get difusionInternet
+     *
+     * @return boolean 
+     */
+    public function getDifusionInternet()
+    {
+        return $this->difusionInternet;
+    }
+
+    /**
+     * Set difusionOtrosMedios
+     *
+     * @param boolean $difusionOtrosMedios
+     * @return Servicio
+     */
+    public function setDifusionOtrosMedios($difusionOtrosMedios)
+    {
+        $this->difusionOtrosMedios = $difusionOtrosMedios;
+    
+        return $this;
+    }
+
+    /**
+     * Get difusionOtrosMedios
+     *
+     * @return boolean 
+     */
+    public function getDifusionOtrosMedios()
+    {
+        return $this->difusionOtrosMedios;
+    }
+
+    /**
+     * Set emisionOnlinePaginaEvento
+     *
+     * @param boolean $emisionOnlinePaginaEvento
+     * @return Servicio
+     */
+    public function setEmisionOnlinePaginaEvento($emisionOnlinePaginaEvento)
+    {
+        $this->emisionOnlinePaginaEvento = $emisionOnlinePaginaEvento;
+    
+        return $this;
+    }
+
+    /**
+     * Get emisionOnlinePaginaEvento
+     *
+     * @return boolean 
+     */
+    public function getEmisionOnlinePaginaEvento()
+    {
+        return $this->emisionOnlinePaginaEvento;
+    }
 }

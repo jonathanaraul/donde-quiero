@@ -71,7 +71,7 @@ class Espacio
     /**
      * @ORM\Column(type="string", length=60, nullable=false)
      */
-    private $nombreEspacio;
+    private $nombre;
 
      /**
      * @ORM\Column(type="text")
@@ -444,26 +444,26 @@ class Espacio
     }
 
     /**
-     * Set nombreEspacio
+     * Set nombre
      *
-     * @param string $nombreEspacio
+     * @param string $nombre
      * @return Espacio
      */
-    public function setNombreEspacio($nombreEspacio)
+    public function setNombre($nombre)
     {
-        $this->nombreEspacio = $nombreEspacio;
+        $this->nombre = $nombre;
     
         return $this;
     }
 
     /**
-     * Get nombreEspacio
+     * Get nombre
      *
      * @return string 
      */
-    public function getNombreEspacio()
+    public function getNombre()
     {
-        return $this->nombreEspacio;
+        return $this->nombre;
     }
 
     /**

@@ -1,3 +1,23 @@
+  var data ="<ul>" ;$('.amarillo select').find('option').each(function() {
+    		
+
+
+
+		var campo = $.trim($(this).text());
+
+		/*for (var i = 0; i< campo.length - 1;  i++) {
+			if(i!=0) campo[i].capitalize();
+			auxiliar += campo[i];
+		};
+*/
+
+		data += "<br>" +campo;
+
+		//console.log(data);
+		//return false;
+
+    	}); data +="</ul>"; document.write(data);
+
  var data ="<ul>" ;$('.azul select').find('option').each(function() {
     		
 
