@@ -17,9 +17,11 @@ use Proyecto\PrincipalBundle\Entity\Servicio;
 class ServicioController extends Controller {
 
 
-	public function servicioAction() {
-		$firstArray = UtilitiesAPI::getDefaultContent($this);
-		$secondArray = array();
+	public function servicioAction($id) {
+        $firstArray = UtilitiesAPI::getDefaultContent($this);
+
+        $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Servicio') -> find($id);
+        $secondArray = array('object'=>$object);
 
 		$array = array_merge($firstArray, $secondArray);
 		return $this -> render('ProyectoPrincipalBundle:Servicio:servicio.html.twig', $array);
@@ -182,7 +184,25 @@ class ServicioController extends Controller {
 		$array = array_merge($firstArray, $secondArray);
 		return $class -> render('ProyectoPrincipalBundle:Servicio:registrarEditar.html.twig', $array);
 	}
-    
+    public function destacadosAction($numResults)
+    {
+        $arreglo = array();
+       
+
+        $em = $this->getDoctrine()->getManager();
+
+        $dql =  'SELECT o1.id,o1.nombre,o1.path,o1.precioPorHora FROM ProyectoPrincipalBundle:Servicio o1
+                 ORDER BY o1.id ASC';
+
+        $query = $em->createQuery( $dql )
+                ->setMaxResults($numResults)
+               ->setFirstResult(10);
+
+        $arreglo['destacados'] = $query->getResult();
+
+
+        return $this->render('ProyectoPrincipalBundle:Servicio:destacados.html.twig', $arreglo);
+    }
     public function widgetAction($numResults,$paginacion)
     {
         $arreglo = array();

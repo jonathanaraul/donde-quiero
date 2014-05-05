@@ -5,88 +5,8 @@
 
 {% include 'ProyectoPrincipalBundle:Helpers:top.html.twig'  with {'clase': 'rosa'}  %}
 {% include 'ProyectoPrincipalBundle:Default:sesion.html.twig'  with {'datos': datos} %}
-<div id="destacados">
-	<h2 > Destacados </h2>
-	<div class="clearfix"></div>
-	<div class="item">
-		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento1.png')}}" alt="image 1"></a>
-		<!-- Image must be 400px by 300px -->
-		<h3>TedxCanarias</h3>
-		<!--Title-->
-		<ul>
-			<li class="izquierda">
-				Las Palmas
-			</li>
-			<li class="izquierda">
-				3h
-			</li>
-			<li class="derecha">
-				Precio
-			</li>
-		</ul>
-		<!--Category-->
-	</div>
-	<!--/item-->
-	<div class="item">
-		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento2.png')}}" alt="image 2"></a>
-		<!-- Image must be 400px by 300px -->
-		<h3>Curso Eficiencia</h3>
-		<!--Title-->
-		<ul>
-			<li class="izquierda">
-				Madri
-			</li>
-			<li class="izquierda">
-				10h
-			</li>
-			<li class="derecha">
-				Precio
-			</li>
-		</ul>
-		<!--Category-->
-	</div>
-	<!--/item-->
-	<div class="item">
-		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento3.png')}}" alt="image 3"></a>
-		<!-- Image must be 400px by 300px -->
-		<h3>Emprende Galicia</h3>
-		<!--Title-->
-		<ul>
-			<li class="izquierda">
-				A Coruña
-			</li>
-			<li class="izquierda">
-				2h
-			</li>
-			<li class="derecha">
-				Precio
-			</li>
-		</ul>
-		<!--Category-->
-	</div>
-	<!--/item-->
-	<div class="item">
-		<a href="{{ path('proyecto_principal_evento') }}"><img src="{{ asset('sistema/images/work/thumbs/evento4.png')}}" alt="image 4"></a>
-		<!-- Image must be 400px by 300px -->
-		<h3>Workshop Creativo</h3>
-		<!--Title-->
-		<ul>
-			<li class="izquierda">
-				Madrid
-			</li>
-			<li class="izquierda">
-				10h
-			</li>
-			<li class="derecha">
-				Precio
-			</li>
-		</ul>
-		<!--Category-->
-	</div>
-	<div class="clearfix"></div>
-</div>
-<!-- destacados Section End -->
 
+{% render controller('ProyectoPrincipalBundle:Evento:destacados', { 'numResults': 4 }) %}
 {% render controller('ProyectoPrincipalBundle:Evento:widget', { 'numResults': 16,'paginacion':true }) %}
 </div>
 <!-- TO MAKE THE PHP FORM WORK, ALL YOU NEED TO DO IS OPEN UP THE FILE CALLED 'submitemail.php' AND CHANGE WHERE IT SAYS 'your email goes here' -->

@@ -17,9 +17,11 @@ use Proyecto\PrincipalBundle\Entity\Espacio;
 class EspacioController extends Controller {
 
 
-	public function espacioAction() {
+	public function espacioAction($id) {
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
-		$secondArray = array();
+
+        $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Espacio') -> find($id);
+		$secondArray = array('object'=>$object);
 
 		$array = array_merge($firstArray, $secondArray);
 		return $this -> render('ProyectoPrincipalBundle:Espacio:espacio.html.twig', $array);
@@ -188,6 +190,24 @@ class EspacioController extends Controller {
 		$array = array_merge($firstArray, $secondArray);
 		return $class -> render('ProyectoPrincipalBundle:Espacio:registrarEditar.html.twig', $array);
 	}
+    public function destacadosAction($numResults)
+    {
+        $arreglo = array();
+       
+
+        $em = $this->getDoctrine()->getManager();
+
+        $dql =  'SELECT o1.id,o1.nombre,o1.path, o1.superficie,o1.precioPorHora,o2.nombre localidad
+                 FROM ProyectoPrincipalBundle:Espacio o1, ProyectoPrincipalBundle:Localidad o2 WHERE o1.localidad = o2.id ORDER BY o1.id ASC';
+
+        $query = $em->createQuery( $dql )
+                ->setMaxResults($numResults)
+               ->setFirstResult(10);
+
+        $arreglo['destacados'] = $query->getResult();
+
+        return $this->render('ProyectoPrincipalBundle:Espacio:destacados.html.twig', $arreglo);
+    }
     public function widgetAction($numResults,$paginacion)
     {
 		$arreglo = array();

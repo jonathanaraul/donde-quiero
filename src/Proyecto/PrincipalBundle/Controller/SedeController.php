@@ -17,9 +17,11 @@ use Proyecto\PrincipalBundle\Entity\Sede;
 class SedeController extends Controller {
 
 
-	public function sedeAction() {
-		$firstArray = UtilitiesAPI::getDefaultContent($this);
-		$secondArray = array();
+	public function sedeAction($id) {
+        $firstArray = UtilitiesAPI::getDefaultContent($this);
+
+        $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Sede') -> find($id);
+        $secondArray = array('object'=>$object);
 
 		$array = array_merge($firstArray, $secondArray);
 		return $this -> render('ProyectoPrincipalBundle:Sede:sede.html.twig', $array);

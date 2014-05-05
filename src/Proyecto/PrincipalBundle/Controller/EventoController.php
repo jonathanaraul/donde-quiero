@@ -17,9 +17,11 @@ use Proyecto\PrincipalBundle\Entity\Evento;
 class EventoController extends Controller {
 
 
-	public function eventoAction() {
-		$firstArray = UtilitiesAPI::getDefaultContent($this);
-		$secondArray = array();
+	public function eventoAction($id) {
+        $firstArray = UtilitiesAPI::getDefaultContent($this);
+
+        $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Evento') -> find($id);
+        $secondArray = array('object'=>$object);
 
 		$array = array_merge($firstArray, $secondArray);
 		return $this -> render('ProyectoPrincipalBundle:Evento:evento.html.twig', $array);
@@ -174,7 +176,25 @@ class EventoController extends Controller {
 		$array = array_merge($firstArray, $secondArray);
 		return $class -> render('ProyectoPrincipalBundle:Evento:registrarEditar.html.twig', $array);
 	}
+    public function destacadosAction($numResults)
+    {
+        $arreglo = array();
+       
 
+        $em = $this->getDoctrine()->getManager();
+
+        $dql =  'SELECT o1.id,o1.nombre,o1.path,o1.duracionTotal,o1.precioPorHora,o2.nombre localidad
+                 FROM ProyectoPrincipalBundle:Evento o1, ProyectoPrincipalBundle:Localidad o2 
+                 WHERE o1.localidad = o2.id ORDER BY o1.id ASC';
+
+        $query = $em->createQuery( $dql )
+                ->setMaxResults($numResults)
+               ->setFirstResult(10);
+
+        $arreglo['destacados'] = $query->getResult();
+
+        return $this->render('ProyectoPrincipalBundle:Evento:destacados.html.twig', $arreglo);
+    }
     public function widgetAction($numResults,$paginacion)
     {
 		$arreglo = array();

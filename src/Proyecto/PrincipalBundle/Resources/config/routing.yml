@@ -2,12 +2,12 @@ proyecto_principal_homepage:
     pattern:  /
     defaults: { _controller: ProyectoPrincipalBundle:Default:index }
 
+proyecto_principal_evento:
+    pattern:  /evento/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:evento,id: '1' }
 proyecto_principal_eventos:
     pattern:  /eventos
     defaults: { _controller: ProyectoPrincipalBundle:Evento:eventos }
-proyecto_principal_evento:
-    pattern:  /evento
-    defaults: { _controller: ProyectoPrincipalBundle:Evento:evento }
 proyecto_principal_evento_registrar:
     pattern:  /registrar/evento
     defaults: { _controller: ProyectoPrincipalBundle:Evento:registrar }
@@ -21,8 +21,8 @@ proyecto_principal_evento_busqueda:
       _method: POST
 
 proyecto_principal_espacio:
-    pattern:  /espacio
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:espacio }
+    pattern:  /espacio/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:espacio,id: '1' }
 proyecto_principal_espacios:
     pattern:  /espacios
     defaults: { _controller: ProyectoPrincipalBundle:Espacio:espacios }
@@ -39,8 +39,8 @@ proyecto_principal_espacio_busqueda:
       _method: POST
 
 proyecto_principal_servicio:
-    pattern:  /servicio
-    defaults: { _controller: ProyectoPrincipalBundle:Servicio:servicio }
+    pattern:  /servicio/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Servicio:servicio,id: '1' }
 proyecto_principal_servicios:
     pattern:  /servicios
     defaults: { _controller: ProyectoPrincipalBundle:Servicio:servicios }
@@ -56,6 +56,9 @@ proyecto_principal_servicio_busqueda:
     requirements:
       _method: POST
 
+proyecto_principal_sede:
+    pattern:  /sedes/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Sede:sede,id: '1' }
 proyecto_principal_sedes:
     pattern:  /sedes
     defaults: { _controller: ProyectoPrincipalBundle:Sede:sedes }
