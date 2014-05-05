@@ -14,6 +14,11 @@ proyecto_principal_evento_registrar:
 proyecto_principal_evento_editar:
     pattern:  /editar/evento
     defaults: { _controller: ProyectoPrincipalBundle:Evento:editar }
+proyecto_principal_evento_busqueda:
+    pattern:  /busqueda/evento
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:busqueda}
+    requirements:
+      _method: POST
 
 proyecto_principal_espacio:
     pattern:  /espacio
@@ -27,6 +32,11 @@ proyecto_principal_espacio_registrar:
 proyecto_principal_espacio_editar:
     pattern:  /editar/espacio
     defaults: { _controller: ProyectoPrincipalBundle:Espacio:editar }
+proyecto_principal_espacio_busqueda:
+    pattern:  /busqueda/espacio
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:busqueda}
+    requirements:
+      _method: POST
 
 proyecto_principal_servicio:
     pattern:  /servicio
@@ -40,6 +50,11 @@ proyecto_principal_servicio_registrar:
 proyecto_principal_servicio_editar:
     pattern:  /editar/servicio
     defaults: { _controller: ProyectoPrincipalBundle:Servicio:editar }
+proyecto_principal_servicio_busqueda:
+    pattern:  /busqueda/servicio
+    defaults: { _controller: ProyectoPrincipalBundle:Servicio:busqueda}
+    requirements:
+      _method: POST
 
 proyecto_principal_sedes:
     pattern:  /sedes
@@ -50,6 +65,11 @@ proyecto_principal_sede_registrar:
 proyecto_principal_sede_editar:
     pattern:  /editar/sede
     defaults: { _controller: ProyectoPrincipalBundle:Sede:editar }
+proyecto_principal_sede_busqueda:
+    pattern:  /busqueda/sede
+    defaults: { _controller: ProyectoPrincipalBundle:Sede:busqueda}
+    requirements:
+      _method: POST
 
 
 proyecto_users_buscar_ciudad:

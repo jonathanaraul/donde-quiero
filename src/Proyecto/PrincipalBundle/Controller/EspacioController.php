@@ -149,13 +149,9 @@ class EspacioController extends Controller {
 			            ->setParameter(1, $parametro); // Sustituye ?1 por 100
 			    },
 
-			))
-            
+			))          
 
             ->getForm();
-
-
-
 
 	    if ($request->isMethod('POST')) {
 
@@ -192,5 +188,212 @@ class EspacioController extends Controller {
 		$array = array_merge($firstArray, $secondArray);
 		return $class -> render('ProyectoPrincipalBundle:Espacio:registrarEditar.html.twig', $array);
 	}
+    public function widgetAction($numResults,$paginacion)
+    {
+		$arreglo = array();
+       
 
+        $em = $this->getDoctrine()->getManager();
+
+        if($paginacion==1)$paginacion = true;
+        else $paginacion = false;
+        $arreglo = EspacioController::consultaBusqueda($numResults,0,null,$paginacion);
+
+        $dql =  'SELECT COUNT(o1.id) c,o2.id,o2.nombre 
+                 FROM ProyectoPrincipalBundle:Espacio o1, 
+                      ProyectoPrincipalBundle:Localidad o2
+                 WHERE o1.localidad = o2.id
+
+        GROUP BY  o1.localidad order by c  desc';
+
+        $query = $em->createQuery( $dql );
+        $arreglo['localidades'] = $query->getResult();
+
+        return $this->render('ProyectoPrincipalBundle:Espacio:widget.html.twig', $arreglo);
+    }
+
+    public function busquedaAction() {
+        $peticion = $this -> getRequest();
+        $doctrine = $this -> getDoctrine();
+        $post = $peticion -> request;
+        $em = $this->getDoctrine()->getManager();
+
+        $precioHora = intval($post -> get("precio"));
+        $actividades = trim($post -> get("actividades"));
+        $superficie = intval($post -> get("superficie"));
+        $modo = trim($post -> get("modo"));
+        $localidad = intval($post -> get("localidad"));
+        $paginacion = intval($post -> get("paginacion"));
+        
+        $numResults = intval($post -> get("numResults"));
+        $indice = intval($post -> get("indice"));
+
+        if($paginacion==1)$paginacion = true;
+        else $paginacion = false;
+
+
+        $parametros = array('precioHora'=>$precioHora,'actividades'=>$actividades,'superficie'=>$superficie,'modo'=>$modo,'localidad'=>$localidad);
+        //echo 'el indice es'.$indice;
+        //exit;
+        $arreglo = EspacioController::consultaBusqueda($numResults,$indice,$parametros,$paginacion);
+
+        $htmlElementos = $this -> renderView('ProyectoPrincipalBundle:Espacio:elementos.html.twig', array('elementos'=>$arreglo['elementos']) );
+        $htmlPaginacion = $this -> renderView('ProyectoPrincipalBundle:Espacio:paginacion.html.twig', array('dataPaginacion'=>$arreglo['dataPaginacion']));
+
+
+        $respuesta = new response(json_encode(array('htmlElementos' => $htmlElementos,'htmlPaginacion' =>$htmlPaginacion)));
+        $respuesta -> headers -> set('content_type', 'aplication/json');
+        return $respuesta;
+    }
+    public function consultaBusqueda($numResults,$indice,$parametros,$paginacion){
+
+   
+    $em = $this->getDoctrine()->getManager();
+    $array = array();
+
+    $dql =  'SELECT o1.id,o1.nombre,o1.path, o1.superficie,o1.precioPorHora,o2.nombre localidad
+                 FROM ProyectoPrincipalBundle:Espacio o1, ProyectoPrincipalBundle:Localidad o2 ';
+
+    $dqlTotales =  'SELECT COUNT(o1.id) FROM ProyectoPrincipalBundle:Espacio o1 ';
+
+
+    $modoA = "";
+    $modoB = "";
+    $tieneWhere = false;
+    $tieneWhereTotales = false;
+
+    if($parametros!=null){
+
+
+        
+        if($parametros['actividades']!= null && $parametros['actividades']!='0'){
+            
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+           
+            $dql.= ' o1.'.$parametros['actividades'].' = :actividades';
+            $dqlTotales.= ' o1.'.$parametros['actividades'].' = :actividades';
+            
+        }
+        if($parametros['precioHora']!= null && $parametros['precioHora']!=0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+            if($parametros['precioHora']>1 && $parametros['precioHora']<=10000){
+                $dql.= ' o1.precioPorHora <= :precioHora';
+                $dqlTotales.= ' o1.precioPorHora <= :precioHora';
+            }
+            else if($parametros['precioHora']>10000){
+                $dql.= ' o1.precioPorHora > :precioHora';
+                $dqlTotales.=' o1.precioPorHora > :precioHora';
+            }
+
+        }
+        if($parametros['superficie']!= null && $parametros['superficie']!=0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+            if($parametros['superficie']>2000){
+                $dql.= ' o1.superficie > :superficie';
+                $dqlTotales.=' o1.superficie > :superficie';
+            }
+            else{
+                $dql.= ' o1.superficie <= :superficie';
+                $dqlTotales.= ' o1.superficie <= :superficie';
+            }
+
+        }
+        if($parametros['modo']!= null && $parametros['modo']!='0-0'){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+            $modoA = explode('-', $parametros['modo']);
+            $modoB = intval($modoA[1]);
+            $modoA = $modoA[0];
+
+            $dql.= ' o1.'.$modoA.' >= :modoA ';
+            $dqlTotales.= ' o1.'.$modoA.' >= :modoA ';
+            
+            if($modoB != 0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+
+                if( $modoB==101){
+                    $dql.= ' o1.'.$modoA.'Capacidad >= :modoB';
+                    $dqlTotales.= ' o1.'.$modoA.'Capacidad >= :modoB';
+                }
+                else{
+                    $dql.= ' o1.'.$modoA.'Capacidad <= :modoB';
+                    $dqlTotales.= ' o1.'.$modoA.'Capacidad <= :modoB';
+                }
+            }
+        }
+        if($parametros['localidad']!= null && $parametros['localidad']!=0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+            
+                $dql.= ' o1.localidad = :localidad';
+                $dqlTotales.=' o1.localidad = :localidad';
+            
+
+
+        }
+
+         
+    }
+
+    if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+    $dql.= ' o1.localidad = o2.id ORDER BY o1.id ASC';
+
+  //  echo '</br>dql='.$dql;echo '</br>dqltotal='.$dqlTotales;exit;
+
+        $query = $em->createQuery( $dql )
+        ->setMaxResults($numResults)
+        ->setFirstResult($indice*$numResults);
+
+
+        if($parametros['actividades']!= null && $parametros['actividades']!='0') $query->setParameter('actividades', 1);
+        if($parametros['precioHora']!= null && $parametros['precioHora']!=0)  $query->setParameter('precioHora', $parametros['precioHora']);
+        if($parametros['superficie']!= null && $parametros['superficie']!=0)  $query->setParameter('superficie', $parametros['superficie']);
+        if($parametros['modo']!= null && $parametros['modo']!='0-0'){
+           $query->setParameter('modoA', 1);
+           if($modoB != 0)$query->setParameter('modoB', $modoB);
+        }
+        if($parametros['localidad']!= null && $parametros['localidad']!=0) $query->setParameter('localidad', $parametros['localidad']);
+
+
+        $array['elementos'] = $query->getResult();
+        $array['dataPaginacion']['obtenidos'] = count( $array['elementos']);
+
+
+        $query = $em->createQuery( $dqlTotales );
+
+        if($parametros['actividades']!= null && $parametros['actividades']!='0') $query->setParameter('actividades', 1);
+        if($parametros['precioHora']!= null && $parametros['precioHora']!=0)  $query->setParameter('precioHora', $parametros['precioHora']);
+        if($parametros['superficie']!= null && $parametros['superficie']!=0)  $query->setParameter('superficie', $parametros['superficie']);
+        if($parametros['modo']!= null && $parametros['modo']!='0-0'){
+           $query->setParameter('modoA', 1);
+           if($modoB != 0)$query->setParameter('modoB', $modoB);
+        }
+        if($parametros['localidad']!= null && $parametros['localidad']!=0) $query->setParameter('localidad', $parametros['localidad']);
+
+        $array['dataPaginacion']['total'] = intval($query->getSingleScalarResult());
+
+
+        $array['dataPaginacion']['paginacion'] = $paginacion;
+        $array['dataPaginacion']['numPaginacion'] = ceil($array['dataPaginacion']['total'] / $numResults);
+        $array['dataPaginacion']['numResults'] = $numResults;
+
+        //var_dump( $array['dataPaginacion']);
+        //exit;
+
+        return $array;
+    }
 }

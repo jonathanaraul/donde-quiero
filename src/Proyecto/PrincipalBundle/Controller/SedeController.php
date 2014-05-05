@@ -188,5 +188,194 @@ class SedeController extends Controller {
 		$array = array_merge($firstArray, $secondArray);
 		return $class -> render('ProyectoPrincipalBundle:Sede:registrarEditar.html.twig', $array);
 	}
+   
+    public function widgetAction($numResults)
+    {
+        $secondArray = array();
+        $em = $this->getDoctrine()->getManager();
+        $dql =  'SELECT COUNT(o1.id) c,o2.id,o2.nombre 
+                 FROM ProyectoPrincipalBundle:Sede o1, 
+                      ProyectoPrincipalBundle:Localidad o2
+                 WHERE o1.localidad = o2.id
 
+        GROUP BY  o1.localidad order by c  desc';
+
+        $query = $em->createQuery( $dql );
+        $secondArray['localidades'] = $query->getResult();
+
+        return $this->render('ProyectoPrincipalBundle:Sede:widget.html.twig', $secondArray);
+    }
+    public function busquedaAction() {
+        $peticion = $this -> getRequest();
+        $doctrine = $this -> getDoctrine();
+        $post = $peticion -> request;
+        $em = $this->getDoctrine()->getManager();
+
+        //selectores
+        $localidad = intval($post -> get("localidad"));
+        $accesibilidad = intval($post -> get("accesibilidad"));
+        $precioHora = intval($post -> get("precio"));
+        $modo = trim($post -> get("modo"));
+        $tipoSede = intval($post -> get("tiposede"));
+        $actividades = trim($post -> get("actividades"));
+
+        //$paginacion = intval($post -> get("paginacion"));
+        //$numResults = intval($post -> get("numResults"));
+        //$indice = intval($post -> get("indice"));
+
+
+        $parametros = array('accesibilidad'=>$accesibilidad,'tipoSede'=>$tipoSede,'precioHora'=>$precioHora,'actividades'=>$actividades,'modo'=>$modo,'localidad'=>$localidad);
+        //echo 'el indice es'.$indice;
+        //exit;
+        $arreglo = SedeController::consultaBusqueda($parametros);
+
+
+
+        $respuesta = new response(json_encode(array('arreglo' => $arreglo)));
+        $respuesta -> headers -> set('content_type', 'aplication/json');
+        return $respuesta;
+    }
+    public function consultaBusqueda($parametros){
+
+   
+    $em = $this->getDoctrine()->getManager();
+    $array = array();
+
+    $dql =  'SELECT o1.id,o1.nombre,o1.path, o1.latitud,o1.longitud,o2.nombre localidad
+                 FROM ProyectoPrincipalBundle:Sede o1, ProyectoPrincipalBundle:Localidad o2 ';
+
+    $dqlTotales =  'SELECT COUNT(o1.id) FROM ProyectoPrincipalBundle:Sede o1 ';
+
+
+    $modoA = "";
+    $modoB = "";
+    $tieneWhere = false;
+    $tieneWhereTotales = false;
+
+    if($parametros!=null){
+
+
+        if($parametros['localidad']!= null && $parametros['localidad']!=0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+                $dql.= ' o1.localidad = :localidad';
+                $dqlTotales.=' o1.localidad = :localidad';
+        }
+        if($parametros['accesibilidad']!= null && $parametros['accesibilidad']!='0'){
+            
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+           
+            $dql.= ' o1.'.$parametros['accesibilidad'].' = :accesibilidad';
+            $dqlTotales.= ' o1.'.$parametros['accesibilidad'].' = :accesibilidad';
+            
+        }
+        if($parametros['precioHora']!= null && $parametros['precioHora']!=0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+            if($parametros['precioHora']>1 && $parametros['precioHora']<=10000){
+                $dql.= ' o1.precioPorHora <= :precioHora';
+                $dqlTotales.= ' o1.precioPorHora <= :precioHora';
+            }
+            else if($parametros['precioHora']>10000){
+                $dql.= ' o1.precioPorHora > :precioHora';
+                $dqlTotales.=' o1.precioPorHora > :precioHora';
+            }
+
+        }
+        if($parametros['modo']!= null && $parametros['modo']!='0-0'){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+            $modoA = explode('-', $parametros['modo']);
+            $modoB = intval($modoA[1]);
+            $modoA = $modoA[0];
+
+            $dql.= ' o1.'.$modoA.' >= :modoA ';
+            $dqlTotales.= ' o1.'.$modoA.' >= :modoA ';
+            
+            if($modoB != 0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+
+                if( $modoB==101){
+                    $dql.= ' o1.'.$modoA.'Capacidad >= :modoB';
+                    $dqlTotales.= ' o1.'.$modoA.'Capacidad >= :modoB';
+                }
+                else{
+                    $dql.= ' o1.'.$modoA.'Capacidad <= :modoB';
+                    $dqlTotales.= ' o1.'.$modoA.'Capacidad <= :modoB';
+                }
+            }
+        }
+        if($parametros['tipoSede']!= null && $parametros['tipoSede']!='0'){
+            
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+           
+            $dql.= ' o1.'.$parametros['tipoSede'].' = :tipoSede';
+            $dqlTotales.= ' o1.'.$parametros['tipoSede'].' = :tipoSede';
+            
+        }
+        if($parametros['actividades']!= null && $parametros['actividades']!='0'){
+            
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+           
+            $dql.= ' o1.'.$parametros['actividades'].' = :actividades';
+            $dqlTotales.= ' o1.'.$parametros['actividades'].' = :actividades';
+            
+        }
+
+
+
+         
+    }
+
+    if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+    $dql.= ' o1.localidad = o2.id ORDER BY o1.id ASC';
+
+        $query = $em->createQuery( $dql );
+
+        if($parametros['accesibilidad']!= null && $parametros['accesibilidad']!='0') $query->setParameter('accesibilidad', 1);
+        if($parametros['tipoSede']!= null && $parametros['tipoSede']!='0') $query->setParameter('tipoSede', 1);
+        if($parametros['actividades']!= null && $parametros['actividades']!='0') $query->setParameter('actividades', 1);
+        if($parametros['precioHora']!= null && $parametros['precioHora']!=0)  $query->setParameter('precioHora', $parametros['precioHora']);
+        if($parametros['modo']!= null && $parametros['modo']!='0-0'){
+           $query->setParameter('modoA', 1);
+           if($modoB != 0)$query->setParameter('modoB', $modoB);
+        }
+        if($parametros['localidad']!= null && $parametros['localidad']!=0) $query->setParameter('localidad', $parametros['localidad']);
+
+
+        $array['elementos'] = $query->getResult();
+        $array['dataPaginacion']['obtenidos'] = count( $array['elementos']);
+
+
+        $query = $em->createQuery( $dqlTotales );
+
+        if($parametros['accesibilidad']!= null && $parametros['accesibilidad']!='0') $query->setParameter('accesibilidad', 1);
+        if($parametros['tipoSede']!= null && $parametros['tipoSede']!='0') $query->setParameter('tipoSede', 1);
+        if($parametros['actividades']!= null && $parametros['actividades']!='0') $query->setParameter('actividades', 1);
+        if($parametros['precioHora']!= null && $parametros['precioHora']!=0)  $query->setParameter('precioHora', $parametros['precioHora']);
+        if($parametros['modo']!= null && $parametros['modo']!='0-0'){
+           $query->setParameter('modoA', 1);
+           if($modoB != 0)$query->setParameter('modoB', $modoB);
+        }
+        if($parametros['localidad']!= null && $parametros['localidad']!=0) $query->setParameter('localidad', $parametros['localidad']);
+
+        $array['dataPaginacion']['total'] = intval($query->getSingleScalarResult());
+
+        //var_dump( $array['dataPaginacion']);
+        //exit;
+
+        return $array;
+    }
 }

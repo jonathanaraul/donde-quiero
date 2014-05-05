@@ -182,5 +182,148 @@ class ServicioController extends Controller {
 		$array = array_merge($firstArray, $secondArray);
 		return $class -> render('ProyectoPrincipalBundle:Servicio:registrarEditar.html.twig', $array);
 	}
+    
+    public function widgetAction($numResults,$paginacion)
+    {
+        $arreglo = array();
+       
 
+        $em = $this->getDoctrine()->getManager();
+
+        if($paginacion==1)$paginacion = true;
+        else $paginacion = false;
+        $arreglo = ServicioController::consultaBusqueda($numResults,0,null,$paginacion);
+
+        return $this->render('ProyectoPrincipalBundle:Servicio:widget.html.twig', $arreglo);
+    }
+
+    public function busquedaAction() {
+
+
+
+        $peticion = $this -> getRequest();
+        $doctrine = $this -> getDoctrine();
+        $post = $peticion -> request;
+        $em = $this->getDoctrine()->getManager();
+
+        $ofrecidosPor = trim($post -> get("ofrecidosPor"));
+        $multimedia = trim($post -> get("multimedia"));
+        $mejoraEspacios = trim($post -> get("mejoraEspacios"));
+        $mejoraContenidos = trim($post -> get("mejoraContenidos"));
+        $servicioAsistentes = trim($post -> get("servicioAsistentes"));
+        $imagenCorporativa = trim($post -> get("imagenCorporativa"));
+
+        
+        $paginacion = intval($post -> get("paginacion"));
+        $numResults = intval($post -> get("numResults"));
+        $indice = intval($post -> get("indice"));
+
+        if($paginacion==1)$paginacion = true;
+        else $paginacion = false;
+
+
+        $parametros = array('ofrecidosPor'=>$ofrecidosPor,'multimedia'=>$multimedia,'mejoraEspacios'=>$mejoraEspacios,
+                            'mejoraContenidos'=>$mejoraContenidos,'servicioAsistentes'=>$servicioAsistentes,'imagenCorporativa'=>$imagenCorporativa);
+
+        $arreglo = ServicioController::consultaBusqueda($numResults,$indice,$parametros,$paginacion);
+
+        $htmlElementos = $this -> renderView('ProyectoPrincipalBundle:Servicio:elementos.html.twig', array('elementos'=>$arreglo['elementos']) );
+        $htmlPaginacion = $this -> renderView('ProyectoPrincipalBundle:Servicio:paginacion.html.twig', array('dataPaginacion'=>$arreglo['dataPaginacion']));
+
+        $respuesta = new response(json_encode(array('htmlElementos' => $htmlElementos,'htmlPaginacion' =>$htmlPaginacion)));
+        $respuesta -> headers -> set('content_type', 'aplication/json');
+        return $respuesta;
+    }
+    public function consultaBusqueda($numResults,$indice,$parametros,$paginacion){
+
+   
+    $em = $this->getDoctrine()->getManager();
+    $array = array();
+
+    $dql =  'SELECT o1.id,o1.nombre,o1.path,o1.precioPorHora FROM ProyectoPrincipalBundle:Servicio o1';
+    $dqlTotales =  'SELECT COUNT(o1.id) FROM ProyectoPrincipalBundle:Servicio o1 ';
+
+    $modoA = "";
+    $modoB = "";
+    $tieneWhere = false;
+    $tieneWhereTotales = false;
+
+    if($parametros!=null){
+        
+        if($parametros['ofrecidosPor']!= null && $parametros['ofrecidosPor']!='0'){
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+            $dql.= ' o1.'.$parametros['ofrecidosPor'].' = :ofrecidosPor';
+            $dqlTotales.= ' o1.'.$parametros['ofrecidosPor'].' = :ofrecidosPor';
+        }
+        if($parametros['multimedia']!= null && $parametros['multimedia']!='0'){
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+            $dql.= ' o1.'.$parametros['multimedia'].' = :multimedia';
+            $dqlTotales.= ' o1.'.$parametros['multimedia'].' = :multimedia';
+        }
+        if($parametros['mejoraEspacios']!= null && $parametros['mejoraEspacios']!='0'){
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+            $dql.= ' o1.'.$parametros['mejoraEspacios'].' = :mejoraEspacios';
+            $dqlTotales.= ' o1.'.$parametros['mejoraEspacios'].' = :mejoraEspacios';
+        }
+        if($parametros['mejoraContenidos']!= null && $parametros['mejoraContenidos']!='0'){
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+            $dql.= ' o1.'.$parametros['mejoraContenidos'].' = :mejoraContenidos';
+            $dqlTotales.= ' o1.'.$parametros['mejoraContenidos'].' = :mejoraContenidos';
+        }
+        if($parametros['servicioAsistentes']!= null && $parametros['servicioAsistentes']!='0'){
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+            $dql.= ' o1.'.$parametros['servicioAsistentes'].' = :servicioAsistentes';
+            $dqlTotales.= ' o1.'.$parametros['servicioAsistentes'].' = :servicioAsistentes';
+        }
+        if($parametros['imagenCorporativa']!= null && $parametros['imagenCorporativa']!='0'){
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+            $dql.= ' o1.'.$parametros['imagenCorporativa'].' = :imagenCorporativa';
+            $dqlTotales.= ' o1.'.$parametros['imagenCorporativa'].' = :imagenCorporativa';
+        }
+
+    }
+
+    //if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+    $dql.= ' ORDER BY o1.id ASC';
+
+  //  echo '</br>dql='.$dql;echo '</br>dqltotal='.$dqlTotales;exit;
+
+        $query = $em->createQuery( $dql )
+        ->setMaxResults($numResults)
+        ->setFirstResult($indice*$numResults);
+
+        if($parametros['ofrecidosPor']!= null && $parametros['ofrecidosPor']!='0') $query->setParameter('ofrecidosPor', 1);
+        if($parametros['multimedia']!= null && $parametros['multimedia']!='0') $query->setParameter('multimedia', 1);
+        if($parametros['mejoraEspacios']!= null && $parametros['mejoraEspacios']!='0') $query->setParameter('mejoraEspacios', 1);
+        if($parametros['mejoraContenidos']!= null && $parametros['mejoraContenidos']!='0') $query->setParameter('mejoraContenidos', 1);
+        if($parametros['servicioAsistentes']!= null && $parametros['servicioAsistentes']!='0') $query->setParameter('servicioAsistentes', 1);
+        if($parametros['imagenCorporativa']!= null && $parametros['imagenCorporativa']!='0') $query->setParameter('imagenCorporativa', 1);
+
+        $array['elementos'] = $query->getResult();
+        $array['dataPaginacion']['obtenidos'] = count( $array['elementos']);
+
+
+        $query = $em->createQuery( $dqlTotales );
+
+        if($parametros['ofrecidosPor']!= null && $parametros['ofrecidosPor']!='0') $query->setParameter('ofrecidosPor', 1);
+        if($parametros['multimedia']!= null && $parametros['multimedia']!='0') $query->setParameter('multimedia', 1);
+        if($parametros['mejoraEspacios']!= null && $parametros['mejoraEspacios']!='0') $query->setParameter('mejoraEspacios', 1);
+        if($parametros['mejoraContenidos']!= null && $parametros['mejoraContenidos']!='0') $query->setParameter('mejoraContenidos', 1);
+        if($parametros['servicioAsistentes']!= null && $parametros['servicioAsistentes']!='0') $query->setParameter('servicioAsistentes', 1);
+        if($parametros['imagenCorporativa']!= null && $parametros['imagenCorporativa']!='0') $query->setParameter('imagenCorporativa', 1);
+
+        $array['dataPaginacion']['total'] = intval($query->getSingleScalarResult());
+
+        $array['dataPaginacion']['paginacion'] = $paginacion;
+        $array['dataPaginacion']['numPaginacion'] = ceil($array['dataPaginacion']['total'] / $numResults);
+        $array['dataPaginacion']['numResults'] = $numResults;
+
+        return $array;
+    }
 }

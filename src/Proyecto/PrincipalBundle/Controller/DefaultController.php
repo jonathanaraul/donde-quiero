@@ -20,10 +20,8 @@ class DefaultController extends Controller {
 		//HelpersController::eliminaHuerfanos($this);
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
 		$secondArray = array();
-		$secondArray['espacios']  = HelpersController::getEspacios($this);
-		$secondArray['eventos']   = HelpersController::getEventos($this);
-		$secondArray['servicios'] = HelpersController::getServicios($this);
-		$secondArray['sedes']     = HelpersController::getSedes($this);
+        $secondArray['sedes']     = HelpersController::getSedes($this);//caso especial mapas javascript
+
 		$array = array_merge($firstArray, $secondArray);
 		return $this -> render('ProyectoPrincipalBundle:Default:index.html.twig', $array);
 	}

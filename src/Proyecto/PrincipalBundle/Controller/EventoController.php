@@ -175,4 +175,201 @@ class EventoController extends Controller {
 		return $class -> render('ProyectoPrincipalBundle:Evento:registrarEditar.html.twig', $array);
 	}
 
+    public function widgetAction($numResults,$paginacion)
+    {
+		$arreglo = array();
+        $em = $this->getDoctrine()->getManager();
+
+        if($paginacion==1)$paginacion = true;
+        else $paginacion = false;
+        $arreglo = EventoController::consultaBusqueda($numResults,0,null,$paginacion);
+
+        $dql =  'SELECT COUNT(o1.id) c,o2.id,o2.nombre 
+                 FROM ProyectoPrincipalBundle:Evento o1, 
+                      ProyectoPrincipalBundle:Localidad o2
+                 WHERE o1.localidad = o2.id
+
+        GROUP BY  o1.localidad order by c  desc';
+
+        $query = $em->createQuery( $dql );
+        $arreglo['localidades'] = $query->getResult();
+
+        return $this->render('ProyectoPrincipalBundle:Evento:widget.html.twig', $arreglo);
+    }
+
+    public function busquedaAction() {
+        $peticion = $this -> getRequest();
+        $doctrine = $this -> getDoctrine();
+        $post = $peticion -> request;
+        $em = $this->getDoctrine()->getManager();
+
+        $localidad = intval($post -> get("localidad"));
+        $precioHora = intval($post -> get("precioHora"));
+        $precio = intval($post -> get("precio"));
+        $duracionTotal = intval($post -> get("duracionTotal"));
+        $actividades = trim($post -> get("actividades"));
+
+        $paginacion = intval($post -> get("paginacion"));
+        $numResults = intval($post -> get("numResults"));
+        $indice = intval($post -> get("indice"));
+
+        if($paginacion==1)$paginacion = true;
+        else $paginacion = false;
+
+
+        $parametros = array('localidad'=>$localidad,'precioHora'=>$precioHora,'precio'=>$precio,
+                            'duracionTotal'=>$duracionTotal,'actividades'=>$actividades);
+
+        $arreglo = EventoController::consultaBusqueda($numResults,$indice,$parametros,$paginacion);
+
+        $htmlElementos = $this -> renderView('ProyectoPrincipalBundle:Evento:elementos.html.twig', array('elementos'=>$arreglo['elementos']) );
+        $htmlPaginacion = $this -> renderView('ProyectoPrincipalBundle:Evento:paginacion.html.twig', array('dataPaginacion'=>$arreglo['dataPaginacion']));
+
+        $respuesta = new response(json_encode(array('htmlElementos' => $htmlElementos,'htmlPaginacion' =>$htmlPaginacion)));
+        $respuesta -> headers -> set('content_type', 'aplication/json');
+        return $respuesta;
+    }
+    public function consultaBusqueda($numResults,$indice,$parametros,$paginacion){
+
+   
+    $em = $this->getDoctrine()->getManager();
+    $array = array();
+
+    $dql =  'SELECT o1.id,o1.nombre,o1.path,o1.duracionTotal,o1.precioPorHora,o2.nombre localidad
+                 FROM ProyectoPrincipalBundle:Evento o1, ProyectoPrincipalBundle:Localidad o2 ';
+
+    $dqlTotales =  'SELECT COUNT(o1.id) FROM ProyectoPrincipalBundle:Evento o1 ';
+
+
+    $modoA = "";
+    $modoB = "";
+    $tieneWhere = false;
+    $tieneWhereTotales = false;
+
+    if($parametros!=null){
+
+        if($parametros['localidad']!= null && $parametros['localidad']!=0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+            
+                $dql.= ' o1.localidad = :localidad';
+                $dqlTotales.=' o1.localidad = :localidad';
+        }
+        if($parametros['precioHora']!= null && $parametros['precioHora']!=0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+            if($parametros['precioHora']>1 && $parametros['precioHora']<=1000){
+                $dql.= ' o1.precioPorHora <= :precioHora';
+                $dqlTotales.= ' o1.precioPorHora <= :precioHora';
+            }
+            else if($parametros['precioHora']>1000){
+                $dql.= ' o1.precioPorHora > :precioHora';
+                $dqlTotales.=' o1.precioPorHora > :precioHora';
+            }
+            else if($parametros['precioHora']==1){
+                $dql.= ' o1.precioPorHora = :precioHora';
+                $dqlTotales.=' o1.precioPorHora = :precioHora';
+            }
+        }
+        if($parametros['precio']!= null && $parametros['precio']!=0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+            if($parametros['precio']>1 && $parametros['precio']<=10000){
+                $dql.= ' o1.precio <= :precio';
+                $dqlTotales.= ' o1.precio <= :precio';
+            }
+            else if($parametros['precio']>10000){
+                $dql.= ' o1.precio > :precio';
+                $dqlTotales.=' o1.precio > :precio';
+            }
+            else if($parametros['precio']==1){
+                $dql.= ' o1.precio = :precio';
+                $dqlTotales.=' o1.precio = :precio';
+            }
+        }
+        if($parametros['duracionTotal']!= null && $parametros['duracionTotal']!=0){
+
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+
+            if($parametros['duracionTotal']>1 && $parametros['duracionTotal']<=300){
+                $dql.= ' o1.duracionTotal <= :duracionTotal';
+                $dqlTotales.= ' o1.duracionTotal <= :duracionTotal';
+            }
+            else if($parametros['duracionTotal']>300){
+                $dql.= ' o1.duracionTotal > :duracionTotal';
+                $dqlTotales.=' o1.duracionTotal > :duracionTotal';
+            }
+            else if($parametros['duracionTotal']==1){
+                $dql.= ' o1.duracionTotal = :duracionTotal';
+                $dqlTotales.=' o1.duracionTotal = :duracionTotal';
+            }
+        }
+        if($parametros['actividades']!= null && $parametros['actividades']!='0'){
+            
+            if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+            if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+           
+            $dql.= ' o1.'.$parametros['actividades'].' = :actividades';
+            $dqlTotales.= ' o1.'.$parametros['actividades'].' = :actividades';
+            
+        }
+    }
+
+    if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+    $dql.= ' o1.localidad = o2.id ORDER BY o1.id ASC';
+
+  //  echo '</br>dql='.$dql;echo '</br>dqltotal='.$dqlTotales;exit;
+
+        $query = $em->createQuery( $dql )
+        ->setMaxResults($numResults)
+        ->setFirstResult($indice*$numResults);
+
+        if($parametros['localidad']!= null && $parametros['localidad']!=0) $query->setParameter('localidad', $parametros['localidad']);
+        if($parametros['precioHora']!= null && $parametros['precioHora']!=0){
+            if($parametros['precioHora']!=1)$query->setParameter('precioHora', $parametros['precioHora']);
+            else $query->setParameter('precioHora',0);
+        }
+        if($parametros['precio']!= null && $parametros['precio']!=0){
+            if($parametros['precio']!=1)$query->setParameter('precio', $parametros['precio']);
+            else $query->setParameter('precio',0);
+        }
+        if($parametros['duracionTotal']!= null && $parametros['duracionTotal']!=0)$query->setParameter('duracionTotal', $parametros['duracionTotal']);
+        if($parametros['actividades']!= null && $parametros['actividades']!='0') $query->setParameter('actividades', 1);      
+
+        $array['elementos'] = $query->getResult();
+        $array['dataPaginacion']['obtenidos'] = count( $array['elementos']);
+
+
+        $query = $em->createQuery( $dqlTotales );
+
+        if($parametros['localidad']!= null && $parametros['localidad']!=0) $query->setParameter('localidad', $parametros['localidad']);
+        if($parametros['precioHora']!= null && $parametros['precioHora']!=0){
+            if($parametros['precioHora']!=1)$query->setParameter('precioHora', $parametros['precioHora']);
+            else $query->setParameter('precioHora',0);
+        }
+        if($parametros['precio']!= null && $parametros['precio']!=0){
+            if($parametros['precio']!=1)$query->setParameter('precio', $parametros['precio']);
+            else $query->setParameter('precio',0);
+        }
+        if($parametros['duracionTotal']!= null && $parametros['duracionTotal']!=0)$query->setParameter('duracionTotal', $parametros['duracionTotal']);
+        if($parametros['actividades']!= null && $parametros['actividades']!='0') $query->setParameter('actividades', 1);      
+
+
+        $array['dataPaginacion']['total'] = intval($query->getSingleScalarResult());
+        $array['dataPaginacion']['paginacion'] = $paginacion;
+        $array['dataPaginacion']['numPaginacion'] = ceil($array['dataPaginacion']['total'] / $numResults);
+        $array['dataPaginacion']['numResults'] = $numResults;
+
+        //var_dump( $array['dataPaginacion']);
+        //exit;
+
+        return $array;
+    }
+
 }
