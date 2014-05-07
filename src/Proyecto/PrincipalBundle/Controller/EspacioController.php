@@ -416,4 +416,13 @@ class EspacioController extends Controller {
 
         return $array;
     }
+    public function reservaAction($id) {
+        $firstArray = UtilitiesAPI::getDefaultContent($this);
+
+        $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Espacio') -> find($id);
+        $secondArray = array('object'=>$object);
+
+        $array = array_merge($firstArray, $secondArray);
+        return $this -> render('ProyectoPrincipalBundle:Espacio:reserva.html.twig', $array);
+    }
 }

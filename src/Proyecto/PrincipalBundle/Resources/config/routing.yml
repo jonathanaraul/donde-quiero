@@ -37,6 +37,9 @@ proyecto_principal_espacio_busqueda:
     defaults: { _controller: ProyectoPrincipalBundle:Espacio:busqueda}
     requirements:
       _method: POST
+proyecto_principal_espacio_reservar:
+    pattern:  /reservar/espacio/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:reserva,id: '1' }
 
 proyecto_principal_servicio:
     pattern:  /servicio/{id}

@@ -1,0 +1,182 @@
+{% extends "ProyectoPrincipalBundle:Default:base.html.twig" %}
+{%block scripts%}
+
+<link href='{{ asset('sistema/fullcalendar-1.6.4/fullcalendar/fullcalendar.css')}}' rel='stylesheet' />
+<link href='{{ asset('sistema/fullcalendar-1.6.4/fullcalendar/fullcalendar.print.css')}}' rel='stylesheet' media='print' />
+
+<script src='{{ asset('sistema/fullcalendar-1.6.4/lib/jquery.min.js')}}'></script>
+<script src='{{ asset('sistema/fullcalendar-1.6.4/lib/jquery-ui.custom.min.js')}}'></script>
+
+<script src='{{ asset('sistema/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js')}}'></script>
+
+<script>
+
+	$(document).ready(function() {
+	
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
+		$('#calendar').fullCalendar({
+			editable: true,
+			events: [
+
+				{
+					title: 'Mi reserva Jonathan Araul',
+					start: new Date(y, m, d-6),
+					end: new Date(y, m, d-3)
+				},
+				{
+					title: 'Día no laborable',
+					start: new Date(y, m, d, 10, 30),
+					allDay: false
+				},
+				{
+					title: 'Día festivo',
+					start: new Date(y, m, d+5, 17, 0),
+					end: new Date(y, m, d+5, 18, 0),
+					allDay: false
+				}
+			]
+		});
+		
+	});
+
+</script>
+<style>
+
+	body {
+		margin-top: 40px;
+		text-align: center;
+		font-size: 14px;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		}
+
+	#calendar {
+		width: 700px;
+		margin: 0 auto;
+		background-color: white;
+
+margin-top: 20px;
+/* padding-top: 20px; */
+/* margin-top: 20px; */
+margin-bottom: 20px;
+padding: 20px;
+border-radius: 15px;
+-moz-border-radius: 15px;
+-webkit-box-shadow: 0 1px 3px #c3c3c3;
+-moz-box-shadow: 0 1px 3px #c3c3c3;
+box-shadow: 0 1px 3px #c3c3c3;
+-webkit-transition: box-shadow 0.2s ease-in-out;
+-moz-transition: box-shadow 0.2s ease-in-out;
+-o-transition: box-shadow 0.2s ease-in-out;
+-ms-transition: box-shadow 0.2s ease-in-out;
+transition: box-shadow 0.2s ease-in-out;
+
+		}
+
+		.fc-event-inner{
+			#border: 1px solid #000000;
+background-color: #1EAC18;
+		}
+
+</style>
+{%endblock%} 
+
+{%block contenedorbase%}
+<div class="wrapper">
+
+	{% include 'ProyectoPrincipalBundle:Helpers:top.html.twig'  with {'clase': 'verde'}  %}
+	{% include 'ProyectoPrincipalBundle:Default:sesion.html.twig'  with {'datos': datos} %}
+
+	<aside id="about" class=" left">
+		<!-- Text Section Start -->
+		<!-- Replace all text with what you want -->
+		<div style="position:relative;">
+			<ul id="gallery">
+				<li>
+                    <img src="{{ asset('uploads/espacios/'~ object.path  ) }}" alt="" style="width:270px;height:230px;">
+					
+				</li>
+				<li>{#<img src="{{ asset('sistema/images/work/thumbs/triangulo2.png')}}" alt="" />#}
+				</li>
+				<li>{#<img src="{{ asset('sistema/images/work/thumbs/triangulo3.png')}}"  alt="" />#}
+				</li>
+
+			</ul>
+		</div>
+		<div class="clearfix"></div>
+
+	</aside>
+	<aside class="right">
+
+		<div class="fichaizq">
+			<h3>{{object.nombre|title}}</h3>
+{#
+			<ul>
+				<li class="izquierda">
+					<h4><a href="sede.html">La Sede del Coam.</a></h4>
+				</li>
+				<li class="derecha">
+					<h4><a href="sede.html" style="margin-left:5px">Cómo llegar.</a></h4>
+				</li>
+			</ul><!--Category-->
+#}
+			<div class="clearfix"></div>
+			<p>
+				{{object.descripcionGeneral}}
+
+				Este espacio esta disponible para su reservacion segun los siguientes parametros:...
+			</p>
+
+		</div>
+
+		<div class="clearfix"></div>
+		
+
+
+		<div class="clearfix"></div>
+
+		<!-- Text Section End -->
+	</aside>
+	<div class="clearfix" ></div>
+	<!-- Text Section End -->
+
+
+<div class="verde rejilla-espacios" id="work" paginacion="">
+	<!-- Work Links Section Start -->
+	<div class="añadir">
+		<a href="/donde-quiero/web/app_dev.php/espacios">Reserva</a><!--/item-->
+	</div>
+	<!--/item-->
+
+	<!--/item-->
+
+	<!--/item-->
+
+	<!--/item--><!--/item--><!--/item-->
+
+	<!--/item-->
+
+	<!--/item-->
+
+	<!--/item-->
+<div class="clearfix" ></div>
+    <div id="elementos-espacio-verde">
+
+		<div id='calendar'></div>
+	    </div>
+	<div class="clearfix"></div>
+	
+	<div class="clearfix"></div>
+	<div id="loader-widget-verde" style="display:none;height:260px;">
+       <p style="text-align:center;width: 100%;margin-top: 168px;"><img src="/donde-quiero/web/sistema/images/loader-verde.gif" title="Cargando espacios" style="width:80px;"></p>
+	</div>
+</div>
+	<!-- Work Links Section End -->
+
+	<div class="clearfix"></div>
+</div><!--/html_carousel-->
+
+{%endblock%} 
