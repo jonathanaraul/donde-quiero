@@ -29,6 +29,7 @@ security:
               path: /logout
               target: /
     access_control:
+        - { path: ^/reservar/.*, roles: ROLE_ADMIN }
         - { path: ^/registrar/.*, roles: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /_wdt/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -36,4 +37,3 @@ security:
         - { path: ^/acceso, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/cuenta/guardar, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/perfil, roles: ROLE_ADMIN }

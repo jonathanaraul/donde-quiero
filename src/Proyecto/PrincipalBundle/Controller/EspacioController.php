@@ -13,6 +13,9 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Proyecto\PrincipalBundle\Entity\User;
 use Proyecto\PrincipalBundle\Entity\Espacio;
+use Proyecto\PrincipalBundle\Entity\Reserva;
+use Proyecto\PrincipalBundle\Entity\Confirmacion;
+use Proyecto\PrincipalBundle\Entity\ConfirmacionElemento;
 
 class EspacioController extends Controller {
 
@@ -420,9 +423,264 @@ class EspacioController extends Controller {
         $firstArray = UtilitiesAPI::getDefaultContent($this);
 
         $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Espacio') -> find($id);
-        $secondArray = array('object'=>$object);
+        $reservas = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Reserva') -> findByEspacio($object);
+
+        $user = UtilitiesAPI::getActiveUser($this);
+        $idUser = $user->getId();
+        $em = $this->getDoctrine()->getManager();
+
+        $dql =  'SELECT COUNT(o1.id)
+                 FROM ProyectoPrincipalBundle:Reserva o1, 
+                      ProyectoPrincipalBundle:Espacio o2
+                 WHERE o1.espacio = o2.id AND
+                       o1.user = :idUser AND
+                       o2.id = :id AND
+                       o1.cancelado = :cancelado AND
+                       o1.pagado = :pagado
+                       ';
+
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $query->setParameter('id', $id);
+        $query->setParameter('cancelado', false);
+        $query->setParameter('pagado', false);
+        $numeroReservacion = intval($query->getSingleScalarResult()) + 1;
+
+        $secondArray = array('object'=>$object,'usuario'=>UtilitiesAPI::getActiveUser($this),'numeroReservacion'=>$numeroReservacion,'reservas'=>$reservas);
 
         $array = array_merge($firstArray, $secondArray);
+        
         return $this -> render('ProyectoPrincipalBundle:Espacio:reserva.html.twig', $array);
+    }
+    public function procesarReservaAction() {
+        $peticion = $this -> getRequest();
+        $doctrine = $this -> getDoctrine();
+        $post = $peticion -> request;
+        $em = $this->getDoctrine()->getManager();
+
+        $arreglo = $this->get('request')->request->all();
+
+
+        $respuesta = EspacioController::procesarReserva($arreglo,$this);
+
+        $respuesta = new response(json_encode(array('respuesta' => $respuesta)));
+        $respuesta -> headers -> set('content_type', 'aplication/json');
+        return $respuesta;
+    }
+    public function borrarReservasAction() {
+        $peticion = $this -> getRequest();
+        $doctrine = $this -> getDoctrine();
+        $post = $peticion -> request;
+        $em = $this->getDoctrine()->getManager();
+
+        $idTipo = intval($post -> get("idTipo"));
+        $tipo = ucfirst( trim($post -> get("tipo")));
+        $user = UtilitiesAPI::getActiveUser($this);
+        $idUser = $user->getId();
+
+
+        $dql =  'SELECT o1
+                 FROM ProyectoPrincipalBundle:Reserva o1, 
+                      ProyectoPrincipalBundle:'.$tipo.' o2
+                 WHERE o1.'.strtolower ( $tipo ).' = o2.id AND
+                       o1.user = :idUser AND
+                       o2.id = :idTipo';
+
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $query->setParameter('idTipo', $idTipo);
+        $reservas = $query->getResult();
+
+        for ($i=0; $i < count($reservas) ; $i++) { 
+            $em->remove($reservas[$i]);
+            $em->flush();
+        }
+
+        $respuesta = new response(json_encode(array('respuesta' => true)));
+        $respuesta -> headers -> set('content_type', 'aplication/json');
+        return $respuesta;
+    }
+    public function procesarReserva( $arreglo,$class){
+
+        //var_dump($arreglo);
+        //exit;
+
+        $object = $class -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Reserva') -> findOneByNumeroReservacion($arreglo['numeroReservacion']);
+
+        if ($object == null) {
+            $object = new Reserva();
+        } 
+        
+        $object -> setTitulo($arreglo['titulo']);
+        $object -> setNumeroReservacion($arreglo['numeroReservacion']);
+        $object -> setUser(UtilitiesAPI::getActiveUser($class));
+        $object -> setPagado(false);
+        $object -> setCancelado(false);
+
+        $todoDia = false;
+        if($arreglo['todoDia']=='true')$todoDia = true;
+        $object -> setTodoDia($todoDia);
+      
+        $fechaInicio = new \DateTime();
+        $fechaInicio->setDate ( intval($arreglo['anioInicio']) , (intval($arreglo['mesInicio'])+1) , intval($arreglo['diaInicio']) );
+        $fechaInicio->setTime ( intval($arreglo['horaInicio']) , intval($arreglo['minInicio'] ));
+        $object -> setFechaInicio($fechaInicio);
+        
+        $fechaFin = new \DateTime();
+        $fechaFin->setDate ( intval($arreglo['anioFin']) , (intval($arreglo['mesFin'])+1) , intval($arreglo['diaFin']) );
+        $fechaFin->setTime ( intval($arreglo['horaFin']) , intval($arreglo['minFin'] ));
+        $object -> setFechaFin($fechaFin);
+
+        $auxiliar = null;
+
+        if($arreglo['tipo']=='espacio'){
+            $auxiliar = $class -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Espacio') -> find($arreglo['idTipo']);
+            $object -> setEspacio( $auxiliar );
+        }
+        else if($arreglo['tipo']=='servicio'){
+            $auxiliar = $class -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Servicio') -> find($arreglo['idTipo']);
+            $object -> setServicio( $auxiliar );
+        }
+        else if($arreglo['tipo']=='sede'){
+            $auxiliar = $class -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Sede') -> find($arreglo['idTipo']);
+            $object -> setSede( $auxiliar );
+        }
+        else if($arreglo['tipo']=='evento'){
+            $auxiliar = $class -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Evento') -> find($arreglo['idTipo']);
+            $object -> setEvento( $auxiliar );
+        }
+
+        $em = $class -> getDoctrine() -> getManager();
+        $em -> persist($object);
+        $em -> flush();
+        
+        return true;
+
+    }
+    public function confirmacionAction($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $firstArray = UtilitiesAPI::getDefaultContent($this);
+        $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Espacio') -> find($id);
+
+        $user = UtilitiesAPI::getActiveUser($this);
+        $idUser = $user->getId();
+
+        $dql =  'SELECT o1.id,o1.fechaInicio, o1.fechaFin, o2.precioPorHora
+                 FROM ProyectoPrincipalBundle:Reserva o1, 
+                      ProyectoPrincipalBundle:Espacio o2
+                 WHERE o1.espacio = o2.id AND
+                       o1.user = :idUser AND
+                       o2.id = :id AND
+                       o1.cancelado = :cancelado AND
+                       o1.pagado = :pagado
+                       ';
+
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $query->setParameter('id', $id);
+        $query->setParameter('cancelado', false);
+        $query->setParameter('pagado', false);
+        $reservas = $query->getResult();
+
+        //var_dump($reservas);
+        //exit;
+
+
+        $data = array();
+        $total = array('horas'=>0,'precio'=>0);
+
+        for ($i=0; $i < count($reservas) ; $i++) { 
+            # code...
+            $data[$i]['id']= $reservas[$i]['id'];
+            $data[$i]['fecha']= $reservas[$i]['fechaInicio']->format('d/m/Y');
+            $data[$i]['horaComienzo']= $reservas[$i]['fechaInicio']->format('H:i');
+            $data[$i]['horaFinalización']= $reservas[$i]['fechaFin']->format('H:i');
+            $data[$i]['horas'] = intval($reservas[$i]['fechaFin']->format('H')) - intval($reservas[$i]['fechaInicio']->format('H'));
+
+            if(intval($reservas[$i]['fechaInicio']->format('i'))!=0 || intval($reservas[$i]['fechaFin']->format('i'))!=0  ){
+               $data[$i]['horas'] = $data[$i]['horas'] +1;
+            }
+
+            if($data[$i]['horas']==0)$data[$i]['horas']=24;
+
+            $total['horas'] += $data[$i]['horas'];
+
+            $data[$i]['precio'] = $data[$i]['horas'] * $reservas[$i]['precioPorHora'];
+
+            $total['precio'] += $data[$i]['precio'];
+
+        }
+
+        $secondArray = array('object'=>$object,'reservas'=>$reservas,'data'=>$data,'total'=>$total);
+
+        $array = array_merge($firstArray, $secondArray);
+
+        //var_dump($array);
+        //exit;
+        
+        return $this -> render('ProyectoPrincipalBundle:Espacio:confirmacion.html.twig', $array);
+    }
+
+    public function confirmacionGuardarAction() {
+        $peticion = $this -> getRequest();
+        $doctrine = $this -> getDoctrine();
+        $post = $peticion -> request;
+        $em = $this -> getDoctrine() -> getManager();
+
+        $arreglo = $this->get('request')->request->all();
+            //    var_dump($arreglo);exit;
+
+        $object = new Confirmacion();
+
+        $object -> setInformacionAdicional($arreglo['informacionAdicional']);
+        $object -> setHoras($arreglo['horas']);
+        $object -> setPrecioTotal($arreglo['precioTotal']);
+        $object -> setUser(UtilitiesAPI::getActiveUser($this));
+        $object -> setPagado(false);
+        $object -> setCancelado(false);
+
+
+        if($arreglo['tipo']=='espacio'){
+            $auxiliar = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Espacio') -> find($arreglo['idTipo']);
+            $object -> setEspacio( $auxiliar );
+        }
+        else if($arreglo['tipo']=='servicio'){
+            $auxiliar = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Servicio') -> find($arreglo['idTipo']);
+            $object -> setServicio( $auxiliar );
+        }
+        else if($arreglo['tipo']=='sede'){
+            $auxiliar = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Sede') -> find($arreglo['idTipo']);
+            $object -> setSede( $auxiliar );
+        }
+        else if($arreglo['tipo']=='evento'){
+            $auxiliar = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Evento') -> find($arreglo['idTipo']);
+            $object -> setEvento( $auxiliar );
+        }
+
+
+        $em -> persist($object);
+        $em -> flush();
+
+
+        $cantidadReservas = intval($arreglo['cantidadReservas']);
+
+
+        for ($i=0; $i < $cantidadReservas ; $i++) { 
+        
+            $auxiliar = intval($arreglo['reserva_'.($i+1)]);
+            $reserva = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Reserva') -> find($auxiliar);
+            $element = new ConfirmacionElemento();
+            $element -> setConfirmacion( $object );
+            $element -> setReserva( $reserva );
+            $em -> persist($element);
+            $em -> flush();
+        }
+
+
+        $respuesta = new response(json_encode(array('respuesta' => true)));
+        $respuesta -> headers -> set('content_type', 'aplication/json');
+        return $respuesta;
     }
 }

@@ -40,6 +40,24 @@ proyecto_principal_espacio_busqueda:
 proyecto_principal_espacio_reservar:
     pattern:  /reservar/espacio/{id}
     defaults: { _controller: ProyectoPrincipalBundle:Espacio:reserva,id: '1' }
+proyecto_principal_espacio_procesar_reserva:
+    pattern:  /reservar/procesar-reserva
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:procesarReserva}
+    requirements:
+      _method: POST
+proyecto_principal_espacio_borrar_reservas:
+    pattern:  /reservar/borrar-reservas
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:borrarReservas}
+    requirements:
+      _method: POST
+proyecto_principal_espacio_confirmacion:
+    pattern:  /reservar/confirmacion/espacio/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:confirmacion,id: '1' }
+proyecto_principal_espacio_confirmacion_guardar:
+    pattern:  /reservar/confirmacion/guardar
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:confirmacionGuardar}
+    requirements:
+      _method: POST
 
 proyecto_principal_servicio:
     pattern:  /servicio/{id}

@@ -3,96 +3,79 @@
  */
 
 $("#selectfaltante").live("change", function() {
-	
-	var variable = $("#selectfaltante").val();	 
 
-	console.log('el selector seleccionado es '+variable);
-	return false;     
-                                       }
-                  );
+	var variable = $("#selectfaltante").val();
 
-
-
-
-
-
-
-$( "input[type=radio]" ).on( "click", function() {
-  var id =  $( "input:checked" ).attr('id');
-  if(id == 'sexomasculino'){
-  	$("#avatar-generico").css('display','none');
-  	$("#avatar-mujer").css('display','none');
-  	$("#avatar-hombre").css('display','block');
-  } 
-  else{
-   	$("#avatar-generico").css('display','none');
-   	$("#avatar-hombre").css('display','none'); 	
-  	$("#avatar-mujer").css('display','block');
-  }
+	console.log('el selector seleccionado es ' + variable);
+	return false;
 });
 
-
-
-
-
-
-
+$("input[type=radio]").on("click", function() {
+	var id = $("input:checked").attr('id');
+	if (id == 'sexomasculino') {
+		$("#avatar-generico").css('display', 'none');
+		$("#avatar-mujer").css('display', 'none');
+		$("#avatar-hombre").css('display', 'block');
+	} else {
+		$("#avatar-generico").css('display', 'none');
+		$("#avatar-hombre").css('display', 'none');
+		$("#avatar-mujer").css('display', 'block');
+	}
+});
 
 $(".eliminar").live("click", function() {
 	var id = $(this).parent().attr('codigo');
 	$(this).parent().parent().parent().remove();
-	var data = 'id='+id;
+	var data = 'id=' + id;
 	$.ajax({
 		type : "POST",
 		url : eliminarObjeto,
 		data : data,
 		dataType : "json",
 		success : function(data) {
-								 }
-	      });	      
-                                       }
-                  );
+		}
+	});
+});
 $(".imprimir").live("click", function() {
 	$('#imprimible').printElement();
 });
 $(".editar").live("click", function() {
 	var id = $(this).parent().attr('codigo');
-	document.location.href = editarProyecto + '/'+ id;
+	document.location.href = editarProyecto + '/' + id;
 });
 $(".ver").live("click", function() {
 	var id = $(this).parent().attr('codigo');
-	document.location.href = verProyecto + '/'+ id;
+	document.location.href = verProyecto + '/' + id;
 });
 
 $("#procesaobjeto").live("click", function() {
 
 	var tipo = parseInt($("#tipo").val());
-	
-	if(!validaCamposLlenos($("input,textarea").not('.opcional')))
+
+	if (!validaCamposLlenos($("input,textarea").not('.opcional')))
 		return false;
 
-	if(!(validaIndices($('.indices:checked' ).length >0)))
+	if (!(validaIndices($('.indices:checked').length > 0)))
 		return false;
 
-	if(!validaCamposNumericos($("input.numero")))
+	if (!validaCamposNumericos($("input.numero")))
 		return false;
 
 	$('.procesando-ocultar').css('display', 'none');
 	$('#mensajeajax').css('display', 'none');
 	$('#procesando').css('display', 'block');
 	$('#mensajeajax-inicial').css('display', 'none');
-	
 
 	var data = '';
 	var j = 0;
 	$.each($("input,textarea"), function(indice, valor) {
 		var auxiliar = $.trim($(valor).val());
 
-		if(auxiliar == 'on')
+		if (auxiliar == 'on')
 			auxiliar = $(valor).is(':checked');
 
 		var id = $(valor).attr('id');
-		if(j >= 1)
+		if (j >= 1)
 			data += '&' + id + '=' + auxiliar;
 		else
 			data += id + '=' + auxiliar;
@@ -105,7 +88,7 @@ $("#procesaobjeto").live("click", function() {
 		data : data,
 		dataType : "json",
 		success : function(data) {
-		 document.location.href = verProyecto + '/'+ data.id;
+			document.location.href = verProyecto + '/' + data.id;
 		}
 	});
 
@@ -114,14 +97,14 @@ $("#procesarcuenta").live("click", function() {
 	var tipo = parseInt($("#tipo").val());
 	//if(!validaCamposSelect($('select')))return false;
 
-	if(!validaCamposLlenos($(".form-horizontal").find("input,textarea").not('.opcional')))
+	if (!validaCamposLlenos($(".form-horizontal").find("input,textarea").not('.opcional')))
 		return false;
-	if(!validaCamposRadio($(".form-horizontal").find("input[type=radio]").not('.opcional')))
+	if (!validaCamposRadio($(".form-horizontal").find("input[type=radio]").not('.opcional')))
 		return false;
-	if(!validaPasswordsIgualdad($('#password'), $('#password2')))
+	if (!validaPasswordsIgualdad($('#password'), $('#password2')))
 		return false;
-	if(tipo == 0) {
-		if(!validaPasswordsMinimoCaracteres($('#password'), $('#password2')))
+	if (tipo == 0) {
+		if (!validaPasswordsMinimoCaracteres($('#password'), $('#password2')))
 			return false;
 	}
 
@@ -134,18 +117,18 @@ $("#procesarcuenta").live("click", function() {
 	$.each($(".form-horizontal").find("input,textarea"), function(indice, valor) {
 		var auxiliar = $.trim($(valor).val());
 
-		if(auxiliar == 'on')
+		if (auxiliar == 'on')
 			auxiliar = $(valor).is(':checked');
 
 		var id = $(valor).attr('id');
-		if(j >= 1)
+		if (j >= 1)
 			data += '&' + id + '=' + auxiliar;
 		else
 			data += id + '=' + auxiliar;
 		j++;
 	});
 	console.log(data);
-	
+
 	$.ajax({
 		type : "POST",
 		url : cuentaGuardar,
@@ -154,15 +137,15 @@ $("#procesarcuenta").live("click", function() {
 		success : function(data) {
 			$('#procesando').css('display', 'none');
 
-			if(data.estado) {
-				if(tipo == 0) {
+			if (data.estado) {
+				if (tipo == 0) {
 					agregaMensajeAjax('Usuario registrado', 'Felicidades ' + $('#nombredeusuario').val() + ' ahora puede acceder al sistema.', data.estado);
 
 				} else {
 					agregaMensajeAjax('Usuario actualizado', 'Felicidades ' + $('#nombredeusuario').val() + ' sus cambios fueron guardados.', data.estado);
 				}
 			} else {
-				if(tipo == 0) {
+				if (tipo == 0) {
 					agregaMensajeAjax('Usuario no registrado', 'Lamentablemente no pudimos registrarlo, intente más tarde.', data.estado);
 
 				} else {
@@ -176,7 +159,7 @@ $("#procesarcuenta").live("click", function() {
 
 });
 function agregaMensajeAjax(titulo, mensaje, tipo) {
-	if(tipo == true)
+	if (tipo == true)
 		$('#mensajeajax').append('<div class="alert alert-block alert-success" ><button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button><p><strong> <i class="icon-ok"></i> ' + titulo + ' </strong> ' + mensaje + ' </p></div>');
 	else
 		$('#mensajeajax').append('<div class="alert alert-block alert-error">   <button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button><p><strong><i class="icon-remove"></i> ' + titulo + ' </strong> ' + mensaje + '.</p></div>');
