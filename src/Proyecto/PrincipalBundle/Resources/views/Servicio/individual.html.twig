@@ -1,5 +1,13 @@
 {% extends "ProyectoPrincipalBundle:Default:base.html.twig" %}
 
+{%block estilos%}
+	{% include 'ProyectoPrincipalBundle:Helpers:estilosIndividual.html.twig' %}
+{%endblock%}
+
+{%block scripts%}
+	{% include 'ProyectoPrincipalBundle:Helpers:scriptsIndividual.html.twig'  with {'clase': 'rosa'}  %}
+{%endblock%}
+
 {%block contenedorbase%}
 <div class="wrapper">
 
@@ -17,7 +25,13 @@
 		</div>
 
 		<div class="leftimg">
-			 <img src="{{ asset(object.getWebPath) }}" alt="" style="width:270px;height:230px;">
+			<img src="{{ asset(object.getWebPath) }}" alt="" style="width:270px;height:230px;">
+		</div>
+
+		<div style="text-align:left; margin-top:50px;" >
+			<a href="{{path('proyecto_principal_servicio_reservar',{'id':object.id})}}" title="Reservar">
+				<div id='calendar'></div>
+			</a>
 		</div>
 
 	</aside>
@@ -68,9 +82,16 @@
 				<h3> {{object.precioPorHora}} </h3>
 				<h4> € </h4>
 			</div>
-			<a href="#">Reservar</a>
+			<a href="{{path('proyecto_principal_servicio_reservar',{'id':object.id})}}">Reservar</a>
 		</div>
-		<div class="clearfix"></div>
+	<div class="clearfix"></div>
+	<h4>Detalles</h4>
+	<div class="clearfix"></div>
+	<div class="atributos">
+
+	</div>
+	<div class="clearfix"></div>
+
 
 	</aside>
 	<div class="clearfix"></div>

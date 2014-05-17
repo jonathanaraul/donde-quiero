@@ -3,7 +3,7 @@
 {%block contenedorbase%}
 <div class="wrapper">
 
-	{% include 'ProyectoPrincipalBundle:Helpers:top.html.twig'  %}
+	{% include 'ProyectoPrincipalBundle:Helpers:top.html.twig'  with {'clase': 'amarillo'} %}
 	{% include 'ProyectoPrincipalBundle:Default:sesion.html.twig'  with {'datos': datos} %}
 	<div id="destacados">
 		<h2 > Destacados </h2>

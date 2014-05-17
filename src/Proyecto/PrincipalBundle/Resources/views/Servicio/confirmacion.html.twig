@@ -16,7 +16,7 @@ var direccionConfirmacionGuardar = "{{path('proyecto_principal_pago_confirmacion
 {%block contenedorbase%}
 <div class="wrapper">
 
-	{% include 'ProyectoPrincipalBundle:Helpers:top.html.twig'  with {'clase': 'verde'}  %}
+	{% include 'ProyectoPrincipalBundle:Helpers:top.html.twig'  with {'clase': 'azul'}  %}
 	{% include 'ProyectoPrincipalBundle:Default:sesion.html.twig'  with {'datos': datos} %}
 
 	<div id="work">
@@ -87,7 +87,7 @@ var direccionConfirmacionGuardar = "{{path('proyecto_principal_pago_confirmacion
 						</p>
 						<div class="clearfix"></div>
 						<div class="enviar" style="float: left;">
-							<a href="{{path('proyecto_principal_espacio_reservar',{'id':object.id})}}" title="Regresar">Regresar y ajustar los tiempos </a>
+							<a href="{{path('proyecto_principal_servicio_reservar',{'id':object.id})}}" title="Regresar">Regresar y ajustar los tiempos </a>
 						</div>
 						<div class="enviar">
 							<a href="javascript:void(0)" id="botonRealizarPago" title="Realizar Pago">Realizar Pago </a>
@@ -133,7 +133,7 @@ var direccionConfirmacionGuardar = "{{path('proyecto_principal_pago_confirmacion
 				<input type="hidden" class="confirmacion" id="cantidadReservas" value="{{data|length}}">
 				<input type="hidden" class="confirmacion" id="horas" value="{{total.horas}}">
 				<input type="hidden" class="confirmacion" id="precioTotal" value="{{total.precio}}">
-				<input type="hidden" class="confirmacion" id="tipo" value="espacio">
+				<input type="hidden" class="confirmacion" id="tipo" value="servicio">
 				<input type="hidden" class="confirmacion" id="idTipo" value="{{object.id}}">
 			</div>
 

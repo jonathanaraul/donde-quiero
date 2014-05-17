@@ -2,30 +2,34 @@ proyecto_principal_homepage:
     pattern:  /
     defaults: { _controller: ProyectoPrincipalBundle:Default:index }
 
-proyecto_principal_evento:
-    pattern:  /evento/{id}
-    defaults: { _controller: ProyectoPrincipalBundle:Evento:evento,id: '1' }
-proyecto_principal_eventos:
-    pattern:  /eventos
-    defaults: { _controller: ProyectoPrincipalBundle:Evento:eventos }
-proyecto_principal_evento_registrar:
-    pattern:  /registrar/evento
-    defaults: { _controller: ProyectoPrincipalBundle:Evento:registrar }
-proyecto_principal_evento_editar:
-    pattern:  /editar/evento
-    defaults: { _controller: ProyectoPrincipalBundle:Evento:editar }
-proyecto_principal_evento_busqueda:
-    pattern:  /busqueda/evento
-    defaults: { _controller: ProyectoPrincipalBundle:Evento:busqueda}
+proyecto_principal_pago_procesar_reserva:
+    pattern:  /reservar/procesar-reserva
+    defaults: { _controller: ProyectoPrincipalBundle:Pago:procesarReserva}
     requirements:
       _method: POST
+proyecto_principal_pago_borrar_reservas:
+    pattern:  /reservar/borrar-reservas
+    defaults: { _controller: ProyectoPrincipalBundle:Pago:borrarReservas}
+    requirements:
+      _method: POST
+proyecto_principal_pago_confirmacion_guardar:
+    pattern:  /reservar/confirmacion/guardar
+    defaults: { _controller: ProyectoPrincipalBundle:Pago:confirmacionGuardar}
+    requirements:
+      _method: POST
+proyecto_principal_pago_aprobado:
+    pattern:  /pago/aprobado/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Pago:aprobado,id: '1' }
+proyecto_principal_pago_cancelado:
+    pattern:  /pago/cancelado/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Pago:cancelado,id: '1' }
 
-proyecto_principal_espacio:
+proyecto_principal_espacio_individual:
     pattern:  /espacio/{id}
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:espacio,id: '1' }
-proyecto_principal_espacios:
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:individual,id: '1' }
+proyecto_principal_espacio_grupal:
     pattern:  /espacios
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:espacios }
+    defaults: { _controller: ProyectoPrincipalBundle:Espacio:grupal }
 proyecto_principal_espacio_registrar:
     pattern:  /registrar/espacio
     defaults: { _controller: ProyectoPrincipalBundle:Espacio:registrar }
@@ -40,31 +44,40 @@ proyecto_principal_espacio_busqueda:
 proyecto_principal_espacio_reservar:
     pattern:  /reservar/espacio/{id}
     defaults: { _controller: ProyectoPrincipalBundle:Espacio:reserva,id: '1' }
-proyecto_principal_espacio_procesar_reserva:
-    pattern:  /reservar/procesar-reserva
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:procesarReserva}
-    requirements:
-      _method: POST
-proyecto_principal_espacio_borrar_reservas:
-    pattern:  /reservar/borrar-reservas
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:borrarReservas}
-    requirements:
-      _method: POST
 proyecto_principal_espacio_confirmacion:
     pattern:  /reservar/confirmacion/espacio/{id}
     defaults: { _controller: ProyectoPrincipalBundle:Espacio:confirmacion,id: '1' }
-proyecto_principal_espacio_confirmacion_guardar:
-    pattern:  /reservar/confirmacion/guardar
-    defaults: { _controller: ProyectoPrincipalBundle:Espacio:confirmacionGuardar}
+
+proyecto_principal_evento_individual:
+    pattern:  /evento/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:individual,id: '1' }
+proyecto_principal_evento_grupal:
+    pattern:  /eventos
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:grupal }
+proyecto_principal_evento_registrar:
+    pattern:  /registrar/evento
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:registrar }
+proyecto_principal_evento_editar:
+    pattern:  /editar/evento
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:editar }
+proyecto_principal_evento_busqueda:
+    pattern:  /busqueda/evento
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:busqueda}
     requirements:
       _method: POST
+proyecto_principal_evento_reservar:
+    pattern:  /reservar/evento/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:reserva,id: '1' }
+proyecto_principal_evento_confirmacion:
+    pattern:  /reservar/confirmacion/evento/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Evento:confirmacion,id: '1' }
 
-proyecto_principal_servicio:
+proyecto_principal_servicio_individual:
     pattern:  /servicio/{id}
-    defaults: { _controller: ProyectoPrincipalBundle:Servicio:servicio,id: '1' }
-proyecto_principal_servicios:
+    defaults: { _controller: ProyectoPrincipalBundle:Servicio:individual,id: '1' }
+proyecto_principal_servicio_grupal:
     pattern:  /servicios
-    defaults: { _controller: ProyectoPrincipalBundle:Servicio:servicios }
+    defaults: { _controller: ProyectoPrincipalBundle:Servicio:grupal }
 proyecto_principal_servicio_registrar:
     pattern:  /registrar/servicio
     defaults: { _controller: ProyectoPrincipalBundle:Servicio:registrar }
@@ -76,13 +89,19 @@ proyecto_principal_servicio_busqueda:
     defaults: { _controller: ProyectoPrincipalBundle:Servicio:busqueda}
     requirements:
       _method: POST
+proyecto_principal_servicio_reservar:
+    pattern:  /reservar/servicio/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Servicio:reserva,id: '1' }
+proyecto_principal_servicio_confirmacion:
+    pattern:  /reservar/confirmacion/servicio/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Servicio:confirmacion,id: '1' }
 
-proyecto_principal_sede:
-    pattern:  /sedes/{id}
-    defaults: { _controller: ProyectoPrincipalBundle:Sede:sede,id: '1' }
-proyecto_principal_sedes:
+proyecto_principal_sede_grupal:
     pattern:  /sedes
-    defaults: { _controller: ProyectoPrincipalBundle:Sede:sedes }
+    defaults: { _controller: ProyectoPrincipalBundle:Sede:grupal }
+proyecto_principal_sede_individual:
+    pattern:  /sede/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Sede:individual,id: '1' }
 proyecto_principal_sede_registrar:
     pattern:  /registrar/sede
     defaults: { _controller: ProyectoPrincipalBundle:Sede:registrar }
@@ -94,6 +113,12 @@ proyecto_principal_sede_busqueda:
     defaults: { _controller: ProyectoPrincipalBundle:Sede:busqueda}
     requirements:
       _method: POST
+proyecto_principal_sede_reservar:
+    pattern:  /reservar/sede/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Sede:reserva,id: '1' }
+proyecto_principal_sede_confirmacion:
+    pattern:  /reservar/confirmacion/sede/{id}
+    defaults: { _controller: ProyectoPrincipalBundle:Sede:confirmacion,id: '1' }
 
 
 proyecto_users_buscar_ciudad:

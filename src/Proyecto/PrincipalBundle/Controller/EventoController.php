@@ -13,25 +13,30 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Proyecto\PrincipalBundle\Entity\User;
 use Proyecto\PrincipalBundle\Entity\Evento;
+use Proyecto\PrincipalBundle\Entity\Reserva;
+use Proyecto\PrincipalBundle\Entity\Confirmacion;
+use Proyecto\PrincipalBundle\Entity\ConfirmacionElemento;
 
 class EventoController extends Controller {
 
 
-	public function eventoAction($id) {
+	public function individualAction($id) {
         $firstArray = UtilitiesAPI::getDefaultContent($this);
 
         $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Evento') -> find($id);
-        $secondArray = array('object'=>$object);
+        $reservas = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Reserva') -> findByEvento($object);
+
+        $secondArray = array('object'=>$object,'reservas'=>$reservas);
 
 		$array = array_merge($firstArray, $secondArray);
-		return $this -> render('ProyectoPrincipalBundle:Evento:evento.html.twig', $array);
+		return $this -> render('ProyectoPrincipalBundle:Evento:individual.html.twig', $array);
 	}
-	public function eventosAction() {
+	public function grupalAction() {
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
 		$secondArray = array();
 
 		$array = array_merge($firstArray, $secondArray);
-		return $this -> render('ProyectoPrincipalBundle:Evento:eventos.html.twig', $array);
+		return $this -> render('ProyectoPrincipalBundle:Evento:grupal.html.twig', $array);
 	}
 
 	public function registrarAction(Request $request) {
@@ -391,5 +396,96 @@ class EventoController extends Controller {
 
         return $array;
     }
+    public function reservaAction($id) {
+        $firstArray = UtilitiesAPI::getDefaultContent($this);
 
+        $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Evento') -> find($id);
+        $reservas = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Reserva') -> findByEvento($object);
+
+        $user = UtilitiesAPI::getActiveUser($this);
+        $idUser = $user->getId();
+        $em = $this->getDoctrine()->getManager();
+
+        $dql =  'SELECT COUNT(o1.id)
+                 FROM ProyectoPrincipalBundle:Reserva o1, 
+                      ProyectoPrincipalBundle:Evento o2
+                 WHERE o1.evento = o2.id AND
+                       o1.user = :idUser AND
+                       o2.id = :id AND
+                       o1.cancelado = :cancelado AND
+                       o1.pagado = :pagado
+                       ';
+
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $query->setParameter('id', $id);
+        $query->setParameter('cancelado', false);
+        $query->setParameter('pagado', false);
+        $numeroReservacion = intval($query->getSingleScalarResult()) + 1;
+
+        $secondArray = array('object'=>$object,'usuario'=>UtilitiesAPI::getActiveUser($this),'numeroReservacion'=>$numeroReservacion,'reservas'=>$reservas);
+
+        $array = array_merge($firstArray, $secondArray);
+        
+        return $this -> render('ProyectoPrincipalBundle:Evento:reserva.html.twig', $array);
+    }
+  
+    public function confirmacionAction($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $firstArray = UtilitiesAPI::getDefaultContent($this);
+        $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Evento') -> find($id);
+
+        $user = UtilitiesAPI::getActiveUser($this);
+        $idUser = $user->getId();
+
+        $dql =  'SELECT o1.id,o1.fechaInicio, o1.fechaFin, o2.precioPorHora
+                 FROM ProyectoPrincipalBundle:Reserva o1, 
+                      ProyectoPrincipalBundle:Evento o2
+                 WHERE o1.evento = o2.id AND
+                       o1.user = :idUser AND
+                       o2.id = :id AND
+                       o1.cancelado = :cancelado AND
+                       o1.pagado = :pagado
+                       ';
+
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $query->setParameter('id', $id);
+        $query->setParameter('cancelado', false);
+        $query->setParameter('pagado', false);
+        $reservas = $query->getResult();
+
+        $data = array();
+        $total = array('horas'=>0,'precio'=>0);
+
+        for ($i=0; $i < count($reservas) ; $i++) { 
+            # code...
+            $data[$i]['id']= $reservas[$i]['id'];
+            $data[$i]['fecha']= $reservas[$i]['fechaInicio']->format('d/m/Y');
+            $data[$i]['horaComienzo']= $reservas[$i]['fechaInicio']->format('H:i');
+            $data[$i]['horaFinalización']= $reservas[$i]['fechaFin']->format('H:i');
+            $data[$i]['horas'] = intval($reservas[$i]['fechaFin']->format('H')) - intval($reservas[$i]['fechaInicio']->format('H'));
+
+            if(intval($reservas[$i]['fechaInicio']->format('i'))!=0 || intval($reservas[$i]['fechaFin']->format('i'))!=0  ){
+               $data[$i]['horas'] = $data[$i]['horas'] +1;
+            }
+
+            if($data[$i]['horas']==0)$data[$i]['horas']=24;
+
+            $total['horas'] += $data[$i]['horas'];
+
+            $data[$i]['precio'] = $data[$i]['horas'] * $reservas[$i]['precioPorHora'];
+
+            $total['precio'] += $data[$i]['precio'];
+
+        }
+
+        $secondArray = array('object'=>$object,'reservas'=>$reservas,'data'=>$data,'total'=>$total);
+
+        $array = array_merge($firstArray, $secondArray);
+
+        return $this -> render('ProyectoPrincipalBundle:Evento:confirmacion.html.twig', $array);
+    }
 }

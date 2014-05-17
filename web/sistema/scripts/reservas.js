@@ -1,10 +1,11 @@
 $('#botonContinuarReserva').live("click", function() {
 
 	var data = '';
+	var color = $("#colorFicha").val();
 
-	$("#elementos-espacio-verde").empty();
+	$("#elementos-espacio-"+color).empty();
 	$('.buscador').css('display','none');
-	$("#loader-widget-verde").css('display', 'block');
+	$("#loader-widget-"+color).css('display', 'block');
 
 /*
 	$.each($(".codigos"), function(indice, valor) {
@@ -25,10 +26,11 @@ $('#botonContinuarReserva').live("click", function() {
 
 $('#botonBorrarReservas').live("click", function() {
 
+	var color = $("#colorFicha").val();
 	var data = 'tipo='+$("#tipo").val()+'&idTipo='+$("#idTipo").val();
-	$("#elementos-espacio-verde").empty();
+	$("#elementos-espacio-"+color).empty();
 	$('.buscador').css('display','none');
-	$("#loader-widget-verde").css('display', 'block');
+	$("#loader-widget-"+color).css('display', 'block');
 
 	$.post(direccionBorrarReservas, data, function(respuesta) {
 		

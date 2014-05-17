@@ -211,6 +211,42 @@ class UtilitiesAPI extends Controller {
 	 //.' - '.$hora.':'.$minuto;
 	 return $fecha;
 	 }
+
+	 public static function obtenerFechaNormal($class) {
+	 $hoy = getdate();
+	 $anio = $hoy['year'];
+	 $mes = $hoy['mon'];
+	 $dia = $hoy['mday'];
+	 $fecha = $dia . "/" . $mes . '/' . $anio;
+	 //.' - '.$hora.':'.$minuto;
+	 return $fecha;
+	 }
+	 public static function sumarTiempo($fechaOriginal, $dia, $mes, $anio, $class) {
+
+	 $arreglo = explode("/", $fechaOriginal);
+
+	 $fecha = new \DateTime();
+	 $fecha -> setDate($arreglo[2], $arreglo[1], $arreglo[0]);
+	 $fecha -> setTime(0, 0, 0);
+	 $periodo = 'P' . $anio . 'Y' . $mes . 'M' . $dia . 'D';
+	 $fecha -> add(new \DateInterval($periodo));
+
+	 $fecha = date_format($fecha, 'd/m/Y'); ;
+	 return $fecha;
+
+	 }
+	 public static function obtenerNombreDia($fechaOriginal, $class) {
+
+	 $arreglo = explode("/", $fechaOriginal);
+	 $fecha = new \DateTime();
+	 $fecha -> setDate($arreglo[2], $arreglo[1], $arreglo[0]);
+
+	 $dia = $fecha->format('w');
+
+	 $dias = array( 'Domingo' , 'Lunes' , 'Martes', 'Miercoles','Jueves','Viernes','Sabado');
+
+	 return $dias[$dia];;
+	 }
 	/*
 	 public static function obtenerFechaCastellanizada($class) {
 	 $hoy = getdate();
@@ -263,15 +299,7 @@ class UtilitiesAPI extends Controller {
 	 return $mes;
 	 }
 
-	 public static function obtenerFechaNormal($class) {
-	 $hoy = getdate();
-	 $anio = $hoy['year'];
-	 $mes = $hoy['mon'];
-	 $dia = $hoy['mday'];
-	 $fecha = $dia . "/" . $mes . '/' . $anio;
-	 //.' - '.$hora.':'.$minuto;
-	 return $fecha;
-	 }
+
 
 	 public static function obtenerFechaNormal2($class) {
 	 $hoy = getdate();
@@ -298,13 +326,7 @@ class UtilitiesAPI extends Controller {
 	 return array($hoy['year'], $hoy['mon']);
 	 }
 
-	 public static function convertirFechaNormal($fechaOriginal, $class) {
 
-	 $arreglo = explode("-", $fechaOriginal);
-	 $fecha = new \DateTime();
-	 $fecha -> setDate($arreglo[2], $arreglo[1], $arreglo[0]);
-	 return $fecha;
-	 }
 
 	 public static function convertirFechaNormal3($fechaOriginal, $class) {
 	 $arreglo = explode("/", $fechaOriginal);
@@ -419,19 +441,6 @@ class UtilitiesAPI extends Controller {
 
 	 }
 
-	 public static function sumarTiempo($fechaOriginal, $dia, $mes, $anio, $class) {
 
-	 $arreglo = explode("-", $fechaOriginal);
-
-	 $fecha = new \DateTime();
-	 $fecha -> setDate($arreglo[2], $arreglo[1], $arreglo[0]);
-	 $fecha -> setTime(0, 0, 0);
-	 $periodo = 'P' . $anio . 'Y' . $mes . 'M' . $dia . 'D';
-	 $fecha -> add(new \DateInterval($periodo));
-
-	 $fecha = date_format($fecha, 'Y-m-d H:i:s'); ;
-	 return $fecha;
-
-	 }
 	 */
 }

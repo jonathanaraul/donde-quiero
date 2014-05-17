@@ -1,5 +1,13 @@
 {% extends "ProyectoPrincipalBundle:Default:base.html.twig" %}
 
+{%block estilos%}
+	{% include 'ProyectoPrincipalBundle:Helpers:estilosIndividual.html.twig' %}
+{%endblock%}
+
+{%block scripts%}
+	{% include 'ProyectoPrincipalBundle:Helpers:scriptsIndividual.html.twig'  with {'clase': 'rosa'}  %}
+{%endblock%}
+
 {%block contenedorbase%}
 <div class="wrapper">
 
@@ -24,7 +32,9 @@
 		</div>
 		<div class="clearfix"></div>
 		<div style="text-align:left; margin-top:50px;" >
-			<a href="reserva.html"><img src="{{ asset('sistema/images/CALENDARIO.jpg')}}"></a>
+			<a href="{{path('proyecto_principal_espacio_reservar',{'id':object.id})}}" title="Reservar">
+				<div id='calendar'></div>
+			</a>
 		</div>
 	</aside>
 	<aside class="right">

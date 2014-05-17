@@ -17,21 +17,21 @@ use Proyecto\PrincipalBundle\Entity\Sede;
 class SedeController extends Controller {
 
 
-	public function sedeAction($id) {
+	public function individualAction($id) {
         $firstArray = UtilitiesAPI::getDefaultContent($this);
 
         $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Sede') -> find($id);
         $secondArray = array('object'=>$object);
 
 		$array = array_merge($firstArray, $secondArray);
-		return $this -> render('ProyectoPrincipalBundle:Sede:sede.html.twig', $array);
+		return $this -> render('ProyectoPrincipalBundle:Sede:individual.html.twig', $array);
 	}
-	public function sedesAction() {
+	public function grupalAction() {
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
 		$secondArray = array();
 
 		$array = array_merge($firstArray, $secondArray);
-		return $this -> render('ProyectoPrincipalBundle:Sede:sedes.html.twig', $array);
+		return $this -> render('ProyectoPrincipalBundle:Sede:grupal.html.twig', $array);
 	}
 
 	public function registrarAction(Request $request) {

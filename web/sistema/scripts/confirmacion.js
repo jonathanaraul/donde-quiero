@@ -13,17 +13,15 @@ $('#botonRealizarPago').live("click", function() {
 
 	var data = 'informacionAdicional='+informacionAdicional;
 
-
 	$.each($(".confirmacion"), function(indice, valor) {
 		var auxiliar = $.trim($(valor).val());
 		var id = $(valor).attr('id');
 		data += '&'+id + '=' + auxiliar;
 	});
 
-	//console.log(data);
-
 	$.post(direccionConfirmacionGuardar, data, function(respuesta) {
 		var respuesta = JSON.parse(respuesta);
+		document.location.href = respuesta.url;
 		//console.dir(respuesta);
 		//$("#loader").css('display', 'none');
 		//$("#elementos-espacio-verde").append(respuesta.htmlElementos);
