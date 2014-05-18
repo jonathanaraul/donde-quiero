@@ -208,7 +208,7 @@ class ServicioController extends Controller {
 
         return $this->render('ProyectoPrincipalBundle:Servicio:destacados.html.twig', $arreglo);
     }
-    public function widgetAction($numResults,$paginacion)
+    public function widgetAction($titulo,$numResults,$paginacion,$proveedor,$cliente,$idRelacionado)
     {
         $arreglo = array();
        
@@ -217,14 +217,18 @@ class ServicioController extends Controller {
 
         if($paginacion==1)$paginacion = true;
         else $paginacion = false;
-        $arreglo = ServicioController::consultaBusqueda($numResults,0,null,$paginacion);
+        $arreglo = ServicioController::consultaBusqueda($numResults,0,null,$paginacion,$proveedor,$cliente,$idRelacionado);
+
+        $arreglo['proveedor']= $proveedor;
+        $arreglo['cliente']= $cliente;
+        $arreglo['idRelacionado']= $idRelacionado;
+        $arreglo['titulo']= $titulo;
+        $arreglo['numResults']= $numResults;
 
         return $this->render('ProyectoPrincipalBundle:Servicio:widget.html.twig', $arreglo);
     }
 
     public function busquedaAction() {
-
-
 
         $peticion = $this -> getRequest();
         $doctrine = $this -> getDoctrine();
@@ -246,11 +250,17 @@ class ServicioController extends Controller {
         if($paginacion==1)$paginacion = true;
         else $paginacion = false;
 
+        $proveedor = intval($post -> get("proveedor"));
+        $cliente = intval($post -> get("cliente"));
+        $idRelacionado = intval($post -> get("idRelacionado"));
+
+        if($proveedor==0)$proveedor = false;
+        if($cliente==0)$cliente = false;
 
         $parametros = array('ofrecidosPor'=>$ofrecidosPor,'multimedia'=>$multimedia,'mejoraEspacios'=>$mejoraEspacios,
                             'mejoraContenidos'=>$mejoraContenidos,'servicioAsistentes'=>$servicioAsistentes,'imagenCorporativa'=>$imagenCorporativa);
 
-        $arreglo = ServicioController::consultaBusqueda($numResults,$indice,$parametros,$paginacion);
+        $arreglo = ServicioController::consultaBusqueda($numResults,$indice,$parametros,$paginacion,$proveedor,$cliente,$idRelacionado);
 
         $htmlElementos = $this -> renderView('ProyectoPrincipalBundle:Servicio:elementos.html.twig', array('elementos'=>$arreglo['elementos']) );
         $htmlPaginacion = $this -> renderView('ProyectoPrincipalBundle:Servicio:paginacion.html.twig', array('dataPaginacion'=>$arreglo['dataPaginacion']));
@@ -259,7 +269,7 @@ class ServicioController extends Controller {
         $respuesta -> headers -> set('content_type', 'aplication/json');
         return $respuesta;
     }
-    public function consultaBusqueda($numResults,$indice,$parametros,$paginacion){
+    public function consultaBusqueda($numResults,$indice,$parametros,$paginacion,$proveedor,$cliente,$idRelacionado){
 
    
     $em = $this->getDoctrine()->getManager();
@@ -267,6 +277,11 @@ class ServicioController extends Controller {
 
     $dql =  'SELECT o1.id,o1.nombre,o1.path,o1.precioPorHora FROM ProyectoPrincipalBundle:Servicio o1';
     $dqlTotales =  'SELECT COUNT(o1.id) FROM ProyectoPrincipalBundle:Servicio o1 ';
+
+    if($proveedor){
+        $dql.= ', ProyectoPrincipalBundle:User o3 ';
+        $dqlTotales .=  ', ProyectoPrincipalBundle:User o3 ';
+    }
 
     $modoA = "";
     $modoB = "";
@@ -314,10 +329,26 @@ class ServicioController extends Controller {
 
     }
 
-    //if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
-    $dql.= ' ORDER BY o1.id ASC';
+    if($proveedor){
+        if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+        $dql.= ' o1.user = o3.id and o3.id = :idRelacionado ';
+        
+        if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+        $dqlTotales .=  ' o1.user = o3.id and o3.id = :idRelacionado ';
+    }
 
-  //  echo '</br>dql='.$dql;echo '</br>dqltotal='.$dqlTotales;exit;
+    if($cliente){
+        if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+        $dql.= ' o1.id IN ( SELECT DISTINCT r2.id FROM ProyectoPrincipalBundle:Reserva r1, 
+            ProyectoPrincipalBundle:Servicio r2, ProyectoPrincipalBundle:User r3 WHERE r1.servicio = r2.id and r1.user = r3.id and r3.id = :idRelacionado ) ';
+        
+        if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+        $dqlTotales .=  ' o1.id IN ( SELECT DISTINCT r2.id FROM ProyectoPrincipalBundle:Reserva r1, 
+            ProyectoPrincipalBundle:Servicio r2, ProyectoPrincipalBundle:User r3 WHERE r1.servicio = r2.id and r1.user = r3.id and r3.id = :idRelacionado ) ';
+
+    }
+
+    $dql.= ' ORDER BY o1.id ASC';
 
         $query = $em->createQuery( $dql )
         ->setMaxResults($numResults)
@@ -329,6 +360,7 @@ class ServicioController extends Controller {
         if($parametros['mejoraContenidos']!= null && $parametros['mejoraContenidos']!='0') $query->setParameter('mejoraContenidos', 1);
         if($parametros['servicioAsistentes']!= null && $parametros['servicioAsistentes']!='0') $query->setParameter('servicioAsistentes', 1);
         if($parametros['imagenCorporativa']!= null && $parametros['imagenCorporativa']!='0') $query->setParameter('imagenCorporativa', 1);
+        if($proveedor || $cliente)$query->setParameter('idRelacionado', $idRelacionado);
 
         $array['elementos'] = $query->getResult();
         $array['dataPaginacion']['obtenidos'] = count( $array['elementos']);
@@ -342,7 +374,8 @@ class ServicioController extends Controller {
         if($parametros['mejoraContenidos']!= null && $parametros['mejoraContenidos']!='0') $query->setParameter('mejoraContenidos', 1);
         if($parametros['servicioAsistentes']!= null && $parametros['servicioAsistentes']!='0') $query->setParameter('servicioAsistentes', 1);
         if($parametros['imagenCorporativa']!= null && $parametros['imagenCorporativa']!='0') $query->setParameter('imagenCorporativa', 1);
-
+        if($proveedor || $cliente)$query->setParameter('idRelacionado', $idRelacionado);
+        
         $array['dataPaginacion']['total'] = intval($query->getSingleScalarResult());
 
         $array['dataPaginacion']['paginacion'] = $paginacion;

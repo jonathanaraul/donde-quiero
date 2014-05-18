@@ -40,6 +40,11 @@ class Espacio
     private $administradorWeb;
 
     /**
+     * @ORM\Column(name="destacado", type="boolean", nullable=true)
+     */
+    private $destacado;
+
+    /**
      * @var \User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -71,7 +76,7 @@ class Espacio
     /**
      * @ORM\Column(type="string", length=60, nullable=false)
      */
-    private $nombreEspacio;
+    private $nombre;
 
      /**
      * @ORM\Column(type="text")
@@ -444,26 +449,26 @@ class Espacio
     }
 
     /**
-     * Set nombreEspacio
+     * Set nombre
      *
-     * @param string $nombreEspacio
+     * @param string $nombre
      * @return Espacio
      */
-    public function setNombreEspacio($nombreEspacio)
+    public function setNombre($nombre)
     {
-        $this->nombreEspacio = $nombreEspacio;
+        $this->nombre = $nombre;
     
         return $this;
     }
 
     /**
-     * Get nombreEspacio
+     * Get nombre
      *
      * @return string 
      */
-    public function getNombreEspacio()
+    public function getNombre()
     {
-        return $this->nombreEspacio;
+        return $this->nombre;
     }
 
     /**
@@ -1756,6 +1761,29 @@ class Espacio
         return $this->sede1;
     }
 
+    /**
+     * Set localidad
+     *
+     * @param \Proyecto\PrincipalBundle\Entity\Localidad $localidad
+     * @return Espacio
+     */
+    public function setLocalidad(\Proyecto\PrincipalBundle\Entity\Localidad $localidad)
+    {
+        $this->localidad = $localidad;
+    
+        return $this;
+    }
+
+    /**
+     * Get localidad
+     *
+     * @return \Proyecto\PrincipalBundle\Entity\Localidad 
+     */
+    public function getLocalidad()
+    {
+        return $this->localidad;
+    }
+
   /**
      * Sets file.
      *
@@ -1857,6 +1885,8 @@ class Espacio
         // when displaying uploaded doc/image in the view.
         return 'uploads/espacios';
     }
+
+
 
 
 

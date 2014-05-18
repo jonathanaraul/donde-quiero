@@ -200,14 +200,14 @@ class EventoController extends Controller {
 
         return $this->render('ProyectoPrincipalBundle:Evento:destacados.html.twig', $arreglo);
     }
-    public function widgetAction($numResults,$paginacion)
+    public function widgetAction($titulo,$numResults,$paginacion,$proveedor,$cliente,$idRelacionado)
     {
 		$arreglo = array();
         $em = $this->getDoctrine()->getManager();
 
         if($paginacion==1)$paginacion = true;
         else $paginacion = false;
-        $arreglo = EventoController::consultaBusqueda($numResults,0,null,$paginacion);
+        $arreglo = EventoController::consultaBusqueda($numResults,0,null,$paginacion,$proveedor,$cliente,$idRelacionado);
 
         $dql =  'SELECT COUNT(o1.id) c,o2.id,o2.nombre 
                  FROM ProyectoPrincipalBundle:Evento o1, 
@@ -219,10 +219,17 @@ class EventoController extends Controller {
         $query = $em->createQuery( $dql );
         $arreglo['localidades'] = $query->getResult();
 
+        $arreglo['proveedor']= $proveedor;
+        $arreglo['cliente']= $cliente;
+        $arreglo['idRelacionado']= $idRelacionado;
+        $arreglo['titulo']= $titulo;
+        $arreglo['numResults']= $numResults;
+
         return $this->render('ProyectoPrincipalBundle:Evento:widget.html.twig', $arreglo);
     }
 
     public function busquedaAction() {
+
         $peticion = $this -> getRequest();
         $doctrine = $this -> getDoctrine();
         $post = $peticion -> request;
@@ -241,11 +248,17 @@ class EventoController extends Controller {
         if($paginacion==1)$paginacion = true;
         else $paginacion = false;
 
+        $proveedor = intval($post -> get("proveedor"));
+        $cliente = intval($post -> get("cliente"));
+        $idRelacionado = intval($post -> get("idRelacionado"));
+
+        if($proveedor==0)$proveedor = false;
+        if($cliente==0)$cliente = false;
 
         $parametros = array('localidad'=>$localidad,'precioHora'=>$precioHora,'precio'=>$precio,
                             'duracionTotal'=>$duracionTotal,'actividades'=>$actividades);
 
-        $arreglo = EventoController::consultaBusqueda($numResults,$indice,$parametros,$paginacion);
+        $arreglo = EventoController::consultaBusqueda($numResults,$indice,$parametros,$paginacion,$proveedor,$cliente,$idRelacionado);
 
         $htmlElementos = $this -> renderView('ProyectoPrincipalBundle:Evento:elementos.html.twig', array('elementos'=>$arreglo['elementos']) );
         $htmlPaginacion = $this -> renderView('ProyectoPrincipalBundle:Evento:paginacion.html.twig', array('dataPaginacion'=>$arreglo['dataPaginacion']));
@@ -254,7 +267,7 @@ class EventoController extends Controller {
         $respuesta -> headers -> set('content_type', 'aplication/json');
         return $respuesta;
     }
-    public function consultaBusqueda($numResults,$indice,$parametros,$paginacion){
+    public function consultaBusqueda($numResults,$indice,$parametros,$paginacion,$proveedor,$cliente,$idRelacionado){
 
    
     $em = $this->getDoctrine()->getManager();
@@ -265,6 +278,10 @@ class EventoController extends Controller {
 
     $dqlTotales =  'SELECT COUNT(o1.id) FROM ProyectoPrincipalBundle:Evento o1 ';
 
+    if($proveedor){
+        $dql.= ', ProyectoPrincipalBundle:User o3 ';
+        $dqlTotales .=  ', ProyectoPrincipalBundle:User o3 ';
+    }
 
     $modoA = "";
     $modoB = "";
@@ -347,9 +364,28 @@ class EventoController extends Controller {
     }
 
     if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
-    $dql.= ' o1.localidad = o2.id ORDER BY o1.id ASC';
+    $dql.= ' o1.localidad = o2.id ';
 
-  //  echo '</br>dql='.$dql;echo '</br>dqltotal='.$dqlTotales;exit;
+    if($proveedor){
+        if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+        $dql.= ' o1.user = o3.id and o3.id = :idRelacionado ';
+        
+        if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+        $dqlTotales .=  ' o1.user = o3.id and o3.id = :idRelacionado ';
+    }
+
+    if($cliente){
+        if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+        $dql.= ' o1.id IN ( SELECT DISTINCT r2.id FROM ProyectoPrincipalBundle:Reserva r1, 
+            ProyectoPrincipalBundle:Evento r2, ProyectoPrincipalBundle:User r3 WHERE r1.evento = r2.id and r1.user = r3.id and r3.id = :idRelacionado ) ';
+        
+        if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+        $dqlTotales .=  ' o1.id IN ( SELECT DISTINCT r2.id FROM ProyectoPrincipalBundle:Reserva r1, 
+            ProyectoPrincipalBundle:Evento r2, ProyectoPrincipalBundle:User r3 WHERE r1.evento = r2.id and r1.user = r3.id and r3.id = :idRelacionado ) ';
+
+    }
+
+    $dql.= ' ORDER BY o1.id ASC';
 
         $query = $em->createQuery( $dql )
         ->setMaxResults($numResults)
@@ -366,7 +402,8 @@ class EventoController extends Controller {
         }
         if($parametros['duracionTotal']!= null && $parametros['duracionTotal']!=0)$query->setParameter('duracionTotal', $parametros['duracionTotal']);
         if($parametros['actividades']!= null && $parametros['actividades']!='0') $query->setParameter('actividades', 1);      
-
+        if($proveedor || $cliente)$query->setParameter('idRelacionado', $idRelacionado);
+        
         $array['elementos'] = $query->getResult();
         $array['dataPaginacion']['obtenidos'] = count( $array['elementos']);
 
@@ -384,15 +421,12 @@ class EventoController extends Controller {
         }
         if($parametros['duracionTotal']!= null && $parametros['duracionTotal']!=0)$query->setParameter('duracionTotal', $parametros['duracionTotal']);
         if($parametros['actividades']!= null && $parametros['actividades']!='0') $query->setParameter('actividades', 1);      
-
+        if($proveedor || $cliente)$query->setParameter('idRelacionado', $idRelacionado);
 
         $array['dataPaginacion']['total'] = intval($query->getSingleScalarResult());
         $array['dataPaginacion']['paginacion'] = $paginacion;
         $array['dataPaginacion']['numPaginacion'] = ceil($array['dataPaginacion']['total'] / $numResults);
         $array['dataPaginacion']['numResults'] = $numResults;
-
-        //var_dump( $array['dataPaginacion']);
-        //exit;
 
         return $array;
     }

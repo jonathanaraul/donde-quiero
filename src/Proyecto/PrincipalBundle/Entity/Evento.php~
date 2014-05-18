@@ -229,6 +229,11 @@ class Evento
      */
     private $precio;
 
+    /**
+     * @ORM\Column(name="destacado", type="boolean", nullable=true)
+     */
+    private $destacado;
+
      /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */

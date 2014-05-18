@@ -1,8 +1,8 @@
 <div id="servicios" ></div>
-<div id="work"  class="azul  rejilla-servicios"  paginacion="{{dataPaginacion.paginacion}}">
+<div id="work"  class="azul  rejilla-servicios"  paginacion="{{dataPaginacion.paginacion}}" proveedor="{{proveedor}}" cliente="{{cliente}}" idRelacionado="{{idRelacionado}}">
 	<!-- Work Links Section Start -->
 	<div class="añadir">
-		<a href="{{path('proyecto_principal_servicio_registrar')}}">Servicios</a><!--/item-->
+		<a href="{{path('proyecto_principal_servicio_registrar')}}">{{titulo}}</a><!--/item-->
 	</div>
 	<div class="buscador">
 		<select name="ofrecidosPor" class="formstyle">
@@ -113,7 +113,7 @@
 		{% include 'ProyectoPrincipalBundle:Servicio:paginacion.html.twig' with {'dataPaginacion': dataPaginacion} %}
 	</div>
 	<div class="clearfix"></div>
-	<div id="loader-widget-azul" style="display:none;height:260px;">
-       <p style="text-align:center;width: 100%;margin-top: 168px;"><img src="{{ asset('sistema/images/loader-azul.gif')}}" title="Cargando servicios" style="width:80px;"></p>
+	<div id="loader-widget-azul" style="display:none;height:{%if numResults== 4%}150{%else%}260{%endif%}px;">
+       <p style="text-align:center;width: 100%;margin-top: {%if numResults== 4%}73{%else%}168{%endif%}px;"><img src="{{ asset('sistema/images/loader-azul.gif')}}" title="Cargando servicios" style="width:80px;"></p>
 	</div>
 </div>

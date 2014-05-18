@@ -37,33 +37,109 @@
 			<div class="clearfix"></div>
 
 			<p>
-				<a href="#">Reservas</a>
+				<a href="{{path('proyecto_perfil_reservas')}}">Reservas</a>
 			</p>
 
 			<div class="datos">
+				{%if reservas is not null%}
+				{%for elemento in reservas%}
+ 
+                {%set color = ''%}
+                {%set nombre = ''%}
+
+                {%if elemento.espacio is not null %}
+                    {%set color = 'verde'%}   
+                    {%set nombre = elemento.espacio.nombre%}    
+                    {%set url = path('proyecto_principal_espacio_reservar',{'id':elemento.espacio.id}) %}            
+                {%elseif elemento.sede is not null %}
+                    {%set color = 'amarillo'%}
+                    {%set nombre = elemento.sede.nombre%}
+                    {%set url = path('proyecto_principal_sede_reservar',{'id':elemento.sede.id}) %}   
+                {%elseif elemento.servicio is not null%}
+                    {%set color = 'azul'%}
+                    {%set nombre = elemento.servicio.nombre%}
+                    {%set url = path('proyecto_principal_servicio_reservar',{'id':elemento.servicio.id}) %}   
+                {%elseif elemento.evento is not null%}
+                    {%set color = 'rosa'%}
+                    {%set nombre = elemento.evento.nombre%}
+                    {%set url = path('proyecto_principal_evento_reservar',{'id':elemento.evento.id}) %}   
+                {%endif%}
+
+
 				<p>
-					dd/mm/aa <a href="reservas.html" class="rosa">Cod-Reserva</a><span id="circulo" class="verde"> </span><a href="evento.html"> Emprende Galicia. </a>
+					{{elemento.fechaInicio.format('d/m/Y')}} 
+
+					<a href="{{url}}" class="{{color}}">&nbsp;&nbsp;&nbsp;cod-{{elemento.id}}&nbsp;&nbsp;&nbsp;</a>
+                    
+                    {%if loop.index % 2 == 0%}
+					<span id="circulo" class="verde"> </span>
+					{%endif%}
+
+					<a href="{{url}}"> 
+					{{nombre}}
+				    </a>
+
 				</p>
-				<p>
-					dd/mm/aa <a href="reservas.html" class="verde">Cod-Reserva</a><a href="espacio.html"> Espacio Coam. </a>
-				</p>
-				<p>
-					dd/mm/aa <a href="reservas.html" class="azul">Cod-Reserva</a><a href="servicio.html"> Fotografia . </a>
-				</p>
+				{%endfor%}
+
 				<div class="clearfix"></div>
 				<div class="otras">
 					<p>
-						<a href="reservas.html">Todas</a>
+						<a href="{{path('proyecto_perfil_reservas')}}">Todas</a>
 					</p>
 				</div>
+				{%else%}
+				<p>Ud no tiene reservas registradas...</p>
+				{%endif%}
 			</div>
 
 			<div class="clearfix"></div>
+            
 			<p>
-				<a href="notificaciones.html">Notificaciones pendientes</a>
+				<a href="{{path('proyecto_perfil_notificaciones')}}">Notificaciones pendientes</a>
 			</p>
 			<div class="datos">
+				{%if notificaciones is not null%}
 				<div class="datos">
+				
+				{%for elemento in notificaciones%}
+ 
+                {%set color = ''%}
+                {%set nombre = ''%}
+
+                {%if elemento.espacio is not null %}
+                    {%set color = 'verde'%}   
+                    {%set nombre = elemento.espacio.nombre%}    
+                    {%set url = path('proyecto_principal_espacio_reservar',{'id':elemento.espacio.id}) %}            
+                {%elseif elemento.sede is not null %}
+                    {%set color = 'amarillo'%}
+                    {%set nombre = elemento.sede.nombre%}
+                    {%set url = path('proyecto_principal_sede_reservar',{'id':elemento.sede.id}) %}   
+                {%elseif elemento.servicio is not null%}
+                    {%set color = 'azul'%}
+                    {%set nombre = elemento.servicio.nombre%}
+                    {%set url = path('proyecto_principal_servicio_reservar',{'id':elemento.servicio.id}) %}   
+                {%elseif elemento.evento is not null%}
+                    {%set color = 'rosa'%}
+                    {%set nombre = elemento.evento.nombre%}
+                    {%set url = path('proyecto_principal_evento_reservar',{'id':elemento.evento.id}) %}   
+                {%endif%}
+				<p>
+					{{elemento.fechaInicio.format('d/m/Y')}} 
+
+					<a href="{{url}}" class="{{color}}">&nbsp;&nbsp;&nbsp;cod-{{elemento.id}}&nbsp;&nbsp;&nbsp;</a>
+                    
+                    {%if loop.index % 2 == 0%}
+					<span id="circulo" class="verde"> </span>
+					{%endif%}
+
+					<a href="{{url}}"> 
+					{{nombre}}
+				    </a>
+
+				</p>
+				{%endfor%} 
+                   {#
 					<p>
 						dd/mm/aa <a href="espaciogestion.html" class="verde">Cod-Solicitud</a><span id="circulo" class="verde"> </span><a href="espacioact.html"> Espacio Coam. </a>
 					</p>
@@ -76,15 +152,19 @@
 					<p>
 						dd/mm/aa <a href="espaciogestion.html" class="verde">Cod-Solicitud</a><a href="espacioact.html"> Espacio Coam. </a>
 					</p>
+                      #}
 				</div>
 				<div class="clearfix"></div>
 				<div class="otras">
 					<p>
-						<a href="notificaciones.html">Todas</a>
+						<a href="{{path('proyecto_perfil_notificaciones')}}">Todas</a>
 					</p>
 				</div>
+				{%endif%}
 			</div>
 			<div class="clearfix"></div>
+
+			
 
 		</div>
 

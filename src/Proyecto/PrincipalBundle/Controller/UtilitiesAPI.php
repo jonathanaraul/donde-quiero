@@ -221,6 +221,16 @@ class UtilitiesAPI extends Controller {
 	 //.' - '.$hora.':'.$minuto;
 	 return $fecha;
 	 }
+	 public static function obtenerFechaNormal2($class) {
+	 $hoy = getdate();
+	 $anio = $hoy['year'];
+	 $mes = $hoy['mon'];
+	 $dia = $hoy['mday'];
+	 $fecha =  $anio .'-'. $mes .'-'. $dia. ' 00:00:00';
+	 //.' - '.$hora.':'.$minuto;
+	 return $fecha;
+	 }
+
 	 public static function sumarTiempo($fechaOriginal, $dia, $mes, $anio, $class) {
 
 	 $arreglo = explode("/", $fechaOriginal);
@@ -301,15 +311,6 @@ class UtilitiesAPI extends Controller {
 
 
 
-	 public static function obtenerFechaNormal2($class) {
-	 $hoy = getdate();
-	 $anio = $hoy['year'];
-	 $mes = $hoy['mon'];
-	 $dia = $hoy['mday'];
-	 $fecha = $dia . "-" . $mes . '-' . $anio;
-	 //.' - '.$hora.':'.$minuto;
-	 return $fecha;
-	 }
 
 	 public static function obtenerFechaNormal3($class) {
 	 $hoy = getdate();

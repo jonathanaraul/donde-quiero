@@ -25,11 +25,173 @@ class PerfilController extends Controller {
 		$user = UtilitiesAPI::getActiveUser($this);
 		$facturacion =  $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Facturacion') -> findOneByUser($user);
 		$retiro =  $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Retiro') -> findOneByUser($user);
-		$secondArray = array('user'=>$user,'facturacion'=>$facturacion,'retiro'=>$retiro);
+
+        $idUser = $user->getId();
+        $em = $this->getDoctrine()->getManager();
+
+        $dql =  'SELECT o1
+                 FROM ProyectoPrincipalBundle:Reserva o1, 
+                      ProyectoPrincipalBundle:User o2
+                 WHERE 
+                       o1.user = o2.id AND
+                       o2.id = :idUser 
+                 ORDER BY o1.id desc
+                       ';
+
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $query->setMaxResults(3);
+        $reservas = $query->getResult();
+
+
+
+        $dql =  'SELECT o1
+                 FROM ProyectoPrincipalBundle:Reserva o1, 
+                      ProyectoPrincipalBundle:User o2
+                 WHERE 
+                       o1.espacio  IN (SELECT s1.id FROM ProyectoPrincipalBundle:Espacio  s1,  ProyectoPrincipalBundle:User s2  WHERE s1.user = s2.id and s2.id = :idUser)
+                    or o1.evento   IN (SELECT e1.id FROM ProyectoPrincipalBundle:Evento   e1,  ProyectoPrincipalBundle:User e2  WHERE e1.user = e2.id and e2.id = :idUser)
+                    or o1.servicio IN (SELECT d1.id FROM ProyectoPrincipalBundle:Servicio d1,  ProyectoPrincipalBundle:User d2  WHERE d1.user = d2.id and d2.id = :idUser)
+                    
+                 ORDER BY o1.id desc
+                       ';
+
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $notificaciones = $query->getResult();
+        $auxiliar = array();
+        for ($i=0; $i < 3 ; $i++) { 
+        	$auxiliar[$i] = $notificaciones[$i];
+        }
+        $notificaciones = $auxiliar;
+
+        //var_dump($notificaciones);exit;
+
+		$secondArray = array('user'=>$user,'facturacion'=>$facturacion,'retiro'=>$retiro,'reservas'=>$reservas,'notificaciones'=>$notificaciones);
 
 		$array = array_merge($firstArray, $secondArray);
 		return $this -> render('ProyectoPrincipalBundle:Perfil:privado.html.twig', $array);
 	}
+	public function notificacionesAction(){
+		$firstArray = UtilitiesAPI::getDefaultContent($this);
+		$user = UtilitiesAPI::getActiveUser($this);
+
+        $idUser = $user->getId();
+        $em = $this->getDoctrine()->getManager();
+
+        $dql =  'SELECT o1
+                 FROM ProyectoPrincipalBundle:Reserva o1
+                 WHERE 
+                       o1.espacio  IN (SELECT s1.id FROM ProyectoPrincipalBundle:Espacio  s1,  ProyectoPrincipalBundle:User s2  WHERE s1.user = s2.id and s2.id = :idUser)
+                    or o1.evento   IN (SELECT e1.id FROM ProyectoPrincipalBundle:Evento   e1,  ProyectoPrincipalBundle:User e2  WHERE e1.user = e2.id and e2.id = :idUser)
+                    or o1.servicio IN (SELECT d1.id FROM ProyectoPrincipalBundle:Servicio d1,  ProyectoPrincipalBundle:User d2  WHERE d1.user = d2.id and d2.id = :idUser)
+                    or o1.sede     IN (SELECT x1.id FROM ProyectoPrincipalBundle:Sede x1,  ProyectoPrincipalBundle:User x2  WHERE x1.user = x2.id and x2.id = :idUser)
+                    and o1.fechaFin >= :fechaFin
+                    
+                 ORDER BY o1.fechaFin desc
+                       ';
+
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $query->setParameter('fechaFin', UtilitiesAPI::obtenerFechaNormal2($this));
+
+        $activas = $query->getResult();
+
+        $dql =  'SELECT o1
+                 FROM ProyectoPrincipalBundle:Reserva o1
+                 WHERE 
+                       o1.espacio  IN (SELECT s1.id FROM ProyectoPrincipalBundle:Espacio  s1,  ProyectoPrincipalBundle:User s2  WHERE s1.user = s2.id and s2.id = :idUser)
+                    or o1.evento   IN (SELECT e1.id FROM ProyectoPrincipalBundle:Evento   e1,  ProyectoPrincipalBundle:User e2  WHERE e1.user = e2.id and e2.id = :idUser)
+                    or o1.servicio IN (SELECT d1.id FROM ProyectoPrincipalBundle:Servicio d1,  ProyectoPrincipalBundle:User d2  WHERE d1.user = d2.id and d2.id = :idUser)
+                    or o1.sede     IN (SELECT x1.id FROM ProyectoPrincipalBundle:Sede x1,  ProyectoPrincipalBundle:User x2  WHERE x1.user = x2.id and x2.id = :idUser)
+                    and o1.fechaFin < :fechaFin
+                    
+                 ORDER BY o1.fechaFin desc
+                       ';
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $query->setParameter('fechaFin', UtilitiesAPI::obtenerFechaNormal2($this));
+
+        $pasadas = $query->getResult();
+
+        $secondArray = array('activas'=>$activas,'pasadas'=>$pasadas,'user'=>$user);
+        $secondArray['sedes']     = HelpersController::getSedes(true,false,$idUser,$this);//caso especial mapas javascript
+		$array = array_merge($firstArray, $secondArray);
+        return $this -> render('ProyectoPrincipalBundle:Perfil:notificaciones.html.twig', $array);
+	}
+	public function reservasAction(){
+		$firstArray = UtilitiesAPI::getDefaultContent($this);
+		$user = UtilitiesAPI::getActiveUser($this);
+
+        $idUser = $user->getId();
+        $em = $this->getDoctrine()->getManager();
+
+        $dql =  'SELECT o1
+                 FROM ProyectoPrincipalBundle:Reserva o1, 
+                      ProyectoPrincipalBundle:User o2
+                 WHERE 
+                       o1.user = o2.id AND
+                       o2.id = :idUser AND
+                       o1.fechaFin >= :fechaFin
+                 ORDER BY o1.fechaFin desc
+                       ';
+
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $query->setParameter('fechaFin', UtilitiesAPI::obtenerFechaNormal2($this));
+
+        $activas = $query->getResult();
+
+        $dql =  'SELECT o1
+                 FROM ProyectoPrincipalBundle:Reserva o1, 
+                      ProyectoPrincipalBundle:User o2
+                 WHERE 
+                       o1.user = o2.id AND
+                       o2.id = :idUser AND
+                       o1.fechaFin < :fechaFin
+                 ORDER BY o1.fechaFin desc
+                       ';
+
+        $query = $em->createQuery( $dql );
+        $query->setParameter('idUser', $idUser);
+        $query->setParameter('fechaFin', UtilitiesAPI::obtenerFechaNormal2($this));
+
+        $pasadas = $query->getResult();
+
+        $secondArray = array('activas'=>$activas,'pasadas'=>$pasadas,'user'=>$user);
+        $secondArray['sedes']     = HelpersController::getSedes(false,true,$idUser,$this);//caso especial mapas javascript
+		$array = array_merge($firstArray, $secondArray);
+
+		return $this -> render('ProyectoPrincipalBundle:Perfil:reservas.html.twig', $array);
+	}
+    public function notificacionReservaAction(){
+        $peticion = $this -> getRequest();
+        $doctrine = $this -> getDoctrine();
+        $post = $peticion -> request;
+        $em = $this->getDoctrine()->getManager();
+
+        $tarea = trim($post -> get("tarea"));
+        $id = intval($post -> get("id"));
+
+        $object = $this -> getDoctrine() -> getRepository('ProyectoPrincipalBundle:Reserva') -> find($id);
+
+        if($tarea=='aprobar'){
+        $object -> setAprobado(true);
+        }
+        else if($tarea=='cancelar'){
+        $object -> setCancelado(true);
+        }
+        else if($tarea=='borrar'){
+        $object -> setOculto(true);
+        }
+
+        $em->persist($object);
+        $em->flush();
+
+        $respuesta = new response(json_encode(array('estado' => true)));
+        $respuesta -> headers -> set('content_type', 'aplication/json');
+        return $respuesta;
+    }
 	public function publicoAction() {
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
 		$user = UtilitiesAPI::getActiveUser($this);

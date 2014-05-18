@@ -330,7 +330,10 @@ class Servicio
     private $precioPorHora;
 
 
-
+    /**
+     * @ORM\Column(name="destacado", type="boolean", nullable=true)
+     */
+    private $destacado;
      /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -2066,5 +2069,28 @@ class Servicio
     public function getEmisionOnlinePaginaEvento()
     {
         return $this->emisionOnlinePaginaEvento;
+    }
+
+    /**
+     * Set destacado
+     *
+     * @param boolean $destacado
+     * @return Servicio
+     */
+    public function setDestacado($destacado)
+    {
+        $this->destacado = $destacado;
+    
+        return $this;
+    }
+
+    /**
+     * Get destacado
+     *
+     * @return boolean 
+     */
+    public function getDestacado()
+    {
+        return $this->destacado;
     }
 }

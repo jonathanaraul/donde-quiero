@@ -7,7 +7,7 @@
 	{% include 'ProyectoPrincipalBundle:Default:sesion.html.twig'  with {'datos': datos} %}
 
     {% render controller('ProyectoPrincipalBundle:Espacio:destacados', { 'numResults': 4 }) %}
-	{% render controller('ProyectoPrincipalBundle:Espacio:widget', { 'numResults': 16,'paginacion':true }) %}
+	{% render controller('ProyectoPrincipalBundle:Espacio:widget', { 'titulo':'Espacios','numResults': 16,'paginacion':true,'proveedor':false,'cliente':false,'idRelacionado':0 }) %}
 
 </div>
 

@@ -20,7 +20,7 @@ class DefaultController extends Controller {
 		//HelpersController::eliminaHuerfanos($this);
 		$firstArray = UtilitiesAPI::getDefaultContent($this);
 		$secondArray = array();
-        $secondArray['sedes']     = HelpersController::getSedes($this);//caso especial mapas javascript
+        $secondArray['sedes']     = HelpersController::getSedes(false,false,0,$this);//caso especial mapas javascript
 
 		$array = array_merge($firstArray, $secondArray);
 		return $this -> render('ProyectoPrincipalBundle:Default:index.html.twig', $array);

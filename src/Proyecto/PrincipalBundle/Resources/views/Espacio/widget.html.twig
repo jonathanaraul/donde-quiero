@@ -1,8 +1,8 @@
 <div id="espacios" ></div>
-<div class="verde rejilla-espacios" id="work"  paginacion="{{dataPaginacion.paginacion}}">
+<div class="verde rejilla-espacios" id="work" paginacion="{{dataPaginacion.paginacion}}" proveedor="{{proveedor}}" cliente="{{cliente}}" idRelacionado="{{idRelacionado}}">
 	<!-- Work Links Section Start -->
 	<div class="añadir">
-		<a href="{{ path('proyecto_principal_espacio_grupal') }}">Espacios</a><!--/item-->
+		<a href="{{ path('proyecto_principal_espacio_grupal') }}">{{titulo}}</a><!--/item-->
 	</div>
 	<div class="buscador">
 		<select name="localidad" class="formstyle">
@@ -184,7 +184,7 @@
 		{% include 'ProyectoPrincipalBundle:Espacio:paginacion.html.twig' with {'dataPaginacion': dataPaginacion} %}
 	</div>
 	<div class="clearfix"></div>
-	<div id="loader-widget-verde" style="display:none;height:260px;">
-       <p style="text-align:center;width: 100%;margin-top: 168px;"><img src="{{ asset('sistema/images/loader-verde.gif')}}" title="Cargando espacios" style="width:80px;"></p>
+	<div id="loader-widget-verde" style="display:none;height:{%if numResults== 4%}150{%else%}260{%endif%}px;">
+       <p style="text-align:center;width: 100%;margin-top: {%if numResults== 4%}73{%else%}168{%endif%}px;"><img src="{{ asset('sistema/images/loader-verde.gif')}}" title="Cargando espacios" style="width:80px;"></p>
 	</div>
 </div>

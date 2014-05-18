@@ -213,16 +213,15 @@ class EspacioController extends Controller {
 
         return $this->render('ProyectoPrincipalBundle:Espacio:destacados.html.twig', $arreglo);
     }
-    public function widgetAction($numResults,$paginacion)
+    public function widgetAction($titulo,$numResults,$paginacion,$proveedor,$cliente,$idRelacionado)
     {
 		$arreglo = array();
        
-
         $em = $this->getDoctrine()->getManager();
 
         if($paginacion==1)$paginacion = true;
         else $paginacion = false;
-        $arreglo = EspacioController::consultaBusqueda($numResults,0,null,$paginacion);
+        $arreglo = EspacioController::consultaBusqueda($numResults,0,null,$paginacion,$proveedor,$cliente,$idRelacionado);
 
         $dql =  'SELECT COUNT(o1.id) c,o2.id,o2.nombre 
                  FROM ProyectoPrincipalBundle:Espacio o1, 
@@ -237,10 +236,6 @@ class EspacioController extends Controller {
         $fechaActual = UtilitiesAPI::obtenerFechaNormal($this);
         $arreglo['disponibilidad'][0] = array(  'valor'=> $fechaActual, 'dia'=> UtilitiesAPI::obtenerNombreDia($fechaActual,$this));
   
-       //var_dump( $arreglo['disponibilidad']);
-
-
-
         for ($i=1; $i <= 6; $i++) { 
             $nuevaFecha = UtilitiesAPI::sumarTiempo($arreglo['disponibilidad'][$i-1]['valor'], 1, 0, 0, $this);
              $arreglo['disponibilidad'][$i] =   array(  
@@ -248,12 +243,18 @@ class EspacioController extends Controller {
                 'dia'  =>UtilitiesAPI::obtenerNombreDia( $nuevaFecha,$this)
                                                       );
         }
+        $arreglo['proveedor']= $proveedor;
+        $arreglo['cliente']= $cliente;
+        $arreglo['idRelacionado']= $idRelacionado;
+        $arreglo['titulo']= $titulo;
+        $arreglo['numResults']= $numResults;
 
 
         return $this->render('ProyectoPrincipalBundle:Espacio:widget.html.twig', $arreglo);
     }
 
     public function busquedaAction() {
+
         $peticion = $this -> getRequest();
         $doctrine = $this -> getDoctrine();
         $post = $peticion -> request;
@@ -273,21 +274,25 @@ class EspacioController extends Controller {
         if($paginacion==1)$paginacion = true;
         else $paginacion = false;
 
+        $proveedor = intval($post -> get("proveedor"));
+        $cliente = intval($post -> get("cliente"));
+        $idRelacionado = intval($post -> get("idRelacionado"));
+
+        if($proveedor==0)$proveedor = false;
+        if($cliente==0)$cliente = false;
 
         $parametros = array('precioHora'=>$precioHora,'actividades'=>$actividades,'superficie'=>$superficie,'modo'=>$modo,'localidad'=>$localidad, 'disponibilidad'=>$disponibilidad);
-        //echo 'el indice es'.$indice;
-        //exit;
-        $arreglo = EspacioController::consultaBusqueda($numResults,$indice,$parametros,$paginacion);
+
+        $arreglo = EspacioController::consultaBusqueda($numResults,$indice,$parametros,$paginacion,$proveedor,$cliente,$idRelacionado);
 
         $htmlElementos = $this -> renderView('ProyectoPrincipalBundle:Espacio:elementos.html.twig', array('elementos'=>$arreglo['elementos']) );
         $htmlPaginacion = $this -> renderView('ProyectoPrincipalBundle:Espacio:paginacion.html.twig', array('dataPaginacion'=>$arreglo['dataPaginacion']));
-
 
         $respuesta = new response(json_encode(array('htmlElementos' => $htmlElementos,'htmlPaginacion' =>$htmlPaginacion)));
         $respuesta -> headers -> set('content_type', 'aplication/json');
         return $respuesta;
     }
-    public function consultaBusqueda($numResults,$indice,$parametros,$paginacion){
+    public function consultaBusqueda($numResults,$indice,$parametros,$paginacion,$proveedor,$cliente,$idRelacionado){
 
    
     $em = $this->getDoctrine()->getManager();
@@ -298,6 +303,10 @@ class EspacioController extends Controller {
 
     $dqlTotales =  'SELECT DISTINCT COUNT(DISTINCT o1.id) FROM ProyectoPrincipalBundle:Espacio o1 ';
 
+    if($proveedor){
+        $dql.= ', ProyectoPrincipalBundle:User o3 ';
+        $dqlTotales .=  ', ProyectoPrincipalBundle:User o3 ';
+    }
 
     $modoA = "";
     $modoB = "";
@@ -307,8 +316,6 @@ class EspacioController extends Controller {
     $fechaFin = '';
 
     if($parametros!=null){
-
-
 
         if($parametros['actividades']!= null && $parametros['actividades']!='0'){
             
@@ -421,9 +428,26 @@ class EspacioController extends Controller {
     if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
     $dql.= ' o1.localidad = o2.id ';
 
-    $dql.= ' ORDER BY o1.id ASC';
+    if($proveedor){
+        if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+        $dql.= ' o1.user = o3.id and o3.id = :idRelacionado ';
+        
+        if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+        $dqlTotales .=  ' o1.user = o3.id and o3.id = :idRelacionado ';
+    }
 
-    //echo '</br>dql= '.$dql;echo ' </br>dqltotal= '.$dqlTotales;exit;
+    if($cliente){
+        if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+        $dql.= ' o1.id IN ( SELECT DISTINCT r2.id FROM ProyectoPrincipalBundle:Reserva r1, 
+            ProyectoPrincipalBundle:Espacio r2, ProyectoPrincipalBundle:User r3 WHERE r1.espacio = r2.id and r1.user = r3.id and r3.id = :idRelacionado ) ';
+        
+        if(!$tieneWhereTotales){$dqlTotales.= ' WHERE ';$tieneWhereTotales= true; }else $dqlTotales.= ' AND ';
+        $dqlTotales .=  ' o1.id IN ( SELECT DISTINCT r2.id FROM ProyectoPrincipalBundle:Reserva r1, 
+            ProyectoPrincipalBundle:Espacio r2, ProyectoPrincipalBundle:User r3 WHERE r1.espacio = r2.id and r1.user = r3.id and r3.id = :idRelacionado ) ';
+
+    }
+
+    $dql.= ' ORDER BY o1.id ASC';
 
         $query = $em->createQuery( $dql )
         ->setMaxResults($numResults)
@@ -441,8 +465,8 @@ class EspacioController extends Controller {
            if($modoB != 0)$query->setParameter('modoB', $modoB);
         }
         if($parametros['localidad']!= null && $parametros['localidad']!=0) $query->setParameter('localidad', $parametros['localidad']);
-
-
+        if($proveedor || $cliente)$query->setParameter('idRelacionado', $idRelacionado);
+        
         $array['elementos'] = $query->getResult();
         $array['dataPaginacion']['obtenidos'] = count( $array['elementos']);
 
@@ -460,6 +484,7 @@ class EspacioController extends Controller {
            if($modoB != 0)$query->setParameter('modoB', $modoB);
         }
         if($parametros['localidad']!= null && $parametros['localidad']!=0) $query->setParameter('localidad', $parametros['localidad']);
+        if($proveedor || $cliente)$query->setParameter('idRelacionado', $idRelacionado);
 
         $array['dataPaginacion']['total'] = intval($query->getSingleScalarResult());
 

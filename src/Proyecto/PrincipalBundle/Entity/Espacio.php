@@ -40,6 +40,11 @@ class Espacio
     private $administradorWeb;
 
     /**
+     * @ORM\Column(name="destacado", type="boolean", nullable=true)
+     */
+    private $destacado;
+
+    /**
      * @var \User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -1886,4 +1891,27 @@ class Espacio
 
 
 
+
+    /**
+     * Set destacado
+     *
+     * @param boolean $destacado
+     * @return Espacio
+     */
+    public function setDestacado($destacado)
+    {
+        $this->destacado = $destacado;
+    
+        return $this;
+    }
+
+    /**
+     * Get destacado
+     *
+     * @return boolean 
+     */
+    public function getDestacado()
+    {
+        return $this->destacado;
+    }
 }

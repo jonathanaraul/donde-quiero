@@ -158,6 +158,17 @@ proyecto_perfil_cancelar_solicitud_baja:
     defaults: { _controller: ProyectoPrincipalBundle:Perfil:cancelarSolicitudBaja }
     requirements:
       _method: POST
+proyecto_perfil_reservas:
+    pattern:  /perfil/reservas
+    defaults: { _controller: ProyectoPrincipalBundle:Perfil:reservas }
+proyecto_perfil_notificaciones:
+    pattern:  /perfil/notificaciones
+    defaults: { _controller: ProyectoPrincipalBundle:Perfil:notificaciones }
+proyecto_perfil_notificacion_reserva:
+    pattern:  /perfil/notificacionReserva
+    defaults: { _controller: ProyectoPrincipalBundle:Perfil:notificacionReserva }
+    requirements:
+      _method: POST
 
 proyecto_principal_acceso:
     pattern:  /acceso

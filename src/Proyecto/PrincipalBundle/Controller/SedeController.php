@@ -191,19 +191,37 @@ class SedeController extends Controller {
 		return $class -> render('ProyectoPrincipalBundle:Sede:registrarEditar.html.twig', $array);
 	}
    
-    public function widgetAction($numResults)
+    public function widgetAction($titulo,$numResults,$proveedor,$cliente,$idRelacionado)
     {
         $secondArray = array();
         $em = $this->getDoctrine()->getManager();
+        $tieneWhere = false;
         $dql =  'SELECT COUNT(o1.id) c,o2.id,o2.nombre 
                  FROM ProyectoPrincipalBundle:Sede o1, 
-                      ProyectoPrincipalBundle:Localidad o2
-                 WHERE o1.localidad = o2.id
+                      ProyectoPrincipalBundle:Localidad o2 ';
 
-        GROUP BY  o1.localidad order by c  desc';
+        if($proveedor){
+            $dql .=  ', ProyectoPrincipalBundle:User o3  WHERE o1.user = o3.id and o3.id = :idRelacionado';
+            $tieneWhere = true;
+        }
+        if($cliente){
+            $dql.= ' WHERE o1.id IN ( SELECT DISTINCT r2.id FROM ProyectoPrincipalBundle:Reserva r1, 
+            ProyectoPrincipalBundle:Sede r2, ProyectoPrincipalBundle:User r3 WHERE r1.sede = r2.id and r1.user = r3.id and r3.id = :idRelacionado ) ';
+            $tieneWhere = true;
+        }
+
+        if(!$tieneWhere){$dql.= ' WHERE ';$tieneWhere= true; }else $dql.= ' AND ';
+
+        $dql .=  'o1.localidad = o2.id  GROUP BY  o1.localidad order by c  desc';
 
         $query = $em->createQuery( $dql );
+        if($proveedor || $cliente)$query->setParameter('idRelacionado', $idRelacionado);
         $secondArray['localidades'] = $query->getResult();
+
+        $secondArray['proveedor']= $proveedor;
+        $secondArray['cliente']= $cliente;
+        $secondArray['idRelacionado']= $idRelacionado;
+        $secondArray['titulo']= $titulo;
 
         return $this->render('ProyectoPrincipalBundle:Sede:widget.html.twig', $secondArray);
     }
@@ -221,15 +239,17 @@ class SedeController extends Controller {
         $tipoSede = intval($post -> get("tiposede"));
         $actividades = trim($post -> get("actividades"));
 
-        //$paginacion = intval($post -> get("paginacion"));
-        //$numResults = intval($post -> get("numResults"));
-        //$indice = intval($post -> get("indice"));
+        $proveedor = intval($post -> get("proveedor"));
+        $cliente = intval($post -> get("cliente"));
+        $idRelacionado = intval($post -> get("idRelacionado"));
 
+        if($proveedor==0)$proveedor = false;
+        if($cliente==0)$cliente = false;
 
         $parametros = array('accesibilidad'=>$accesibilidad,'tipoSede'=>$tipoSede,'precioHora'=>$precioHora,'actividades'=>$actividades,'modo'=>$modo,'localidad'=>$localidad);
         //echo 'el indice es'.$indice;
         //exit;
-        $arreglo = SedeController::consultaBusqueda($parametros);
+        $arreglo = SedeController::consultaBusqueda($parametros,$paginacion,$proveedor,$cliente,$idRelacionado);
 
 
 

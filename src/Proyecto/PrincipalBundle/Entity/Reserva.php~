@@ -68,6 +68,15 @@ class Reserva
      * @ORM\Column(name="cancelado",type="boolean", nullable=false)
      */
     private $cancelado;
+    /**
+     * @ORM\Column(name="aprobado",type="boolean", nullable=false)
+     */
+    private $aprobado;
+
+    /**
+     * @ORM\Column(name="oculto",type="boolean", nullable=false)
+     */
+    private $oculto;
 
     /**
      * @var \Espacio
@@ -348,5 +357,74 @@ class Reserva
     public function getEvento()
     {
         return $this->evento;
+    }
+
+    /**
+     * Set pagado
+     *
+     * @param boolean $pagado
+     * @return Reserva
+     */
+    public function setPagado($pagado)
+    {
+        $this->pagado = $pagado;
+    
+        return $this;
+    }
+
+    /**
+     * Get pagado
+     *
+     * @return boolean 
+     */
+    public function getPagado()
+    {
+        return $this->pagado;
+    }
+
+    /**
+     * Set cancelado
+     *
+     * @param boolean $cancelado
+     * @return Reserva
+     */
+    public function setCancelado($cancelado)
+    {
+        $this->cancelado = $cancelado;
+    
+        return $this;
+    }
+
+    /**
+     * Get cancelado
+     *
+     * @return boolean 
+     */
+    public function getCancelado()
+    {
+        return $this->cancelado;
+    }
+
+    /**
+     * Set aprobado
+     *
+     * @param boolean $aprobado
+     * @return Reserva
+     */
+    public function setAprobado($aprobado)
+    {
+        $this->aprobado = $aprobado;
+    
+        return $this;
+    }
+
+    /**
+     * Get aprobado
+     *
+     * @return boolean 
+     */
+    public function getAprobado()
+    {
+        return $this->aprobado;
     }
 }

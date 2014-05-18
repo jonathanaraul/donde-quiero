@@ -84,19 +84,31 @@ class HelpersController extends Controller
 
         return  $arreglo;
     }
-    public static function getSedes($class){
+    public static function getSedes($proveedor,$cliente,$idRelacionado,$class){
 
         $em = $class->getDoctrine()->getManager();
 
         $dql =  'SELECT o1.id,o1.nombre,o1.path, o1.latitud,o1.longitud
                  FROM ProyectoPrincipalBundle:Sede o1
-                 ORDER BY o1.id ASC';
+                ';
+        $tieneWhere = false;
 
-        $query = $em->createQuery( $dql );//->setMaxResults(8);
+        if($proveedor){
+            $dql .=  ', ProyectoPrincipalBundle:User o3  WHERE o1.user = o3.id and o3.id = :idRelacionado';
+            $tieneWhere = true;
+        }
+        if($cliente){
+            $dql.= ' WHERE o1.id IN ( SELECT DISTINCT r2.id FROM ProyectoPrincipalBundle:Reserva r1, 
+            ProyectoPrincipalBundle:Sede r2, ProyectoPrincipalBundle:User r3 WHERE r1.sede = r2.id and r1.user = r3.id and r3.id = :idRelacionado ) ';
+            $tieneWhere = true;
+        }
 
+
+        $dql .=   ' ORDER BY o1.id ASC';
+
+        $query = $em->createQuery( $dql );
+        if($proveedor || $cliente)$query->setParameter('idRelacionado', $idRelacionado);
         $arreglo = $query->getResult();
-       // var_dump($arreglo);
-        //exit;
 
         return  $arreglo;
     }

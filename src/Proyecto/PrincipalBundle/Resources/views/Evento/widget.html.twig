@@ -1,9 +1,9 @@
 <div id="eventos" ></div>
 
-<div id="work"  class="rosa rejilla-eventos"  paginacion="{{dataPaginacion.paginacion}}">
+<div id="work"  class="rosa rejilla-eventos"  paginacion="{{dataPaginacion.paginacion}}" proveedor="{{proveedor}}" cliente="{{cliente}}" idRelacionado="{{idRelacionado}}">
 	<!-- Work Links Section Start -->
 	<div class="añadir">
-		<a href="{{path('proyecto_principal_evento_registrar')}}">Eventos</a><!--/item-->
+		<a href="{{path('proyecto_principal_evento_registrar')}}">{{titulo}}</a><!--/item-->
 	</div>
 	<div class="buscador">
 		<select name="localidad" class="formstyle">
@@ -159,7 +159,7 @@
 		{% include 'ProyectoPrincipalBundle:Evento:paginacion.html.twig' with {'dataPaginacion': dataPaginacion} %}
 	</div>
 	<div class="clearfix"></div>
-	<div id="loader-widget-rosa" style="display:none;height:260px;">
-       <p style="text-align:center;width: 100%;margin-top: 168px;"><img src="{{ asset('sistema/images/loader-rosa.gif')}}" title="Cargando eventos" style="width:80px;"></p>
+	<div id="loader-widget-rosa" style="display:none;height:{%if numResults== 4%}150{%else%}260{%endif%}px;">
+       <p style="text-align:center;width: 100%;margin-top: {%if numResults== 4%}73{%else%}168{%endif%}px;"><img src="{{ asset('sistema/images/loader-rosa.gif')}}" title="Cargando eventos" style="width:80px;"></p>
 	</div>
 </div>
